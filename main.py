@@ -8,6 +8,8 @@ from datetime import datetime
 
 from script.module_db import *
 
+from script.create_ui_element import *
+
 # interface
 from interface import Ui_MainWindow
 
@@ -24,12 +26,25 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.label_total_number_books.setText(f"{CountBook()}")
         self.ui.label_how_many_given_book.setText(f"{IssuedBookAll()}")
         self.ui.label__how_many_given_book_today.setText(f"{NumberBooksIssuedToday()}")
-        self.ui.label_how_many_debtors.setText("") # Доделать
+        self.ui.label_how_many_debtors.setText(f"{QuantityDebtors()}") 
+        self.ui.label_how_many_return_today.setText(f"")
+        # self.ui.pushButton_create_report_main_info.clicked.connect()
         # END TAB-MAIN-INFO
 
         # START TAB-ADD-BOOK
         self.ui.pushButton_add_new_book.clicked.connect(self.AddNewBook)
         # END TAB-ADD-BOOK
+
+        # START TAB-ADD-NEW-USER
+
+        # END TAB-ADD-NEW-USER
+
+
+        # START TAB-SEARCH-BOOK
+        self.ui.pushButton_search.clicked.connect(self.SearchBook)
+        # END TAB-SEARCH-BOOK
+        
+
 
     def AddNewBook(self):
         
@@ -50,9 +65,24 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             return
         print("не ок")
         
-        
 
-
+    def SearchBook(self):
+        value_search = self.ui.lineEdit_search.text().strip()
+        if not value_search:
+            print("введите данные")
+            return
+            
+        info = TakeInfoAboutBook(value_search)
+        print(info)
+        for element in info:
+            print(element)
+            have_or_no = CheckTheRemainedBook(element[0])
+            print(have_or_no)
+            print(*element)
+            ui_frame = CreateFrameBook(*element, have_or_no)
+            # print(ui_frame)
+            self.ui.verticalLayout_6.addWidget(ui_frame)
+            
 
 
 if __name__ == "__main__":

@@ -129,14 +129,14 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>120</y>
-      <width>461</width>
-      <height>271</height>
+      <x>20</x>
+      <y>130</y>
+      <width>621</width>
+      <height>301</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideNone</enum>
@@ -171,8 +171,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>451</width>
-           <height>241</height>
+           <width>611</width>
+           <height>271</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -387,8 +387,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>451</width>
-           <height>241</height>
+           <width>611</width>
+           <height>231</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -566,8 +566,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>451</width>
-           <height>241</height>
+           <width>611</width>
+           <height>231</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -712,8 +712,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>451</width>
-           <height>241</height>
+           <width>611</width>
+           <height>271</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -851,13 +851,13 @@
      </layout>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_4">
+   <widget class="QFrame" name="frame_meaning_search">
     <property name="geometry">
      <rect>
       <x>300</x>
       <y>470</y>
-      <width>120</width>
-      <height>80</height>
+      <width>311</width>
+      <height>149</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -866,6 +866,84 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
+    <layout class="QVBoxLayout" name="verticalLayout_8">
+     <item>
+      <widget class="QLineEdit" name="lineEdit_name_book_search">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="placeholderText">
+        <string>Название книги</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_author_search">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="placeholderText">
+        <string>Автор книги</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_isbn_search">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="placeholderText">
+        <string>ISBN</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDateEdit" name="dateEdit_year_publication_search">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="minimumDate">
+        <date>
+         <year>1752</year>
+         <month>9</month>
+         <day>14</day>
+        </date>
+       </property>
+       <property name="minimumTime">
+        <time>
+         <hour>0</hour>
+         <minute>0</minute>
+         <second>0</second>
+        </time>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_quantity_book_search">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="placeholderText">
+        <string>Количество книг</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

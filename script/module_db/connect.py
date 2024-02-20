@@ -1,7 +1,6 @@
 import sqlite3
 from .config import *
 
-
 def _createConnectionAndCursorDataBase():
     """
     Данная функция создает экземпляр класса
@@ -45,6 +44,8 @@ def ConnectBase(input_funct):
                 print(data_error)
             except sqlite3.OperationalError as request_error:
                 print(request_error)
+            except sqlite3.Error as error:
+                print(error)
             finally:
                 _breakConnectionDataBase(connect, cursor)
             

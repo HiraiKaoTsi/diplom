@@ -23,7 +23,7 @@ def ReturnBook(user_id: int, id_book: int, cursor: sqlite3.Cursor = None) -> boo
     return True
 
 @ConnectBase
-def CheckTakenBook(id_book: int, cursor: sqlite3.Cursor = None) -> bool:
+def CheckTheRemainedBook(id_book: int, cursor: sqlite3.Cursor = None) -> bool:
     """
     По введенному id книги проверят в наличии ли она
     :return: True если книга имееться False - если отсуствует
@@ -31,7 +31,7 @@ def CheckTakenBook(id_book: int, cursor: sqlite3.Cursor = None) -> bool:
 
     quantity_book = TakeQuantityBook(id_book)
 
-    sql = "SELECT * FROM take_book WHERE book_id = ? ORDER BY id DESC LIMIT 1;"
+    sql = "SELECT COUNT(id) FROM take_book WHERE book_id = ? AND date_return IS NULL"
     cursor.execute(sql, (id_book, ))
     result = cursor.fetchone()[0]
 
@@ -60,4 +60,27 @@ def IssuedBookAll(cursor: sqlite3.Cursor = None) -> int:
     result = cursor.fetchone()[0]
     return result
 
-# SELECT strftime('%Y-%m-%d %H:%M:%S', datetime('now'))
+
+@ConnectBase
+def QuantityDebtors(cursor: sqlite3.Cursor = None) -> int:
+    """
+    Выводит количество задолжников книг
+    """
+
+    sql = "SELECT COUNT(id) FROM take_book WHERE date_take < strftime('%d.%m.%Y', date('now', '-14 days'));"
+    cursor.execute(sql)
+    result = cursor.fetchone()[0]
+
+    return result
+
+
+def CountReturnBookToday(cursor: sqlite3.Cursor = None) -> int:
+    """
+    Выводит количество вернутых книг сегодня
+    """
+
+    sql = "SELECT COUNT(id) FROM take_book WHERE date_return = strftime('%d.%m.%Y', datetime('now'));"
+    cursor.execute(sql)
+    result = cursor.fetchone()[0]
+
+    return result

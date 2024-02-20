@@ -38,3 +38,11 @@ def TakeQuantityBook(id_book: int, cursor: sqlite3.Cursor = None) -> int:
     cursor.execute(sql, (id_book, ))
     result = cursor.fetchone()[0]
     return result
+
+@ConnectBase
+def TakeInfoAboutBook(info: str, cursor: sqlite3.Cursor):
+    info = f"%{info}%"
+    sql = f"SELECT * FROM books WHERE LOWER(name_book) || LOWER(author) || ISBN || year_publication LIKE ?;"
+    cursor.execute(sql, (info, ))
+    result = cursor.fetchall()
+    return result
