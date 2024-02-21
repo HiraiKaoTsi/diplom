@@ -2,7 +2,7 @@ from docx import Document
 from docx.shared import Pt
 
 
-def CreateReportMainInfo(way_and_name_file: str, info_meaning: dict) -> None:
+def CreateReportMainInfo(way_and_name_file: str, info_meaning: dict) -> bool:
     """
     Создает doxc файл, с информацией основного окна
     :way_and_name_file - путь до файла и его название
@@ -58,3 +58,4 @@ def CreateReportMainInfo(way_and_name_file: str, info_meaning: dict) -> None:
         row += 1
 
     doc.save(f"{way_and_name_file}")
+    return True
