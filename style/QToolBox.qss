@@ -1,0 +1,21 @@
+QToolBox::tab {
+	color: rgb(255, 255, 255);
+    background-color: rgb(62, 69, 80);
+    border-radius: 3px;
+}
+
+QToolBox { 
+    icon-size: 28px; 
+}
+
+QToolBox::tab:hover {
+    background-color:  rgb(44, 51, 61);
+}
+
+QToolBox::tab:selected {
+    background-color:  rgb(23, 28, 34);
+}
+
+QToolBox::tab:!selected {
+    margin-top: 2px;
+}

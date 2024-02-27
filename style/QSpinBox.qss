@@ -1,0 +1,37 @@
+QSpinBox {
+    padding-left: 5px;
+    color: black;
+    background-color: rgb(255, 255, 255);
+	border: 2px solid rgb(62, 69, 80);
+	border-radius: 4px;
+}
+
+QSpinBox::up-button {
+    border-image: url(:/icons/arrow/for-widget/top-arrow.png);
+    border-width: 1px;
+    margin-right: 5px;
+    width: 10px;
+}
+
+QSpinBox::up-button:hover {
+    border-image: url(:/icons/arrow/for-widget/top-hover-arrow.png) 2;
+}
+
+QSpinBox::up-button:pressed {
+    border-image: url(:/icons/arrow/for-widget/top-pressed-arrow.png) 1;
+}
+
+QSpinBox::down-button {
+    border-image: url(:/icons/arrow/for-widget/bot-arrow.png);
+    border-width: 1px;
+    margin-right: 5px;
+    width: 10px;
+}
+
+QSpinBox::down-button:hover {
+    border-image: url(:/icons/arrow/for-widget/bot-hover-arrow.png) 2;
+}
+
+QSpinBox::down-button:pressed {
+    border-image: url(:/icons/arrow/for-widget/bot-pressed-arrow.png) 1;
+}

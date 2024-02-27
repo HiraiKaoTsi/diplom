@@ -1,0 +1,17 @@
+QLineEdit {
+    border: none;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;	
+    border-bottom: 2px solid rgb(62, 69, 80);	
+    background-color: rgb(255, 255, 255);
+    color: black;
+    padding-left: 5px;
+}
+
+QLineEdit:hover {
+    border-bottom: 2px solid rgb(44, 51, 61);
+}
+
+QLineEdit:focus {
+    border-bottom: 2px solid rgb(23, 28, 34);
+}

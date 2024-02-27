@@ -5,7 +5,7 @@ class CreateFrameBook(QtWidgets.QFrame):
     def __init__(self, id, name_book, author, isbn, year_publication, quantity, have_book):
         super().__init__()
 
-        
+
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         self.setSizePolicy(sizePolicy)
         self.setObjectName("frame-book")

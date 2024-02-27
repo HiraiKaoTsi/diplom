@@ -23,6 +23,9 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        # Launch method
+        # self.ui.radioButton_all_users.clicked.connect(self.TEST)
+        self.CreateUserForInfo(())
 
         # START TAB-MAIN-INFO
         self.ui.label_today_date.setText(f"Сегодняшняя дата - {datetime.strftime(date.today(), '%d.%m.%Y')}")
@@ -43,11 +46,14 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         # self.ui.pushButton_search.clicked.connect(self.SearchBook)
         # END TAB-SEARCH-BOOK
         
+    def TEST(self):
+        print(3333)
+
     def EdimMainInfo(self):
         self.ui.label_total_number_books.setText(f"{CountBook()}")
         self.ui.label_how_many_given_book.setText(f"{IssuedBookAll()}")
-        self.ui.label__how_many_given_book_today.setText(f"{NumberBooksIssuedToday()}")
-        self.ui.label_how_many_debtors.setText(f"{QuantityDebtors()}") 
+        self.ui.label__how_many_given_book_today.setText(f"{CountIssuedBookToday()}")
+        self.ui.label_how_many_debtors.setText(f"{CountQuantityDebtors()}") 
         self.ui.label_how_many_return_today.setText(f"{CountReturnBookToday()}")
 
 
@@ -68,42 +74,40 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         if CreateReportMainInfo(filename, info):
             print("Файл создан!")
 
-    # def AddNewBook(self):
-        
-    #     meaning = \
-    #     [
-    #         self.ui.lineEdit_name_book_add.text().strip(), self.ui.lineEdit_author_add.text().strip(), 
-    #         self.ui.lineEdit_isbn_add.text().strip(), self.ui.lineEdit_year_publication_add.text().strip(), 
-    #         self.ui.lineEdit_quantity_book_add.text().strip()
-    #     ]
 
-    #     for value in meaning:
-    #         if not value:
-    #             print("Заполните данные")
-    #             return
-        
-    #     if AddNewBook(*meaning):
-    #         print("все ок")
-    #         return
-    #     print("не ок")
-        
 
-    # def SearchBook(self):
-    #     value_search = self.ui.lineEdit_search.text().strip()
-    #     if not value_search:
-    #         print("введите данные")
-    #         return
-            
-    #     info = TakeInfoAboutBook(value_search)
-    #     print(info)
-    #     for element in info:
-    #         print(element)
-    #         have_or_no = CheckTheRemainedBook(element[0])
-    #         print(have_or_no)
-    #         print(*element)
-    #         ui_frame = CreateFrameBook(*element, have_or_no)
-    #         # print(ui_frame)
-    #         self.ui.verticalLayout_6.addWidget(ui_frame)
+    def CreateUserForInfo(self, data_info_user: tuple[dict, ...]):
+        if len(data_info_user) == 0:
+            return
+        
+        # for element in data_info_user 
+        # a = CreateUser(1, "fio", "number_group", "student id", self.OpenAllInfoUser)
+        # self.ui.verticalLayout_all_user.addWidget(a)
+
+        # self.ClearLayoutFromFrame(self.ui.verticalLayout_all_user)
+
+    def ClearLayoutFromFrame(self, layout: QtWidgets.QVBoxLayout):
+        #  verticalLayout_all_user - пользователи
+        #  verticalLayout_all_message - сообщение пользователям
+
+        # verticalLayout_books - книги 
+        print(type(layout))
+        if layout is not None:
+            for i in range(layout.count()):
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+                else:
+                    self.deleteLayout(item.layout())
+
+
+    def OpenAllInfoUser(self, id_user, fio, number_group, student_id_number):
+        self.ui.label_fio_info_user.setText(f"{fio}")
+        self.ui.label_number_group.setText(f"{number_group}")
+        self.ui.label_student_id_number.setText(f"{student_id_number}")
+        self.ui.stackedWidget.setCurrentIndex(0)
+        print(id_user)
             
 
 

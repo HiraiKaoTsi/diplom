@@ -13,9 +13,8 @@ def IssuedBookAll(cursor: MySQLCursor = None) -> int:
     result = cursor.fetchone()[0]
     return result
 
-
 @ConnectBase
-def NumberBooksIssuedToday(cursor: MySQLCursor = None) -> int:
+def CountIssuedBookToday(cursor: MySQLCursor = None) -> int:
     """
     Данная функция подсчитывает количество выданых книг за сегодня
     """
@@ -26,24 +25,48 @@ def NumberBooksIssuedToday(cursor: MySQLCursor = None) -> int:
 
 
 @ConnectBase
-def QuantityDebtors(cursor: MySQLCursor = None) -> int:
+def CountReturnBookToday(cursor: MySQLCursor = None) -> int:
     """
-    Выводит количество задолжников книг
+    Данная функция подсчитывает количество вернутых книг за сегодня
     """
-    sql = "SELECT COUNT(id) FROM take_book WHERE date_take < DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY) AND date_return IS NULL;"
+    sql = "SELECT COUNT(id) FROM take_book WHERE date_return = CURRENT_DATE();"
     cursor.execute(sql)
     result = cursor.fetchone()[0]
 
     return result
 
-@ConnectBase
-def CountReturnBookToday(cursor: MySQLCursor = None) -> int:
-    """
-    Выводит количество вернутых книг сегодня
-    """
 
-    sql = "SELECT COUNT(id) FROM take_book WHERE date_return = CURRENT_DATE();"
+@ConnectBase
+def CountQuantityDebtors(cursor: MySQLCursor = None) -> int:
+    """
+    Выводит количество задолжников книг
+    """
+    sql = "SELECT COUNT(ID) FROM take_book WHERE date_take < DATE_SUB(CURRENT_DATE(), INTERVAL how_many_days_give DAY) AND date_return IS NULL;"
     cursor.execute(sql)
     result = cursor.fetchone()[0]
+
+    return result
+
+
+@ConnectBase
+def WhichBookTakeUser(user_id, cursor: MySQLCursor = None) -> tuple:
+    """
+    Выводит все книги которые брал пользоватль (которые вернул)
+    """
+    sql = f"SELECT * FROM library_database.take_book WHERE user_id = %s AND date_return IS NOT NULL;"
+    cursor.execute(sql, (user_id, ))
+    result = cursor.fetchall()
+
+    return result
+
+
+@ConnectBase
+def WhichNowBookAtUser(user_id, cursor: MySQLCursor = None) -> tuple:
+    """
+    Выводит все книги которые сейчас у пользователя
+    """
+    sql = f"SELECT * FROM library_database.take_book WHERE user_id = %s AND date_return IS NOT NULL;"
+    cursor.execute(sql, (user_id, ))
+    result = cursor.fetchall()
 
     return result

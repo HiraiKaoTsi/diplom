@@ -1,0 +1,56 @@
+QComboBox {
+    color: white;
+    border-radius: 3px;
+    padding-left: 8px;
+}
+
+QComboBox:!editable, QComboBox::drop-down:editable {
+    background: rgb(62, 69, 80);
+}
+
+QComboBox:hover {
+    background-color: rgb(44, 51, 61);
+}
+
+QComboBox:!editable:on, QComboBox::drop-down:editable:on {
+    background: rgb(23, 28, 34);
+}
+
+QComboBox::drop-down {
+    padding-left: 3px;
+    padding-right: 3px;
+
+    width: 20px;
+    height: 20px;
+
+    background-color: transparent;
+    subcontrol-origin: padding;
+    subcontrol-position: center right;
+
+    border-left: 1px solid black;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+QComboBox::down-arrow {
+    image: url(:/icons/arrow/for-widget/bot-pressed-arrow.png);
+    width: 15px;
+    height: 15px;
+}
+
+QComboBox::down-arrow:hover {
+	image: url(:/icons/arrow/for-widget/2-bot-arrow-hover.png);
+}
+
+
+QComboBox::down-arrow:on { 
+	image: url(:/icons/arrow/for-widget/2-bot-arrow.png);
+    top: 1px;
+}
+
+QComboBox QAbstractItemView {
+    outline: none;
+    background-color: #cacaca; 
+    border: 1px solid #000000;
+    selection-background-color: rgb(62, 69, 80); 
+}

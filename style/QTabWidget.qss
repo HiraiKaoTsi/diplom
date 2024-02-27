@@ -1,0 +1,32 @@
+QTabWidget {
+	background-color: rgba(0, 0, 0, 0);
+    background: transparent;
+	border: 0px;
+}
+
+QTabWidget::pane { 
+    background-color: rgba(0, 0, 0, 0);
+    background: transparent;
+    border: 0px;
+}
+
+QTabBar::tab {
+	color: rgb(255, 255, 255);
+    background-color: rgb(62, 69, 80);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    min-width: 8ex;
+    padding: 4px;
+}
+
+QTabBar::tab:hover {
+    background-color:  rgb(44, 51, 61);
+}
+
+QTabBar::tab:selected {
+    background-color:  rgb(23, 28, 34);
+}
+
+QTabBar::tab:!selected {
+    margin-top: 2px; 
+}

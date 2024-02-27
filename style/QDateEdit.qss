@@ -1,0 +1,37 @@
+QDateEdit {
+    padding-left: 5px;
+    background-color: rgb(255, 255, 255);
+	border: 2px solid rgb(62, 69, 80);
+	border-radius: 4px;
+	height: 25px;
+}
+
+QDateEdit::up-button {
+    margin-right: 5px;
+    width: 10px;
+    border-image: url(:/icons/arrow/for-widget/top-arrow.png);
+    border-width: 1px;
+}
+
+QDateEdit::up-button:hover {
+    border-image: url(:/icons/arrow/for-widget/top-hover-arrow.png) 2;
+}
+
+QDateEdit::up-button:pressed {
+    border-image: url(:/icons/arrow/for-widget/top-pressed-arrow.png) 1;
+}
+
+QDateEdit::down-button {
+    margin-right: 5px;
+    width: 10px;
+    border-image: url(:/icons/arrow/for-widget/bot-arrow.png);
+    border-width: 1px;
+}
+
+QDateEdit::down-button:hover {
+    border-image: url(:/icons/arrow/for-widget/bot-hover-arrow.png) 2;
+}
+
+QDateEdit::down-button:pressed {
+    border-image: url(:/icons/arrow/for-widget/bot-pressed-arrow.png) 1;
+}
