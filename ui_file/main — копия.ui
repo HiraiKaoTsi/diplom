@@ -1297,7 +1297,7 @@
                         </widget>
                        </item>
                        <item>
-                        <widget class="QLineEdit" name="lineEdit_phone">
+                        <widget class="QLineEdit" name="lineEdit_4">
                          <property name="sizePolicy">
                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                            <horstretch>0</horstretch>
@@ -1381,7 +1381,7 @@
                         </widget>
                        </item>
                        <item>
-                        <widget class="QLineEdit" name="lineEdit_mail"/>
+                        <widget class="QLineEdit" name="lineEdit"/>
                        </item>
                        <item>
                         <spacer name="horizontalSpacer_2">
@@ -1458,7 +1458,7 @@
                         </widget>
                        </item>
                        <item>
-                        <widget class="QLineEdit" name="lineEdit_telegram"/>
+                        <widget class="QLineEdit" name="lineEdit_2"/>
                        </item>
                        <item>
                         <spacer name="horizontalSpacer_3">
@@ -1535,7 +1535,7 @@
                         </widget>
                        </item>
                        <item>
-                        <widget class="QLineEdit" name="lineEdit_vk"/>
+                        <widget class="QLineEdit" name="lineEdit_3"/>
                        </item>
                        <item>
                         <spacer name="horizontalSpacer_4">
@@ -1652,8 +1652,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>98</width>
-                     <height>28</height>
+                     <width>100</width>
+                     <height>30</height>
                     </rect>
                    </property>
                    <attribute name="icon">
@@ -1686,8 +1686,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>98</width>
-                     <height>28</height>
+                     <width>100</width>
+                     <height>30</height>
                     </rect>
                    </property>
                    <attribute name="icon">
@@ -1885,8 +1885,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>28</height>
+                 <width>903</width>
+                 <height>492</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_all_user">
@@ -2034,8 +2034,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>28</height>
+                 <width>903</width>
+                 <height>441</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_all_message">

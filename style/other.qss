@@ -20,3 +20,6 @@ QGroupBox {
 	border: none;
 }
 
+QFrame {
+    border 0px;
+}

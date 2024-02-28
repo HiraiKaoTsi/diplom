@@ -3,7 +3,7 @@ from .connect import *
 from .handler_book import TakeQuantityBook
 
 
-@ConnectBase
+@ConnectBaseReturnTypeList
 def IssuedBookAll(cursor: MySQLCursor = None) -> int:
     """
     Сколько книг выданно всего
@@ -13,7 +13,7 @@ def IssuedBookAll(cursor: MySQLCursor = None) -> int:
     result = cursor.fetchone()[0]
     return result
 
-@ConnectBase
+@ConnectBaseReturnTypeList
 def CountIssuedBookToday(cursor: MySQLCursor = None) -> int:
     """
     Данная функция подсчитывает количество выданых книг за сегодня
@@ -24,7 +24,7 @@ def CountIssuedBookToday(cursor: MySQLCursor = None) -> int:
     return result
 
 
-@ConnectBase
+@ConnectBaseReturnTypeList
 def CountReturnBookToday(cursor: MySQLCursor = None) -> int:
     """
     Данная функция подсчитывает количество вернутых книг за сегодня
@@ -36,7 +36,7 @@ def CountReturnBookToday(cursor: MySQLCursor = None) -> int:
     return result
 
 
-@ConnectBase
+@ConnectBaseReturnTypeList
 def CountQuantityDebtors(cursor: MySQLCursor = None) -> int:
     """
     Выводит количество задолжников книг
@@ -48,7 +48,7 @@ def CountQuantityDebtors(cursor: MySQLCursor = None) -> int:
     return result
 
 
-@ConnectBase
+@ConnectBaseReturnTypeList
 def WhichBookTakeUser(user_id, cursor: MySQLCursor = None) -> tuple:
     """
     Выводит все книги которые брал пользоватль (которые вернул)
@@ -60,7 +60,7 @@ def WhichBookTakeUser(user_id, cursor: MySQLCursor = None) -> tuple:
     return result
 
 
-@ConnectBase
+@ConnectBaseReturnTypeList
 def WhichNowBookAtUser(user_id, cursor: MySQLCursor = None) -> tuple:
     """
     Выводит все книги которые сейчас у пользователя

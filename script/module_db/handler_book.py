@@ -1,6 +1,6 @@
 from .connect import *
 
-@ConnectBase
+@ConnectBaseReturnTypeList
 def CountBook(cursor: MySQLCursor = None) -> int:
     """
     Данная функция подсчитывает количество книг в базе данных
@@ -12,7 +12,7 @@ def CountBook(cursor: MySQLCursor = None) -> int:
     result = cursor.fetchone()[0]
     return result
 
-@ConnectBase
+@ConnectBaseReturnTypeList
 def AddNewBook(name_book, author, isbn, year_publication, quantity, cursor: MySQLCursor = None) -> bool:
     
     """
@@ -26,7 +26,7 @@ def AddNewBook(name_book, author, isbn, year_publication, quantity, cursor: MySQ
 
 
 # mb edit name function
-@ConnectBase
+@ConnectBaseReturnTypeList
 def TakeQuantityBook(id_book: int, cursor: MySQLCursor = None) -> int:
     """
     Данная функция возращает колиство данной книги
@@ -36,7 +36,7 @@ def TakeQuantityBook(id_book: int, cursor: MySQLCursor = None) -> int:
     result = cursor.fetchone()[0]
     return result
 
-@ConnectBase
+@ConnectBaseReturnTypeList
 def TakeInfoAboutBook(info: str, cursor: MySQLCursor):
     info = f"%{info}%"
     sql = f"SELECT * FROM books WHERE LOWER(name_book) || LOWER(author) || ISBN || year_publication LIKE %s;"

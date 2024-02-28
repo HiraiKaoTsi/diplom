@@ -1,7 +1,7 @@
 QScrollBar:vertical {
     background: transparent;
     border-radius: 5px;
-    background: rgb(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0);
     width: 15px;
     margin: 18px 2px 18px 2px;
 }
@@ -75,7 +75,7 @@ QScrollBar::sub-line:vertical:pressed {
 QScrollBar:horizontal {
     background: transparent;
     border-radius: 5px;
-    background: rgb(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0);
     height: 15px;
     margin: 2px 18px 2px 18px;
 }

@@ -1,3 +1,5 @@
+from os import listdir
+
 # built - in Module
 from sys import argv, exit
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -22,10 +24,15 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         QtWidgets.QWidget.__init__(self, parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
+        
         # Launch method
-        # self.ui.radioButton_all_users.clicked.connect(self.TEST)
+        self.EditSyleSheet()
         self.CreateUserForInfo(())
+
+        self.ui.pushButton_back_info_user.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(1))
+
+        self.ui.tabWidget.setCurrentIndex(4)
+        self.ui.stackedWidget.setCurrentIndex(1)
 
         # START TAB-MAIN-INFO
         self.ui.label_today_date.setText(f"Сегодняшняя дата - {datetime.strftime(date.today(), '%d.%m.%Y')}")
@@ -46,10 +53,23 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         # self.ui.pushButton_search.clicked.connect(self.SearchBook)
         # END TAB-SEARCH-BOOK
         
-    def TEST(self):
-        print(3333)
+    def EditSyleSheet(self) -> None:
+        """
+        Данный метод считывает файлы .qss в катологе style и применяет их к приложению 
+        """
+        style = ""
+        for qss_file in listdir("style"):
+            with open(f"style/{qss_file}", mode="r", encoding="utf-8") as qss:
+                style += qss.read()
+
+        self.setStyleSheet(style)
+        QtWidgets.qApp.setStyleSheet(style)
+
 
     def EdimMainInfo(self):
+        """
+        Данный метод отображает информацию из базы данных на галвном экране
+        """
         self.ui.label_total_number_books.setText(f"{CountBook()}")
         self.ui.label_how_many_given_book.setText(f"{IssuedBookAll()}")
         self.ui.label__how_many_given_book_today.setText(f"{CountIssuedBookToday()}")
@@ -58,6 +78,9 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
 
 
     def onCreateReport(self):
+        """
+        Данный метод создает docx файл и заполняет его информацией с главного окна
+        """
         filename, ok = QtWidgets.QFileDialog.getSaveFileName(self,
                             "Сохранить файл",
                             ".",
@@ -74,15 +97,31 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         if CreateReportMainInfo(filename, info):
             print("Файл создан!")
 
+    
+    def DetailedInformationAboutUser(self, id_user):
+        """
+        Подробная информация о пользователе
+        """
+        data = GetAboutUser(id_user)
+        self.ui.lineEdit_fio_info_user.setText(f"{data['FIO']}")
+        self.ui.lineEdit_number_group.setText(f"{data['number_group']}")
+        self.ui.lineEdit_student_id_number.setText(f"{data['student_id_number']}")
 
+        self.ui.lineEdit_phone.setText(f"{'' if data['number_phone'] is None else data['number_phone']}")
+        self.ui.lineEdit_mail.setText(f"{'' if data['email'] is None else data['email']}")
+        self.ui.lineEdit_telegram.setText(f"{'' if data['vk'] is None else data['vk']}")
+        self.ui.lineEdit_vk.setText(f"{'' if data['telegram'] is None else data['telegram']}")
+
+
+        self.ui.stackedWidget.setCurrentIndex(0)
 
     def CreateUserForInfo(self, data_info_user: tuple[dict, ...]):
-        if len(data_info_user) == 0:
-            return
-        
-        # for element in data_info_user 
-        # a = CreateUser(1, "fio", "number_group", "student id", self.OpenAllInfoUser)
-        # self.ui.verticalLayout_all_user.addWidget(a)
+        # if len(data_info_user) == 0:
+        #     return
+        data_info_user = GetAllUser()
+        for element in data_info_user:
+            widget = CreateUser(self.DetailedInformationAboutUser, *element)
+            self.ui.verticalLayout_all_user.addWidget(widget)
 
         # self.ClearLayoutFromFrame(self.ui.verticalLayout_all_user)
 
