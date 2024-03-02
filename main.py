@@ -27,11 +27,13 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         
         # Launch method
         self.EditSyleSheet()
+
         self.CreateUserForInfo(())
+        self.CreateBookForInfo(())
 
         self.ui.pushButton_back_info_user.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(1))
 
-        self.ui.tabWidget.setCurrentIndex(4)
+        self.ui.tabWidget.setCurrentIndex(3)
         self.ui.stackedWidget.setCurrentIndex(1)
 
         # START TAB-MAIN-INFO
@@ -114,6 +116,14 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
 
 
         self.ui.stackedWidget.setCurrentIndex(0)
+
+    def CreateBookForInfo(self, data_info_book: tuple[dict, ...]):
+        data_info_user = GetAllInfoAboutBooks()
+        for element in data_info_user:
+            quanity_issued = GetQuantityBookThatUserHaveById(element[0])
+            # CreateBook(*element, quanity_issued)
+            print(quanity_issued)
+            # print(element)
 
     def CreateUserForInfo(self, data_info_user: tuple[dict, ...]):
         # if len(data_info_user) == 0:

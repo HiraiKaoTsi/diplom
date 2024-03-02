@@ -53,7 +53,7 @@ def WhichBookTakeUser(user_id, cursor: MySQLCursor = None) -> tuple:
     """
     Выводит все книги которые брал пользоватль (которые вернул)
     """
-    sql = f"SELECT * FROM library_database.take_book WHERE user_id = %s AND date_return IS NOT NULL;"
+    sql = f"SELECT * FROM take_book WHERE user_id = %s AND date_return IS NOT NULL;"
     cursor.execute(sql, (user_id, ))
     result = cursor.fetchall()
 
@@ -65,8 +65,19 @@ def WhichNowBookAtUser(user_id, cursor: MySQLCursor = None) -> tuple:
     """
     Выводит все книги которые сейчас у пользователя
     """
-    sql = f"SELECT * FROM library_database.take_book WHERE user_id = %s AND date_return IS NOT NULL;"
+    sql = f"SELECT * FROM take_book WHERE user_id = %s AND date_return IS NOT NULL;"
     cursor.execute(sql, (user_id, ))
     result = cursor.fetchall()
+
+    return result
+
+@ConnectBaseReturnTypeList
+def GetQuantityBookThatUserHaveById(book_id: int, cursor: MySQLCursor = None) -> int:
+    """
+    Получает количество экземпляров книг которые находиться у пользователей по айди книги
+    """
+    sql = f"SELECT COUNT(id) FROM take_book WHERE book_id = %s AND date_return IS NULL;"
+    cursor.execute(sql, (book_id, ))
+    result = cursor.fetchone()[0]
 
     return result

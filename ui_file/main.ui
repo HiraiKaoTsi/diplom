@@ -23,7 +23,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <property name="iconSize">
        <size>
@@ -627,19 +627,19 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_17">
         <property name="spacing">
-         <number>30</number>
+         <number>5</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>4</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>4</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>4</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>4</number>
         </property>
         <item>
          <widget class="QLabel" name="label_title_tab4">
@@ -814,8 +814,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>913</width>
-             <height>397</height>
+             <width>905</width>
+             <height>489</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_books">
@@ -921,7 +921,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_info_user">
            <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -1036,8 +1036,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>899</width>
-                     <height>475</height>
+                     <width>901</width>
+                     <height>477</height>
                     </rect>
                    </property>
                    <attribute name="icon">
@@ -1652,8 +1652,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>98</width>
-                     <height>28</height>
+                     <width>100</width>
+                     <height>30</height>
                     </rect>
                    </property>
                    <attribute name="icon">
@@ -1686,8 +1686,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>98</width>
-                     <height>28</height>
+                     <width>100</width>
+                     <height>30</height>
                     </rect>
                    </property>
                    <attribute name="icon">
@@ -1885,8 +1885,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>28</height>
+                 <width>903</width>
+                 <height>492</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_all_user">
@@ -2034,8 +2034,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>28</height>
+                 <width>903</width>
+                 <height>441</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_all_message">

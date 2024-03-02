@@ -25,6 +25,7 @@ def AddNewBook(name_book, author, isbn, year_publication, quantity, cursor: MySQ
 
 
 
+
 # mb edit name function
 @ConnectBaseReturnTypeList
 def TakeQuantityBook(id_book: int, cursor: MySQLCursor = None) -> int:
@@ -37,9 +38,17 @@ def TakeQuantityBook(id_book: int, cursor: MySQLCursor = None) -> int:
     return result
 
 @ConnectBaseReturnTypeList
-def TakeInfoAboutBook(info: str, cursor: MySQLCursor):
+def TakeInfoAboutBook(info: str, cursor: MySQLCursor = None):
     info = f"%{info}%"
     sql = f"SELECT * FROM books WHERE LOWER(name_book) || LOWER(author) || ISBN || year_publication LIKE %s;"
     cursor.execute(sql, (info, ))
     result = cursor.fetchall()
     return result
+
+
+@ConnectBaseReturnTypeList
+def GetAllInfoAboutBooks(cursor: MySQLCursor = None) -> tuple:
+    sql = "SELECT * FROM books;"
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return tuple(result)
