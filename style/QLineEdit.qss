@@ -1,5 +1,6 @@
 QLineEdit {
     border: none;
+    height: 30px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;	
     border-bottom: 2px solid rgb(62, 69, 80);	

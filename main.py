@@ -28,8 +28,8 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         # Launch method
         self.EditSyleSheet()
 
-        self.CreateUserForInfo(())
-        self.CreateBookForInfo(())
+        self.CreateUserForInfo(GetAllUser())
+        self.CreateBookForInfo(GetAllBooks())
 
         self.ui.pushButton_back_info_user.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(1))
 
@@ -117,18 +117,25 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
 
         self.ui.stackedWidget.setCurrentIndex(0)
 
-    def CreateBookForInfo(self, data_info_book: tuple[dict, ...]):
-        data_info_user = GetAllInfoAboutBooks()
-        for element in data_info_user:
-            quanity_issued = GetQuantityBookThatUserHaveById(element[0])
-            # CreateBook(*element, quanity_issued)
-            print(quanity_issued)
-            # print(element)
+    def CreateBookForInfo(self, data_info_book: tuple[tuple, ...]):
+        """
+        Создает книги по полученной информации
+        """
+        if len(data_info_book) == 0:
+            return
 
-    def CreateUserForInfo(self, data_info_user: tuple[dict, ...]):
-        # if len(data_info_user) == 0:
-        #     return
-        data_info_user = GetAllUser()
+        for element in data_info_book:
+            quanity_issued = GetQuantityBookThatUserHaveById(element[0])
+            widget = CreateBook(*element, quanity_issued)
+            self.ui.verticalLayout_books.addWidget(widget)
+
+    def CreateUserForInfo(self, data_info_user: tuple[tuple, ...]):
+        """
+        Создает пользователей по полученной информации
+        """
+        if len(data_info_user) == 0:
+            return
+
         for element in data_info_user:
             widget = CreateUser(self.DetailedInformationAboutUser, *element)
             self.ui.verticalLayout_all_user.addWidget(widget)
@@ -140,7 +147,6 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         #  verticalLayout_all_message - сообщение пользователям
 
         # verticalLayout_books - книги 
-        print(type(layout))
         if layout is not None:
             for i in range(layout.count()):
                 item = layout.takeAt(0)

@@ -18,7 +18,7 @@
 	border: 1px solid black;
 }</string>
   </property>
-  <widget class="QFrame" name="frame_zxc">
+  <widget class="QFrame" name="frame_book_history">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -88,14 +88,14 @@
        <item>
         <widget class="QLabel" name="label_date_take">
          <property name="text">
-          <string>TextLabel</string>
+          <string>label_date_take</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_date_return">
          <property name="text">
-          <string>TextLabel</string>
+          <string>label_date_return</string>
          </property>
         </widget>
        </item>

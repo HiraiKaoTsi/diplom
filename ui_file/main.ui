@@ -23,7 +23,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <property name="iconSize">
        <size>
@@ -36,7 +36,7 @@
       </property>
       <widget class="QWidget" name="tab_main_info">
        <attribute name="icon">
-        <iconset resource="../icons/icons.qrc">
+        <iconset>
          <normaloff>:/icons/main/info.png</normaloff>:/icons/main/info.png</iconset>
        </attribute>
        <attribute name="title">
@@ -247,7 +247,7 @@
                <string>Отчет</string>
               </property>
               <property name="icon">
-               <iconset resource="../icons/icons.qrc">
+               <iconset>
                 <normaloff>:/icons/other/word.png</normaloff>:/icons/other/word.png</iconset>
               </property>
               <property name="iconSize">
@@ -266,7 +266,7 @@
       </widget>
       <widget class="QWidget" name="tab_add_book">
        <attribute name="icon">
-        <iconset resource="../icons/icons.qrc">
+        <iconset>
          <normaloff>:/icons/book/add-book.png</normaloff>:/icons/book/add-book.png</iconset>
        </attribute>
        <attribute name="title">
@@ -324,37 +324,6 @@
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QLabel" name="label_title_tab2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Добавить новую книгу</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="wordWrap">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_name_book_add">
               <property name="sizePolicy">
@@ -440,7 +409,7 @@
                <string>Добавить новую книгу</string>
               </property>
               <property name="icon">
-               <iconset resource="../icons/icons.qrc">
+               <iconset>
                 <normaloff>:/icons/book/add-book.png</normaloff>:/icons/book/add-book.png</iconset>
               </property>
               <property name="iconSize">
@@ -459,7 +428,7 @@
       </widget>
       <widget class="QWidget" name="tab_add_new_user">
        <attribute name="icon">
-        <iconset resource="../icons/icons.qrc">
+        <iconset>
          <normaloff>:/icons/users/add-student.png</normaloff>:/icons/users/add-student.png</iconset>
        </attribute>
        <attribute name="title">
@@ -511,37 +480,6 @@
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QLabel" name="label_title_tab3">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Зарегистрировать нового пользователя</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="wordWrap">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_fio_add_user">
               <property name="placeholderText">
@@ -597,7 +535,7 @@
                <string>Добавить</string>
               </property>
               <property name="icon">
-               <iconset resource="../icons/icons.qrc">
+               <iconset>
                 <normaloff>:/icons/users/add-student.png</normaloff>:/icons/users/add-student.png</iconset>
               </property>
               <property name="iconSize">
@@ -619,7 +557,7 @@
         <cursorShape>ArrowCursor</cursorShape>
        </property>
        <attribute name="icon">
-        <iconset resource="../icons/icons.qrc">
+        <iconset>
          <normaloff>:/icons/book/book.png</normaloff>:/icons/book/book.png</iconset>
        </attribute>
        <attribute name="title">
@@ -641,37 +579,6 @@
         <property name="bottomMargin">
          <number>4</number>
         </property>
-        <item>
-         <widget class="QLabel" name="label_title_tab4">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Поиск книги</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QFrame" name="frame_search">
           <property name="frameShape">
@@ -712,7 +619,7 @@
               <string>Поиск</string>
              </property>
              <property name="icon">
-              <iconset resource="../icons/icons.qrc">
+              <iconset>
                <normaloff>:/icons/main/search.png</normaloff>:/icons/main/search.png</iconset>
              </property>
              <property name="iconSize">
@@ -815,7 +722,7 @@
              <x>0</x>
              <y>0</y>
              <width>905</width>
-             <height>489</height>
+             <height>524</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_books">
@@ -847,7 +754,7 @@
            <string>Сброс</string>
           </property>
           <property name="icon">
-           <iconset resource="../icons/icons.qrc">
+           <iconset>
             <normaloff>:/icons/main/reset.png</normaloff>:/icons/main/reset.png</iconset>
           </property>
           <property name="iconSize">
@@ -865,7 +772,7 @@
         <number>-1</number>
        </property>
        <attribute name="icon">
-        <iconset resource="../icons/icons.qrc">
+        <iconset>
          <normaloff>:/icons/users/student.png</normaloff>:/icons/users/student.png</iconset>
        </attribute>
        <attribute name="title">
@@ -888,40 +795,9 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QLabel" name="label_title_tab5">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Студенты</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_info_user">
            <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -954,7 +830,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>911</width>
-                 <height>609</height>
+                 <height>639</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1009,7 +885,7 @@
                       <string>Назад</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../icons/icons.qrc">
+                      <iconset>
                        <normaloff>:/icons/arrow/left-arrow-2.png</normaloff>:/icons/arrow/left-arrow-2.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -1036,12 +912,12 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>901</width>
-                     <height>477</height>
+                     <width>899</width>
+                     <height>505</height>
                     </rect>
                    </property>
                    <attribute name="icon">
-                    <iconset resource="../icons/icons.qrc">
+                    <iconset>
                      <normaloff>:/icons/main/info.png</normaloff>:/icons/main/info.png</iconset>
                    </attribute>
                    <attribute name="label">
@@ -1289,7 +1165,7 @@
                           <enum>Qt::AutoText</enum>
                          </property>
                          <property name="pixmap">
-                          <pixmap resource="../icons/icons.qrc">:/icons/socialNetwork/phone.png</pixmap>
+                          <pixmap>:/icons/socialNetwork/phone.png</pixmap>
                          </property>
                          <property name="scaledContents">
                           <bool>true</bool>
@@ -1373,7 +1249,7 @@
                           <enum>Qt::AutoText</enum>
                          </property>
                          <property name="pixmap">
-                          <pixmap resource="../icons/icons.qrc">:/icons/socialNetwork/email.png</pixmap>
+                          <pixmap>:/icons/socialNetwork/email.png</pixmap>
                          </property>
                          <property name="scaledContents">
                           <bool>true</bool>
@@ -1450,7 +1326,7 @@
                           <enum>Qt::AutoText</enum>
                          </property>
                          <property name="pixmap">
-                          <pixmap resource="../icons/icons.qrc">:/icons/socialNetwork/telegram.png</pixmap>
+                          <pixmap>:/icons/socialNetwork/telegram.png</pixmap>
                          </property>
                          <property name="scaledContents">
                           <bool>true</bool>
@@ -1527,7 +1403,7 @@
                           <enum>Qt::AutoText</enum>
                          </property>
                          <property name="pixmap">
-                          <pixmap resource="../icons/icons.qrc">:/icons/socialNetwork/vk.png</pixmap>
+                          <pixmap>:/icons/socialNetwork/vk.png</pixmap>
                          </property>
                          <property name="scaledContents">
                           <bool>true</bool>
@@ -1598,7 +1474,7 @@
                           <string>Удалить пользователя</string>
                          </property>
                          <property name="icon">
-                          <iconset resource="../icons/icons.qrc">
+                          <iconset>
                            <normaloff>:/icons/main/close.png</normaloff>:/icons/main/close.png</iconset>
                          </property>
                          <property name="iconSize">
@@ -1631,7 +1507,7 @@
                           <string>Изменить данные</string>
                          </property>
                          <property name="icon">
-                          <iconset resource="../icons/icons.qrc">
+                          <iconset>
                            <normaloff>:/icons/main/edit.png</normaloff>:/icons/main/edit.png</iconset>
                          </property>
                          <property name="iconSize">
@@ -1652,12 +1528,12 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>100</width>
-                     <height>30</height>
+                     <width>98</width>
+                     <height>28</height>
                     </rect>
                    </property>
                    <attribute name="icon">
-                    <iconset resource="../icons/icons.qrc">
+                    <iconset>
                      <normaloff>:/icons/book/book.png</normaloff>:/icons/book/book.png</iconset>
                    </attribute>
                    <attribute name="label">
@@ -1686,12 +1562,12 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>100</width>
-                     <height>30</height>
+                     <width>98</width>
+                     <height>28</height>
                     </rect>
                    </property>
                    <attribute name="icon">
-                    <iconset resource="../icons/icons.qrc">
+                    <iconset>
                      <normaloff>:/icons/book/second-books.png</normaloff>:/icons/book/second-books.png</iconset>
                    </attribute>
                    <attribute name="label">
@@ -1780,7 +1656,7 @@
                   <string>Поиск</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
+                  <iconset>
                    <normaloff>:/icons/main/search.png</normaloff>:/icons/main/search.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -1886,7 +1762,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>903</width>
-                 <height>492</height>
+                 <height>522</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_all_user">
@@ -1918,7 +1794,7 @@
                <string>Сброс</string>
               </property>
               <property name="icon">
-               <iconset resource="../icons/icons.qrc">
+               <iconset>
                 <normaloff>:/icons/main/reset.png</normaloff>:/icons/main/reset.png</iconset>
               </property>
               <property name="iconSize">
@@ -1984,7 +1860,7 @@
                   <string>Назад</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
+                  <iconset>
                    <normaloff>:/icons/arrow/left-arrow-2.png</normaloff>:/icons/arrow/left-arrow-2.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -2035,7 +1911,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>903</width>
-                 <height>441</height>
+                 <height>471</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_all_message">
@@ -2146,7 +2022,7 @@
                       <string>  email</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../icons/icons.qrc">
+                      <iconset>
                        <normaloff>:/icons/socialNetwork/email.png</normaloff>:/icons/socialNetwork/email.png</iconset>
                      </property>
                     </item>
@@ -2155,7 +2031,7 @@
                       <string>  telegram</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../icons/icons.qrc">
+                      <iconset>
                        <normaloff>:/icons/socialNetwork/telegram.png</normaloff>:/icons/socialNetwork/telegram.png</iconset>
                      </property>
                     </item>
@@ -2164,7 +2040,7 @@
                       <string>  vk</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../icons/icons.qrc">
+                      <iconset>
                        <normaloff>:/icons/socialNetwork/vk.png</normaloff>:/icons/socialNetwork/vk.png</iconset>
                      </property>
                     </item>
@@ -2217,7 +2093,7 @@
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
+                  <iconset>
                    <normaloff>:/icons/arrow/right-arrow-3.png</normaloff>:/icons/arrow/right-arrow-3.png</iconset>
                  </property>
                  <property name="iconSize">

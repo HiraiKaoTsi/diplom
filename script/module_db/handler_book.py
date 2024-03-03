@@ -47,7 +47,7 @@ def TakeInfoAboutBook(info: str, cursor: MySQLCursor = None):
 
 
 @ConnectBaseReturnTypeList
-def GetAllInfoAboutBooks(cursor: MySQLCursor = None) -> tuple:
+def GetAllBooks(cursor: MySQLCursor = None) -> tuple:
     sql = "SELECT * FROM books;"
     cursor.execute(sql)
     result = cursor.fetchall()

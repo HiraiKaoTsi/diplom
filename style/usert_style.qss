@@ -1,8 +1,0 @@
-QFrame#frame-user {
-    border: 2px solid rgb(62, 69, 80);
-    border-radius: 10px;
-    margin-right: 100px;
-    margin-left: 100px;
-    margin-bottom: 20px;
-    margin-top: 10px;
-}

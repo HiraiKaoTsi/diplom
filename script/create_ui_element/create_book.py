@@ -14,20 +14,19 @@ class CreateBook(QtWidgets.QFrame):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QtCore.QSize(321, 141))
         self.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.setObjectName("frame_book")
+        self.setObjectName("frame-book")
         
         # Сетка для виджета
         gridLayout = QtWidgets.QGridLayout(self)
-        gridLayout.setContentsMargins(5, 5, 5, 5)
+        gridLayout.setContentsMargins(25, 25, 25, 25)
         gridLayout.setSpacing(5)
         gridLayout.setObjectName("gridLayout")
 
         # Название
         label_name = QtWidgets.QLabel(self)
-        label_name.setText(f"{name}")
+        label_name.setText(f"Название книги: {name}")
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -38,32 +37,31 @@ class CreateBook(QtWidgets.QFrame):
 
         # Автор 
         label_author = QtWidgets.QLabel(self)
-        label_author.setText(f"{author}")
+        label_author.setText(f"Автор: {author}")
         label_author.setObjectName("label_author")
         gridLayout.addWidget(label_author, 1, 0, 1, 1)
 
         # isbn
         label_isbn = QtWidgets.QLabel(self)
-        label_isbn.setText(f"{isbn}")
+        label_isbn.setText(f"ISBN: {isbn}")
         label_isbn.setObjectName("label_isbn")
         gridLayout.addWidget(label_isbn, 2, 0, 1, 1)
 
         # Год публикации
         label_year_publication = QtWidgets.QLabel(self)
-        # MB EDIT DATE TO RUS FORM
-        label_year_publication.setText(f"{year_release}")
+        label_year_publication.setText(f"Год публикации: {year_release}")
         label_year_publication.setObjectName("label_year_publication")
         gridLayout.addWidget(label_year_publication, 3, 0, 1, 1)
 
         # Общее количество книг
         label_all_quantity = QtWidgets.QLabel(self)
-        label_all_quantity.setText(f"{general_quanity}")
+        label_all_quantity.setText(f"Количество экземпляров: {general_quanity}")
         label_all_quantity.setObjectName("label_all_quantity")
         gridLayout.addWidget(label_all_quantity, 4, 0, 1, 1)
 
         # Текущее количество
         label_current_quantity = QtWidgets.QLabel(self)
-        # label_current_quantity.setText(f"{current_quanity}")
+        label_current_quantity.setText(f"Текущее количество: {general_quanity-current_quanity_issued}")
         label_current_quantity.setObjectName("label_current_quantity")
         gridLayout.addWidget(label_current_quantity, 5, 0, 1, 1)
 
@@ -84,6 +82,7 @@ class CreateBook(QtWidgets.QFrame):
 
         # Кнопка принять книгу 
         pushButton_accept = QtWidgets.QPushButton(frame_button)
+        pushButton_accept.setText("Принять книгу")
         pushButton_accept.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/book/book-pick-up.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -94,6 +93,7 @@ class CreateBook(QtWidgets.QFrame):
 
         # Кнопка Выдать книгу
         pushButton_issue = QtWidgets.QPushButton(frame_button)
+        pushButton_issue.setText("Выдать книгу")
         pushButton_issue.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/icons/book/book-gived.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -104,6 +104,7 @@ class CreateBook(QtWidgets.QFrame):
 
         # Кнопка изменить информацию
         pushButton_edit = QtWidgets.QPushButton(frame_button)
+        pushButton_edit.setText("Изменить данные")
         pushButton_edit.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(":/icons/book/edit-book.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)

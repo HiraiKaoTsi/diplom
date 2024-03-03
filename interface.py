@@ -15,9 +15,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(941, 717)
-        MainWindow.setStyleSheet("QFrame {\n"
-"    border: 1px solid black;\n"
-"}")
+
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.centralwidget)
