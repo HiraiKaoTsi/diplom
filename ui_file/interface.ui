@@ -36,7 +36,7 @@
       </property>
       <widget class="QWidget" name="tab_main_info">
        <attribute name="icon">
-        <iconset>
+        <iconset resource="../icons/icons.qrc">
          <normaloff>:/icons/main/info.png</normaloff>:/icons/main/info.png</iconset>
        </attribute>
        <attribute name="title">
@@ -247,7 +247,7 @@
                <string>Отчет</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="../icons/icons.qrc">
                 <normaloff>:/icons/other/word.png</normaloff>:/icons/other/word.png</iconset>
               </property>
               <property name="iconSize">
@@ -266,7 +266,7 @@
       </widget>
       <widget class="QWidget" name="tab_add_book">
        <attribute name="icon">
-        <iconset>
+        <iconset resource="../icons/icons.qrc">
          <normaloff>:/icons/book/add-book.png</normaloff>:/icons/book/add-book.png</iconset>
        </attribute>
        <attribute name="title">
@@ -409,7 +409,7 @@
                <string>Добавить новую книгу</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="../icons/icons.qrc">
                 <normaloff>:/icons/book/add-book.png</normaloff>:/icons/book/add-book.png</iconset>
               </property>
               <property name="iconSize">
@@ -428,7 +428,7 @@
       </widget>
       <widget class="QWidget" name="tab_add_new_user">
        <attribute name="icon">
-        <iconset>
+        <iconset resource="../icons/icons.qrc">
          <normaloff>:/icons/users/add-student.png</normaloff>:/icons/users/add-student.png</iconset>
        </attribute>
        <attribute name="title">
@@ -535,7 +535,7 @@
                <string>Добавить</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="../icons/icons.qrc">
                 <normaloff>:/icons/users/add-student.png</normaloff>:/icons/users/add-student.png</iconset>
               </property>
               <property name="iconSize">
@@ -557,7 +557,7 @@
         <cursorShape>ArrowCursor</cursorShape>
        </property>
        <attribute name="icon">
-        <iconset>
+        <iconset resource="../icons/icons.qrc">
          <normaloff>:/icons/book/book.png</normaloff>:/icons/book/book.png</iconset>
        </attribute>
        <attribute name="title">
@@ -619,7 +619,7 @@
               <string>Поиск</string>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="../icons/icons.qrc">
                <normaloff>:/icons/main/search.png</normaloff>:/icons/main/search.png</iconset>
              </property>
              <property name="iconSize">
@@ -727,19 +727,19 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_books">
             <property name="spacing">
-             <number>1</number>
+             <number>50</number>
             </property>
             <property name="leftMargin">
-             <number>4</number>
+             <number>20</number>
             </property>
             <property name="topMargin">
-             <number>0</number>
+             <number>20</number>
             </property>
             <property name="rightMargin">
-             <number>4</number>
+             <number>20</number>
             </property>
             <property name="bottomMargin">
-             <number>4</number>
+             <number>20</number>
             </property>
            </layout>
           </widget>
@@ -754,7 +754,7 @@
            <string>Сброс</string>
           </property>
           <property name="icon">
-           <iconset>
+           <iconset resource="../icons/icons.qrc">
             <normaloff>:/icons/main/reset.png</normaloff>:/icons/main/reset.png</iconset>
           </property>
           <property name="iconSize">
@@ -772,7 +772,7 @@
         <number>-1</number>
        </property>
        <attribute name="icon">
-        <iconset>
+        <iconset resource="../icons/icons.qrc">
          <normaloff>:/icons/users/student.png</normaloff>:/icons/users/student.png</iconset>
        </attribute>
        <attribute name="title">
@@ -797,7 +797,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_info_user">
            <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -885,7 +885,7 @@
                       <string>Назад</string>
                      </property>
                      <property name="icon">
-                      <iconset>
+                      <iconset resource="../icons/icons.qrc">
                        <normaloff>:/icons/arrow/left-arrow-2.png</normaloff>:/icons/arrow/left-arrow-2.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -902,7 +902,7 @@
                 <item>
                  <widget class="QToolBox" name="toolBox">
                   <property name="currentIndex">
-                   <number>0</number>
+                   <number>2</number>
                   </property>
                   <property name="tabSpacing">
                    <number>5</number>
@@ -917,7 +917,7 @@
                     </rect>
                    </property>
                    <attribute name="icon">
-                    <iconset>
+                    <iconset resource="../icons/icons.qrc">
                      <normaloff>:/icons/main/info.png</normaloff>:/icons/main/info.png</iconset>
                    </attribute>
                    <attribute name="label">
@@ -1165,7 +1165,7 @@
                           <enum>Qt::AutoText</enum>
                          </property>
                          <property name="pixmap">
-                          <pixmap>:/icons/socialNetwork/phone.png</pixmap>
+                          <pixmap resource="../icons/icons.qrc">:/icons/socialNetwork/phone.png</pixmap>
                          </property>
                          <property name="scaledContents">
                           <bool>true</bool>
@@ -1249,7 +1249,7 @@
                           <enum>Qt::AutoText</enum>
                          </property>
                          <property name="pixmap">
-                          <pixmap>:/icons/socialNetwork/email.png</pixmap>
+                          <pixmap resource="../icons/icons.qrc">:/icons/socialNetwork/email.png</pixmap>
                          </property>
                          <property name="scaledContents">
                           <bool>true</bool>
@@ -1326,7 +1326,7 @@
                           <enum>Qt::AutoText</enum>
                          </property>
                          <property name="pixmap">
-                          <pixmap>:/icons/socialNetwork/telegram.png</pixmap>
+                          <pixmap resource="../icons/icons.qrc">:/icons/socialNetwork/telegram.png</pixmap>
                          </property>
                          <property name="scaledContents">
                           <bool>true</bool>
@@ -1403,7 +1403,7 @@
                           <enum>Qt::AutoText</enum>
                          </property>
                          <property name="pixmap">
-                          <pixmap>:/icons/socialNetwork/vk.png</pixmap>
+                          <pixmap resource="../icons/icons.qrc">:/icons/socialNetwork/vk.png</pixmap>
                          </property>
                          <property name="scaledContents">
                           <bool>true</bool>
@@ -1474,7 +1474,7 @@
                           <string>Удалить пользователя</string>
                          </property>
                          <property name="icon">
-                          <iconset>
+                          <iconset resource="../icons/icons.qrc">
                            <normaloff>:/icons/main/close.png</normaloff>:/icons/main/close.png</iconset>
                          </property>
                          <property name="iconSize">
@@ -1507,7 +1507,7 @@
                           <string>Изменить данные</string>
                          </property>
                          <property name="icon">
-                          <iconset>
+                          <iconset resource="../icons/icons.qrc">
                            <normaloff>:/icons/main/edit.png</normaloff>:/icons/main/edit.png</iconset>
                          </property>
                          <property name="iconSize">
@@ -1528,12 +1528,12 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>98</width>
-                     <height>28</height>
+                     <width>899</width>
+                     <height>505</height>
                     </rect>
                    </property>
                    <attribute name="icon">
-                    <iconset>
+                    <iconset resource="../icons/icons.qrc">
                      <normaloff>:/icons/book/book.png</normaloff>:/icons/book/book.png</iconset>
                    </attribute>
                    <attribute name="label">
@@ -1541,20 +1541,54 @@
                    </attribute>
                    <layout class="QVBoxLayout" name="verticalLayout_page_take_book">
                     <property name="spacing">
-                     <number>5</number>
+                     <number>0</number>
                     </property>
                     <property name="leftMargin">
-                     <number>4</number>
+                     <number>0</number>
                     </property>
                     <property name="topMargin">
-                     <number>4</number>
+                     <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>4</number>
+                     <number>0</number>
                     </property>
                     <property name="bottomMargin">
-                     <number>4</number>
+                     <number>0</number>
                     </property>
+                    <item>
+                     <widget class="QScrollArea" name="scrollArea_take_book">
+                      <property name="widgetResizable">
+                       <bool>true</bool>
+                      </property>
+                      <widget class="QWidget" name="widgetContents_take_book">
+                       <property name="geometry">
+                        <rect>
+                         <x>0</x>
+                         <y>0</y>
+                         <width>897</width>
+                         <height>503</height>
+                        </rect>
+                       </property>
+                       <layout class="QVBoxLayout" name="verticalLayout_take_book">
+                        <property name="spacing">
+                         <number>50</number>
+                        </property>
+                        <property name="leftMargin">
+                         <number>20</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>20</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>20</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>20</number>
+                        </property>
+                       </layout>
+                      </widget>
+                     </widget>
+                    </item>
                    </layout>
                   </widget>
                   <widget class="QWidget" name="page_history_take_book">
@@ -1562,12 +1596,12 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>98</width>
-                     <height>28</height>
+                     <width>899</width>
+                     <height>505</height>
                     </rect>
                    </property>
                    <attribute name="icon">
-                    <iconset>
+                    <iconset resource="../icons/icons.qrc">
                      <normaloff>:/icons/book/second-books.png</normaloff>:/icons/book/second-books.png</iconset>
                    </attribute>
                    <attribute name="label">
@@ -1575,20 +1609,54 @@
                    </attribute>
                    <layout class="QVBoxLayout" name="verticalLayout_history_take_book">
                     <property name="spacing">
-                     <number>5</number>
+                     <number>0</number>
                     </property>
                     <property name="leftMargin">
-                     <number>4</number>
+                     <number>0</number>
                     </property>
                     <property name="topMargin">
-                     <number>4</number>
+                     <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>4</number>
+                     <number>0</number>
                     </property>
                     <property name="bottomMargin">
-                     <number>4</number>
+                     <number>0</number>
                     </property>
+                    <item>
+                     <widget class="QScrollArea" name="scrollArea_history_take_bok">
+                      <property name="widgetResizable">
+                       <bool>true</bool>
+                      </property>
+                      <widget class="QWidget" name="widgetContents_history_take_bok">
+                       <property name="geometry">
+                        <rect>
+                         <x>0</x>
+                         <y>0</y>
+                         <width>897</width>
+                         <height>503</height>
+                        </rect>
+                       </property>
+                       <layout class="QVBoxLayout" name="verticalLayout_history_take_bok">
+                        <property name="spacing">
+                         <number>50</number>
+                        </property>
+                        <property name="leftMargin">
+                         <number>5</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>20</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>20</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>20</number>
+                        </property>
+                       </layout>
+                      </widget>
+                     </widget>
+                    </item>
                    </layout>
                   </widget>
                  </widget>
@@ -1656,7 +1724,7 @@
                   <string>Поиск</string>
                  </property>
                  <property name="icon">
-                  <iconset>
+                  <iconset resource="../icons/icons.qrc">
                    <normaloff>:/icons/main/search.png</normaloff>:/icons/main/search.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -1767,19 +1835,19 @@
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_all_user">
                 <property name="spacing">
-                 <number>5</number>
+                 <number>50</number>
                 </property>
                 <property name="leftMargin">
-                 <number>4</number>
+                 <number>20</number>
                 </property>
                 <property name="topMargin">
-                 <number>0</number>
+                 <number>20</number>
                 </property>
                 <property name="rightMargin">
-                 <number>4</number>
+                 <number>20</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>4</number>
+                 <number>20</number>
                 </property>
                </layout>
               </widget>
@@ -1794,7 +1862,7 @@
                <string>Сброс</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="../icons/icons.qrc">
                 <normaloff>:/icons/main/reset.png</normaloff>:/icons/main/reset.png</iconset>
               </property>
               <property name="iconSize">
@@ -1860,7 +1928,7 @@
                   <string>Назад</string>
                  </property>
                  <property name="icon">
-                  <iconset>
+                  <iconset resource="../icons/icons.qrc">
                    <normaloff>:/icons/arrow/left-arrow-2.png</normaloff>:/icons/arrow/left-arrow-2.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -1916,19 +1984,19 @@
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_all_message">
                 <property name="spacing">
-                 <number>4</number>
+                 <number>50</number>
                 </property>
                 <property name="leftMargin">
-                 <number>3</number>
+                 <number>20</number>
                 </property>
                 <property name="topMargin">
-                 <number>3</number>
+                 <number>20</number>
                 </property>
                 <property name="rightMargin">
-                 <number>3</number>
+                 <number>20</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>3</number>
+                 <number>20</number>
                 </property>
                </layout>
               </widget>
@@ -2022,7 +2090,7 @@
                       <string>  email</string>
                      </property>
                      <property name="icon">
-                      <iconset>
+                      <iconset resource="../icons/icons.qrc">
                        <normaloff>:/icons/socialNetwork/email.png</normaloff>:/icons/socialNetwork/email.png</iconset>
                      </property>
                     </item>
@@ -2031,7 +2099,7 @@
                       <string>  telegram</string>
                      </property>
                      <property name="icon">
-                      <iconset>
+                      <iconset resource="../icons/icons.qrc">
                        <normaloff>:/icons/socialNetwork/telegram.png</normaloff>:/icons/socialNetwork/telegram.png</iconset>
                      </property>
                     </item>
@@ -2040,7 +2108,7 @@
                       <string>  vk</string>
                      </property>
                      <property name="icon">
-                      <iconset>
+                      <iconset resource="../icons/icons.qrc">
                        <normaloff>:/icons/socialNetwork/vk.png</normaloff>:/icons/socialNetwork/vk.png</iconset>
                      </property>
                     </item>
@@ -2093,7 +2161,7 @@
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset>
+                  <iconset resource="../icons/icons.qrc">
                    <normaloff>:/icons/arrow/right-arrow-3.png</normaloff>:/icons/arrow/right-arrow-3.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -2130,6 +2198,7 @@
  </widget>
  <resources>
   <include location="../icons/icons.qrc"/>
+  <include location="../../../icons/icons.qrc"/>
  </resources>
  <connections/>
 </ui>

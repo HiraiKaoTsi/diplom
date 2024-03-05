@@ -16,7 +16,7 @@ from script.create_ui_element import *
 
 
 # interface
-from interface import Ui_MainWindow
+from interface_ui import Ui_MainWindow
 
 
 class FunctionalMainWindow(QtWidgets.QMainWindow):
@@ -28,32 +28,43 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         # Launch method
         self.EditSyleSheet()
 
-        self.CreateUserForInfo(GetAllUser())
         self.CreateBookForInfo(GetAllBooks())
+        self.CreateUserForInfo(GetAllUser())
 
         self.ui.pushButton_back_info_user.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(1))
 
         self.ui.tabWidget.setCurrentIndex(3)
         self.ui.stackedWidget.setCurrentIndex(1)
 
-        # START TAB-MAIN-INFO
+        # START 1 TAB-MAIN-INFO
         self.ui.label_today_date.setText(f"Сегодняшняя дата - {datetime.strftime(date.today(), '%d.%m.%Y')}")
         self.EdimMainInfo()
         self.ui.pushButton_create_report_main_info.clicked.connect(self.onCreateReport)
-        # END TAB-MAIN-INFO
+        # END 1 TAB-MAIN-INFO
 
-        # START TAB-ADD-BOOK
+
+        # START 2 TAB-ADD-BOOK
         # self.ui.pushButton_add_new_book.clicked.connect(self.AddNewBook)
-        # END TAB-ADD-BOOK
-
-        # START TAB-ADD-NEW-USER
-
-        # END TAB-ADD-NEW-USER
+        # END 2 TAB-ADD-BOOK
 
 
-        # START TAB-SEARCH-BOOK
+        # START 3 TAB-ADD-NEW-USER
+
+        # END 3 TAB-ADD-NEW-USER
+
+
+        # START 4 TAB-SEARCH-BOOK
         # self.ui.pushButton_search.clicked.connect(self.SearchBook)
-        # END TAB-SEARCH-BOOK
+        # END 4 TAB-SEARCH-BOOK
+
+
+        # START 5 TAB-DEBTORS
+        self.ui.pushButton_reset_user.hide()
+        self.ui.pushButton_reset_user.clicked.connect(self.ResetTabDebtors)
+        # self.ui.radioButton_debtors.clicked.connect(self.)
+        # self.ui.radioButton_suitable_delivery.clicked.connect(self.)
+        # END 5 TAB-DEBTORS
+
         
     def EditSyleSheet(self) -> None:
         """
@@ -68,7 +79,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         QtWidgets.qApp.setStyleSheet(style)
 
 
-    def EdimMainInfo(self):
+    def EdimMainInfo(self) -> None:
         """
         Данный метод отображает информацию из базы данных на галвном экране
         """
@@ -79,7 +90,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.label_how_many_return_today.setText(f"{CountReturnBookToday()}")
 
 
-    def onCreateReport(self):
+    def onCreateReport(self) -> None:
         """
         Данный метод создает docx файл и заполняет его информацией с главного окна
         """
@@ -100,22 +111,44 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             print("Файл создан!")
 
     
-    def DetailedInformationAboutUser(self, id_user):
+    def DetailedInformationAboutUser(self, id_user: int):
         """
         Подробная информация о пользователе
         """
+        # Получает информацию из базы данных 
         data = GetAboutUser(id_user)
+
+        # Заполняет первую страничку (информация о пользователе)
         self.ui.lineEdit_fio_info_user.setText(f"{data['FIO']}")
         self.ui.lineEdit_number_group.setText(f"{data['number_group']}")
         self.ui.lineEdit_student_id_number.setText(f"{data['student_id_number']}")
-
         self.ui.lineEdit_phone.setText(f"{'' if data['number_phone'] is None else data['number_phone']}")
         self.ui.lineEdit_mail.setText(f"{'' if data['email'] is None else data['email']}")
         self.ui.lineEdit_telegram.setText(f"{'' if data['vk'] is None else data['vk']}")
         self.ui.lineEdit_vk.setText(f"{'' if data['telegram'] is None else data['telegram']}")
+        
+        # Очистка старой информации
+        self.ClearLayoutFromFrame(self.ui.verticalLayout_history_take_bok)
+        self.ClearLayoutFromFrame(self.ui.verticalLayout_take_book)
 
+        # Заполнение второй странички (взятые книги)
+        data_taked_book = GetInfoBooksTakenUserById(id_user)
+        if data_taked_book != ():
+            for element in data_taked_book:
+                widget = CreateGivedBook(*element)
+                self.ui.verticalLayout_take_book.addWidget(widget, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
 
+        # Заполнение третей странички (история братых книг)
+        data_history_take_book = GetInfoHistoryBooksTakenUserById(id_user)
+        if data_history_take_book != ():
+            for element in data_history_take_book:
+                widget = CreateHistoryBook(*element)
+                self.ui.verticalLayout_history_take_bok.addWidget(widget, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+    
+        # Переход на страничку
+        self.ui.toolBox.setCurrentIndex(0) 
         self.ui.stackedWidget.setCurrentIndex(0)
+
 
     def CreateBookForInfo(self, data_info_book: tuple[tuple, ...]):
         """
@@ -128,6 +161,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             quanity_issued = GetQuantityBookThatUserHaveById(element[0])
             widget = CreateBook(*element, quanity_issued)
             self.ui.verticalLayout_books.addWidget(widget)
+
 
     def CreateUserForInfo(self, data_info_user: tuple[tuple, ...]):
         """
@@ -142,10 +176,13 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
 
         # self.ClearLayoutFromFrame(self.ui.verticalLayout_all_user)
 
+
     def ClearLayoutFromFrame(self, layout: QtWidgets.QVBoxLayout):
+        """
+        Удаляет из введенного layout все виджеты
+        """
         #  verticalLayout_all_user - пользователи
         #  verticalLayout_all_message - сообщение пользователям
-
         # verticalLayout_books - книги 
         if layout is not None:
             for i in range(layout.count()):
@@ -157,13 +194,16 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
                     self.deleteLayout(item.layout())
 
 
-    def OpenAllInfoUser(self, id_user, fio, number_group, student_id_number):
-        self.ui.label_fio_info_user.setText(f"{fio}")
-        self.ui.label_number_group.setText(f"{number_group}")
-        self.ui.label_student_id_number.setText(f"{student_id_number}")
-        self.ui.stackedWidget.setCurrentIndex(0)
-        print(id_user)
-            
+    def ResetTabDebtors(self):
+        self.ClearLayoutFromFrame(self.ui.verticalLayout_all_user)
+        self.CreateUserForInfo(GetAllUser())
+        self.ui.pushButton_reset_user.hide()
+
+
+    def SearchStudent(self, info: int):
+        match info:
+            case 1:
+                data = GetUsersBookDebtors()
 
 
 if __name__ == "__main__":

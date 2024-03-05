@@ -9,6 +9,7 @@ class CreateBook(QtWidgets.QFrame):
         super().__init__()
 
         # Настройка самого виджета
+        # self.setMinimumSize(QtCore.QSize(800, 500))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

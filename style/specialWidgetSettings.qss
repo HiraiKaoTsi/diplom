@@ -1,8 +1,14 @@
-QFrame#frame-user, #frame-book{
+QFrame#frame-user, #frame-book {
     border: 2px solid rgb(62, 69, 80);
     border-radius: 10px;
-    margin-right: 100px;
-    margin-left: 100px;
+    /* margin-right: 20px;
+    margin-left: 20px; */
     margin-bottom: 20px;
     margin-top: 10px;
+}
+
+
+QFrame#frame-book-history, #frame-gived-book {
+    border: 2px solid rgb(62, 69, 80);
+    border-radius: 10px;
 }

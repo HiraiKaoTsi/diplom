@@ -23,3 +23,11 @@ QGroupBox {
 QFrame {
     border 0px;
 }
+
+
+QWidget {
+    color: white;
+	font-family: Rubick;
+	font-size: 9pt;
+	font-weight: 600;
+}

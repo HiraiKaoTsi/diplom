@@ -24,8 +24,6 @@ def AddNewBook(name_book, author, isbn, year_publication, quantity, cursor: MySQ
     return True
 
 
-
-
 # mb edit name function
 @ConnectBaseReturnTypeList
 def TakeQuantityBook(id_book: int, cursor: MySQLCursor = None) -> int:
@@ -36,6 +34,7 @@ def TakeQuantityBook(id_book: int, cursor: MySQLCursor = None) -> int:
     cursor.execute(sql, (id_book, ))
     result = cursor.fetchone()[0]
     return result
+
 
 @ConnectBaseReturnTypeList
 def TakeInfoAboutBook(info: str, cursor: MySQLCursor = None):
@@ -52,3 +51,5 @@ def GetAllBooks(cursor: MySQLCursor = None) -> tuple:
     cursor.execute(sql)
     result = cursor.fetchall()
     return tuple(result)
+
+

@@ -81,3 +81,54 @@ def GetQuantityBookThatUserHaveById(book_id: int, cursor: MySQLCursor = None) ->
     result = cursor.fetchone()[0]
 
     return result
+
+
+@ConnectBaseReturnTypeList
+def GetInfoHistoryBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple[tuple, ...]:
+    """
+    Получает информацию(историю) о взятых книгах и о их датах получения и возращения пользователем по введеному его id
+    """
+    sql = f"""
+    SELECT 
+        books.name_book,
+        books.author,
+        books.ISBN,
+        books.year_publication,
+        take_book.date_take,
+        take_book.date_return
+    FROM 
+        take_book
+    INNER JOIN 
+        books ON take_book.book_id = books.id
+    WHERE 
+        take_book.user_id = %s AND take_book.date_return IS NOT NULL;
+    """
+    cursor.execute(sql, (user_id, ))
+    result = cursor.fetchall()
+    
+    return tuple(result)
+
+
+@ConnectBaseReturnTypeList
+def GetInfoBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple[tuple, ...]:
+    """
+    Получает информацию о книгах которые находится у пользователя сейчас
+    """
+    sql = f"""
+    SELECT 
+        books.name_book,
+        books.author,
+        books.ISBN,
+        books.year_publication,
+        take_book.date_take
+    FROM 
+        take_book
+    INNER JOIN 
+        books ON take_book.book_id = books.id
+    WHERE 
+        take_book.user_id = %s AND take_book.date_return IS NULL;
+    """
+    cursor.execute(sql, (user_id, ))
+    result = cursor.fetchall()
+    
+    return tuple(result)
