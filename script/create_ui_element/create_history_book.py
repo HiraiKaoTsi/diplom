@@ -70,13 +70,13 @@ class CreateHistoryBook(QtWidgets.QFrame):
 
         # Дата братия книги пользователем
         label_date_take = QtWidgets.QLabel(frame_date)
-        label_date_take.setText(f"Дата когда взял книгу: {datetime.strftime(date_take, "%d.%m.%Y")}\t\t")
+        label_date_take.setText(f"Дата когда взял книгу: {datetime.strftime(date_take, '%d.%m.%Y')}\t\t")
         label_date_take.setObjectName("label_date_take")
         horizontalLayout.addWidget(label_date_take)
 
         # Дата когда пользователь вернул книгу
         label_date_return = QtWidgets.QLabel(frame_date)
-        label_date_return.setText(f"Дата когда вернул книгу: {datetime.strftime(date_return, "%d.%m.%Y")}")
+        label_date_return.setText(f"Дата когда вернул книгу: {datetime.strftime(date_return, '%d.%m.%Y')}")
         label_date_return.setObjectName("label_date_return")
         horizontalLayout.addWidget(label_date_return)    
        

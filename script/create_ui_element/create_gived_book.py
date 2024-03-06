@@ -57,7 +57,7 @@ class CreateGivedBook(QtWidgets.QFrame):
 
         # Год даты взятие
         label_date_take = QtWidgets.QLabel(self)
-        label_date_take.setText(f"Дата взятие книги: {datetime.strftime(date_take, "%d.%m.%Y")}")
+        label_date_take.setText(f"Дата взятие книги: {datetime.strftime(date_take, '%d.%m.%Y')}")
         label_date_take.setObjectName("label_date_take")
         gridLayout.addWidget(label_date_take, 4, 0, 1, 1)
 

@@ -6,17 +6,18 @@ from .handler_book import TakeQuantityBook
 @ConnectBaseReturnTypeList
 def IssuedBookAll(cursor: MySQLCursor = None) -> int:
     """
-    Сколько книг выданно всего
+    Сколько книг выдано всего
     """
     sql = "SELECT COUNT(id) FROM take_book WHERE date_return is NULL;"
     cursor.execute(sql)
     result = cursor.fetchone()[0]
     return result
 
+
 @ConnectBaseReturnTypeList
 def CountIssuedBookToday(cursor: MySQLCursor = None) -> int:
     """
-    Данная функция подсчитывает количество выданых книг за сегодня
+    Данная функция подсчитывает количество выданных книг за сегодня
     """
     sql = "SELECT COUNT(id) FROM take_book WHERE date_return IS NULL AND date_take = CURRENT_DATE();"
     cursor.execute(sql)
@@ -41,7 +42,11 @@ def CountQuantityDebtors(cursor: MySQLCursor = None) -> int:
     """
     Выводит количество задолжников книг
     """
-    sql = "SELECT COUNT(ID) FROM take_book WHERE date_take < DATE_SUB(CURRENT_DATE(), INTERVAL how_many_days_give DAY) AND date_return IS NULL;"
+    sql = ("SELECT "
+           "    COUNT(ID) "
+           "FROM "
+           "    take_book "
+           "    WHERE date_take < DATE_SUB(CURRENT_DATE(), INTERVAL how_many_days_give DAY) AND date_return IS NULL;")
     cursor.execute(sql)
     result = cursor.fetchone()[0]
 
@@ -51,10 +56,10 @@ def CountQuantityDebtors(cursor: MySQLCursor = None) -> int:
 @ConnectBaseReturnTypeList
 def WhichBookTakeUser(user_id, cursor: MySQLCursor = None) -> tuple:
     """
-    Выводит все книги которые брал пользоватль (которые вернул)
+    Выводит все книги, которые брал пользователь (которые вернул)
     """
     sql = f"SELECT * FROM take_book WHERE user_id = %s AND date_return IS NOT NULL;"
-    cursor.execute(sql, (user_id, ))
+    cursor.execute(sql, (user_id,))
     result = cursor.fetchall()
 
     return result
@@ -66,10 +71,11 @@ def WhichNowBookAtUser(user_id, cursor: MySQLCursor = None) -> tuple:
     Выводит все книги которые сейчас у пользователя
     """
     sql = f"SELECT * FROM take_book WHERE user_id = %s AND date_return IS NOT NULL;"
-    cursor.execute(sql, (user_id, ))
+    cursor.execute(sql, (user_id,))
     result = cursor.fetchall()
 
     return result
+
 
 @ConnectBaseReturnTypeList
 def GetQuantityBookThatUserHaveById(book_id: int, cursor: MySQLCursor = None) -> int:
@@ -77,7 +83,7 @@ def GetQuantityBookThatUserHaveById(book_id: int, cursor: MySQLCursor = None) ->
     Получает количество экземпляров книг которые находиться у пользователей по айди книги
     """
     sql = f"SELECT COUNT(id) FROM take_book WHERE book_id = %s AND date_return IS NULL;"
-    cursor.execute(sql, (book_id, ))
+    cursor.execute(sql, (book_id,))
     result = cursor.fetchone()[0]
 
     return result
@@ -86,7 +92,7 @@ def GetQuantityBookThatUserHaveById(book_id: int, cursor: MySQLCursor = None) ->
 @ConnectBaseReturnTypeList
 def GetInfoHistoryBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple[tuple, ...]:
     """
-    Получает информацию(историю) о взятых книгах и о их датах получения и возращения пользователем по введеному его id
+    Получает информацию(историю) о взятых книгах и об их датах получения и возращения пользователем по введенному его id
     """
     sql = f"""
     SELECT 
@@ -103,9 +109,9 @@ def GetInfoHistoryBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -
     WHERE 
         take_book.user_id = %s AND take_book.date_return IS NOT NULL;
     """
-    cursor.execute(sql, (user_id, ))
+    cursor.execute(sql, (user_id,))
     result = cursor.fetchall()
-    
+
     return tuple(result)
 
 
@@ -128,7 +134,9 @@ def GetInfoBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple
     WHERE 
         take_book.user_id = %s AND take_book.date_return IS NULL;
     """
-    cursor.execute(sql, (user_id, ))
+    cursor.execute(sql, (user_id,))
     result = cursor.fetchall()
-    
+
     return tuple(result)
+
+

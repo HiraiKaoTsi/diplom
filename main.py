@@ -4,16 +4,13 @@ from os import listdir
 from sys import argv, exit
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from datetime import  date
+from datetime import date
 from datetime import datetime
 
-
 from script.module_db import *
-from script.module_word import *
+# from script.module_word import *
 
 from script.create_ui_element import *
-
-
 
 # interface
 from interface_ui import Ui_MainWindow
@@ -24,9 +21,9 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         QtWidgets.QWidget.__init__(self, parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        
+
         # Launch method
-        self.EditSyleSheet()
+        self.EditStyleSheet()
 
         self.CreateBookForInfo(GetAllBooks())
         self.CreateUserForInfo(GetAllUser())
@@ -38,25 +35,21 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
 
         # START 1 TAB-MAIN-INFO
         self.ui.label_today_date.setText(f"Сегодняшняя дата - {datetime.strftime(date.today(), '%d.%m.%Y')}")
-        self.EdimMainInfo()
+        self.EditMainInfo()
         self.ui.pushButton_create_report_main_info.clicked.connect(self.onCreateReport)
         # END 1 TAB-MAIN-INFO
-
 
         # START 2 TAB-ADD-BOOK
         # self.ui.pushButton_add_new_book.clicked.connect(self.AddNewBook)
         # END 2 TAB-ADD-BOOK
 
-
         # START 3 TAB-ADD-NEW-USER
 
         # END 3 TAB-ADD-NEW-USER
 
-
         # START 4 TAB-SEARCH-BOOK
         # self.ui.pushButton_search.clicked.connect(self.SearchBook)
         # END 4 TAB-SEARCH-BOOK
-
 
         # START 5 TAB-DEBTORS
         self.ui.pushButton_reset_user.hide()
@@ -65,10 +58,9 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         # self.ui.radioButton_suitable_delivery.clicked.connect(self.)
         # END 5 TAB-DEBTORS
 
-        
-    def EditSyleSheet(self) -> None:
+    def EditStyleSheet(self) -> None:
         """
-        Данный метод считывает файлы .qss в катологе style и применяет их к приложению 
+        Данный метод считывает файлы .qss в каталоге style и применяет их к приложению
         """
         style = ""
         for qss_file in listdir("style"):
@@ -78,39 +70,36 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.setStyleSheet(style)
         QtWidgets.qApp.setStyleSheet(style)
 
-
-    def EdimMainInfo(self) -> None:
+    def EditMainInfo(self) -> None:
         """
-        Данный метод отображает информацию из базы данных на галвном экране
+        Данный метод отображает информацию из базы данных на главном экране
         """
         self.ui.label_total_number_books.setText(f"{CountBook()}")
         self.ui.label_how_many_given_book.setText(f"{IssuedBookAll()}")
         self.ui.label__how_many_given_book_today.setText(f"{CountIssuedBookToday()}")
-        self.ui.label_how_many_debtors.setText(f"{CountQuantityDebtors()}") 
+        self.ui.label_how_many_debtors.setText(f"{CountQuantityDebtors()}")
         self.ui.label_how_many_return_today.setText(f"{CountReturnBookToday()}")
-
 
     def onCreateReport(self) -> None:
         """
         Данный метод создает docx файл и заполняет его информацией с главного окна
         """
         filename, ok = QtWidgets.QFileDialog.getSaveFileName(self,
-                            "Сохранить файл",
-                            ".",
-                            "All Files(*.docx)")
+                                                             "Сохранить файл",
+                                                             ".",
+                                                             "All Files(*.docx)")
         if not filename:
             return
         info = {
             "Общее количество книг:": self.ui.label_total_number_books.text(),
             "Сколько всего книг выдано:": self.ui.label_how_many_given_book.text(),
-            "Выданно книг за сегодня:": self.ui.label__how_many_given_book_today.text(),
+            "Выдано книг за сегодня:": self.ui.label__how_many_given_book_today.text(),
             "Сколько задолжников:": self.ui.label_how_many_debtors.text(),
             "Сколько книг за сегодня вернуто": self.ui.label_how_many_return_today.text()
         }
-        if CreateReportMainInfo(filename, info):
-            print("Файл создан!")
+        # if CreateReportMainInfo(filename, info):
+        #     print("Файл создан!")
 
-    
     def DetailedInformationAboutUser(self, id_user: int):
         """
         Подробная информация о пользователе
@@ -126,29 +115,29 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.lineEdit_mail.setText(f"{'' if data['email'] is None else data['email']}")
         self.ui.lineEdit_telegram.setText(f"{'' if data['vk'] is None else data['vk']}")
         self.ui.lineEdit_vk.setText(f"{'' if data['telegram'] is None else data['telegram']}")
-        
+
         # Очистка старой информации
         self.ClearLayoutFromFrame(self.ui.verticalLayout_history_take_bok)
         self.ClearLayoutFromFrame(self.ui.verticalLayout_take_book)
 
         # Заполнение второй странички (взятые книги)
-        data_taked_book = GetInfoBooksTakenUserById(id_user)
-        if data_taked_book != ():
-            for element in data_taked_book:
+        data_taken_book = GetInfoBooksTakenUserById(id_user)
+        if data_taken_book != ():
+            for element in data_taken_book:
                 widget = CreateGivedBook(*element)
-                self.ui.verticalLayout_take_book.addWidget(widget, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+                self.ui.verticalLayout_take_book.addWidget(widget, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
 
-        # Заполнение третей странички (история братых книг)
+        # Заполнение третей странички (история взятых книг)
         data_history_take_book = GetInfoHistoryBooksTakenUserById(id_user)
         if data_history_take_book != ():
             for element in data_history_take_book:
                 widget = CreateHistoryBook(*element)
-                self.ui.verticalLayout_history_take_bok.addWidget(widget, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
-    
-        # Переход на страничку
-        self.ui.toolBox.setCurrentIndex(0) 
-        self.ui.stackedWidget.setCurrentIndex(0)
+                self.ui.verticalLayout_history_take_bok.addWidget(widget, 0,
+                                                                  QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
 
+        # Переход на страничку
+        self.ui.toolBox.setCurrentIndex(0)
+        self.ui.stackedWidget.setCurrentIndex(0)
 
     def CreateBookForInfo(self, data_info_book: tuple[tuple, ...]):
         """
@@ -158,10 +147,9 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             return
 
         for element in data_info_book:
-            quanity_issued = GetQuantityBookThatUserHaveById(element[0])
-            widget = CreateBook(*element, quanity_issued)
+            quantity_issued = GetQuantityBookThatUserHaveById(element[0])
+            widget = CreateBook(*element, quantity_issued)
             self.ui.verticalLayout_books.addWidget(widget)
-
 
     def CreateUserForInfo(self, data_info_user: tuple[tuple, ...]):
         """
@@ -170,11 +158,11 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         if len(data_info_user) == 0:
             return
 
+        self.ClearLayoutFromFrame(self.ui.verticalLayout_all_user)
+
         for element in data_info_user:
             widget = CreateUser(self.DetailedInformationAboutUser, *element)
             self.ui.verticalLayout_all_user.addWidget(widget)
-
-        # self.ClearLayoutFromFrame(self.ui.verticalLayout_all_user)
 
 
     def ClearLayoutFromFrame(self, layout: QtWidgets.QVBoxLayout):
@@ -183,7 +171,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         """
         #  verticalLayout_all_user - пользователи
         #  verticalLayout_all_message - сообщение пользователям
-        # verticalLayout_books - книги 
+        #   verticalLayout_books - книги
         if layout is not None:
             for i in range(layout.count()):
                 item = layout.takeAt(0)
@@ -193,17 +181,24 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
                 else:
                     self.deleteLayout(item.layout())
 
-
     def ResetTabDebtors(self):
         self.ClearLayoutFromFrame(self.ui.verticalLayout_all_user)
         self.CreateUserForInfo(GetAllUser())
         self.ui.pushButton_reset_user.hide()
 
-
     def SearchStudent(self, info: int):
         match info:
             case 1:
-                data = GetUsersBookDebtors()
+                self.CreateUserForInfo(GetAllUser())
+                self.ui.pushButton_reset_user.hide()
+            case 2:
+                self.CreateUserForInfo(GetUsersBookDebtors())
+                self.ui.pushButton_reset_user.show()
+            case 3:
+                self.CreateUserForInfo(GetInfoTheyFitDelivery())
+                self.ui.pushButton_reset_user.show()
+            case 4:
+                self.ui.lineEdit_search_user.text().strip()
 
 
 if __name__ == "__main__":
