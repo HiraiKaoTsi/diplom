@@ -24,6 +24,27 @@ def GetAboutUser(id_user: int, cursor: MySQLCursor = None) -> dict:
 
 
 @ConnectBaseReturnTypeList
+def GetUsersTakesBook(cursor: MySQLCursor = None):
+    """
+    Функция возвращает информацию о взявших книгу
+    """
+    sql = """
+    SELECT 
+        users.*
+    FROM 
+        take_book 
+    INNER JOIN 
+        users ON user_id = users.id
+    WHERE 
+        date_return IS NULL
+    """
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return tuple(result)
+
+
+
+@ConnectBaseReturnTypeList
 def GetUsersBookDebtors(cursor: MySQLCursor = None) -> tuple[tuple, ...] | tuple:
     """
     Функция возвращает информацию о задолжниках
@@ -36,7 +57,9 @@ def GetUsersBookDebtors(cursor: MySQLCursor = None) -> tuple[tuple, ...] | tuple
     INNER JOIN 
         users ON user_id = users.id
     WHERE 
-        date_return IS NULL;
+        date_return IS NULL
+    AND 
+        DATE_ADD(date_take, INTERVAL how_many_days_give DAY) <= CURDATE();
     """
     cursor.execute(sql)
     result = cursor.fetchall()
@@ -59,18 +82,33 @@ def GetInfoTheyFitDelivery(cursor: MySQLCursor = None) -> tuple[tuple, ...] | tu
     INNER JOIN
         users ON take_book.user_id = users.id
     WHERE
-        DATEDIFF((DATE_ADD(take_book.date_take, INTERVAL take_book.how_many_days_give DAY)), CURRENT_DATE()) <= 2;
+        take_book.date_return IS NULL 
+    AND
+        DATEDIFF((DATE_ADD(take_book.date_take, INTERVAL take_book.how_many_days_give DAY)), CURRENT_DATE()) <= 3 
+    AND
+        DATEDIFF((DATE_ADD(take_book.date_take, INTERVAL take_book.how_many_days_give DAY)), CURRENT_DATE()) > 0;
     """
     cursor.execute(sql)
     result = cursor.fetchall()
     return tuple(result)
 
+
 @ConnectBaseReturnTypeList
-def GetInfoByInputData(cursor: MySQLCursor = None):
+def GetInfoByInputData(input_data: str, cursor: MySQLCursor = None) -> tuple[tuple, ...] | tuple:
+    input_data = f"%{input_data}%"
+    """
+    Функция по полученной информации
+    """
     sql = """
     SELECT 
         * 
     FROM 
         users
-     WHERE CONCAT_WS(FIO, number_group, student_id_number, number_phone, email, vk, telegram) LIKE '%%s%';
+    WHERE 
+        CONCAT_WS(FIO, number_group, student_id_number, number_phone, email, vk, telegram) LIKE %s;
     """
+    cursor.execute(sql, (input_data, ))
+    result = cursor.fetchall()
+    return tuple(result)
+
+

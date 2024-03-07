@@ -54,8 +54,12 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         # START 5 TAB-DEBTORS
         self.ui.pushButton_reset_user.hide()
         self.ui.pushButton_reset_user.clicked.connect(self.ResetTabDebtors)
-        # self.ui.radioButton_debtors.clicked.connect(self.)
-        # self.ui.radioButton_suitable_delivery.clicked.connect(self.)
+        self.ui.radioButton_all_users.clicked.connect(lambda: self.SearchStudent(1))
+        self.ui.radioButton_user_take_book.clicked.connect(lambda: self.SearchStudent(2))
+        self.ui.radioButton_debtors.clicked.connect(lambda: self.SearchStudent(3))
+        self.ui.radioButton_suitable_delivery.clicked.connect(lambda: self.SearchStudent(4))
+        self.ui.lineEdit_search_user.returnPressed.connect(lambda: self.SearchStudent(5))
+        self.ui.pushButton_search_user.clicked.connect(lambda: self.SearchStudent(5))
         # END 5 TAB-DEBTORS
 
     def EditStyleSheet(self) -> None:
@@ -155,8 +159,6 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         """
         Создает пользователей по полученной информации
         """
-        if len(data_info_user) == 0:
-            return
 
         self.ClearLayoutFromFrame(self.ui.verticalLayout_all_user)
 
@@ -181,10 +183,14 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
                 else:
                     self.deleteLayout(item.layout())
 
+
     def ResetTabDebtors(self):
-        self.ClearLayoutFromFrame(self.ui.verticalLayout_all_user)
-        self.CreateUserForInfo(GetAllUser())
+        self.SearchStudent(1)
+        self.ui.lineEdit_search_user.setText("")
+        self.ui.radioButton_all_users.setChecked(True)
         self.ui.pushButton_reset_user.hide()
+        self.ui.frame_radioButton_users.show()
+
 
     def SearchStudent(self, info: int):
         match info:
@@ -192,13 +198,26 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
                 self.CreateUserForInfo(GetAllUser())
                 self.ui.pushButton_reset_user.hide()
             case 2:
-                self.CreateUserForInfo(GetUsersBookDebtors())
+                self.CreateUserForInfo(GetUsersTakesBook())
                 self.ui.pushButton_reset_user.show()
             case 3:
-                self.CreateUserForInfo(GetInfoTheyFitDelivery())
+                self.CreateUserForInfo(GetUsersBookDebtors())
                 self.ui.pushButton_reset_user.show()
             case 4:
-                self.ui.lineEdit_search_user.text().strip()
+                self.CreateUserForInfo(GetInfoTheyFitDelivery())
+                self.ui.pushButton_reset_user.show()
+            case 5:
+                input_data_user = self.ui.lineEdit_search_user.text().strip()
+                if not input_data_user:
+                    return
+                check_info_db = GetInfoByInputData(input_data_user)
+                if check_info_db == ():
+                    print("Мессаге что информации не найдено")
+                    return
+                self.CreateUserForInfo(check_info_db)
+                self.ui.pushButton_reset_user.show()
+                self.ui.frame_radioButton_users.hide()
+                self.ui.radioButton_all_users.setChecked(True)
 
 
 if __name__ == "__main__":

@@ -935,7 +935,7 @@ class Ui_MainWindow(object):
         self.lineEdit_search_user.setPlaceholderText(_translate("MainWindow", "Введите данные студента"))
         self.pushButton_search_user.setText(_translate("MainWindow", "Поиск"))
         self.radioButton_all_users.setText(_translate("MainWindow", "Все студенты"))
-        self.radioButton_user_take_book.setText(_translate("MainWindow", "Студенты у которых находиться книга"))
+        self.radioButton_user_take_book.setText(_translate("MainWindow", "Студенты взявшие книгу"))
         self.radioButton_debtors.setText(_translate("MainWindow", "Задолжники"))
         self.radioButton_suitable_delivery.setText(_translate("MainWindow", "Подходящие к сдаче"))
         self.pushButton_reset_user.setText(_translate("MainWindow", "Сброс"))
