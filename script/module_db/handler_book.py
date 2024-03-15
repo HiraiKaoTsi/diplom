@@ -52,4 +52,14 @@ def GetAllBooks(cursor: MySQLCursor = None) -> tuple:
     result = cursor.fetchall()
     return tuple(result)
 
+@ConnectBaseReturnTypeList
+def InsertNewBooks(param: tuple, cursor: MySQLCursor = None) -> bool:
+    sql = f"""
+    INSERT INTO 
+    books(name_book, author, ISBN, year_publication, quantity) 
+    VALUES(%s, %s, %s, %s, %s);
+    """
 
+    cursor.execute(sql, param)
+    cursor.fetchone()
+    return True

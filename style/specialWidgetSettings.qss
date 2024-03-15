@@ -12,3 +12,8 @@ QFrame#frame-book-history, #frame-gived-book {
     border: 2px solid rgb(62, 69, 80);
     border-radius: 10px;
 }
+
+QLabel#label_dont_have_result_user {
+    margin-top: 30px;
+    font-size: 15pt;
+}

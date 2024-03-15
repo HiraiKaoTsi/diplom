@@ -1,12 +1,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import datetime
+from typing import Callable
+
 
 
 class CreateGivedBook(QtWidgets.QFrame):
     """
     Создает виджет QFrame по полученной информации
     """
-    def __init__(self, name: str, author: str, isbn: str, year_release: int, date_take: datetime.date,):
+    def __init__(self, id_book, name: str, author: str, isbn: str, year_release: int, date_take: datetime.date, functional_return_book: Callable):
         super().__init__()
 
         # Настройка самого виджета
@@ -64,6 +66,7 @@ class CreateGivedBook(QtWidgets.QFrame):
         # Кнопка принятие книги
         pushButton_accept = QtWidgets.QPushButton(self)
         pushButton_accept.setText("Принять книгу")
+        pushButton_accept.clicked.connect(lambda: functional_return_book(id_book, name))
         pushButton_accept.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/book/book-pick-up.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)

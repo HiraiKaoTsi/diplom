@@ -120,8 +120,9 @@ def GetInfoBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple
     """
     Получает информацию о книгах которые находится у пользователя сейчас
     """
-    sql = f"""
+    sql = """
     SELECT 
+        books.id,
         books.name_book,
         books.author,
         books.ISBN,
@@ -140,3 +141,21 @@ def GetInfoBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple
     return tuple(result)
 
 
+@ConnectBaseReturnTypeList
+def UpdateReturnBook(user_id: int, book_id, cursor: MySQLCursor = None) -> bool:
+    """
+    Обновляет информацию, что пользователь вернул книгу
+    """
+    sql = """
+    UPDATE 
+        take_book 
+    SET 
+        date_return = CURRENT_DATE() 
+    WHERE 
+        user_id = %s AND book_id = %s AND date_return IS NULL;
+    """
+
+    cursor.execute(sql, (user_id, book_id))
+    cursor.fetchone()
+
+    return True

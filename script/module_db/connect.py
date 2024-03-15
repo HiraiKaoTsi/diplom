@@ -28,7 +28,7 @@ def _breakConnectionDataBase(connection: MySQLConnection, cursor: MySQLCursor) -
     :param connect: MySQLConnection
     :param cursor: MySQLCursor
     """
-    if connect:
+    if connection.is_connected():
         cursor.close()
         connection.close()
 

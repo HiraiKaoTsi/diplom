@@ -26,7 +26,7 @@ def GetAboutUser(id_user: int, cursor: MySQLCursor = None) -> dict:
 @ConnectBaseReturnTypeList
 def GetUsersTakesBook(cursor: MySQLCursor = None):
     """
-    Функция возвращает информацию о взявших книгу
+    Функция возвращает информацию о взявших книг пользователя
     """
     sql = """
     SELECT 
@@ -112,3 +112,45 @@ def GetInfoByInputData(input_data: str, cursor: MySQLCursor = None) -> tuple[tup
     return tuple(result)
 
 
+@ConnectBaseReturnTypeList
+def DeleteUserById(id_user: int, cursor: MySQLCursor = None) -> bool:
+    """
+    Удаляет пользователя по введенному id
+    """
+    sql = "DELETE FROM users WHERE id = %s;"
+    cursor.execute(sql, (id_user, ))
+    cursor.fetchone()
+    return True
+
+@ConnectBaseReturnTypeList
+def EditDataUser(id_user: int, param: dict, cursor: MySQLCursor = None) -> bool:
+    """
+    Изменяет информацию пользователя по id
+    """
+
+    param_edit_for_sql = ""
+    for key, value in zip(param.keys(), param.values()):
+        param_edit_for_sql+=f"""{key} = {'NULL' if value == "" else f'"{value}"'}, """
+    param_edit_for_sql = param_edit_for_sql[:-2]
+
+    sql = f"""
+    UPDATE users
+    SET {param_edit_for_sql}
+    WHERE id = %s;
+    """
+    
+    cursor.execute(sql, (id_user, ))
+    cursor.fetchone()
+    return True
+
+@ConnectBaseReturnTypeList
+def InsertNewUser(param: tuple, cursor: MySQLCursor = None) -> bool:
+    sql = f"""
+    INSERT INTO 
+    users(FIO, number_group, student_id_number, number_phone, email, telegram, vk) 
+    VALUES(%s, %s, %s, %s, %s, %s, %s);
+    """
+
+    cursor.execute(sql, param)
+    cursor.fetchone()
+    return True

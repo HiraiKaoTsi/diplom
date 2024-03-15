@@ -5,7 +5,7 @@ class CreateUser(QtWidgets.QFrame):
     """
     Создает виджет QFrame по полученной информации
     """
-    def __init__(self, details_user, id_user, fio, number_group, student_id_number, number_phone=None, email=None, vk=None, telegram=None):
+    def __init__(self, details_user, id_user, fio, number_group, student_id_number, number_phone=None, email=None, telegram=None, vk=None):
         super().__init__()
         
         # Настройка самого виджета
@@ -45,7 +45,7 @@ class CreateUser(QtWidgets.QFrame):
         label_student_id_number.setObjectName("label_student_id_number")
         gridLayout.addWidget(label_student_id_number, 2, 0, 1, 3)
 
-        if number_phone is not None:
+        if (number_phone is not None) and (number_phone != ""):
             # Frame для номера телефона
             frame_phone = QtWidgets.QFrame(self)
             frame_phone.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -148,10 +148,10 @@ class CreateUser(QtWidgets.QFrame):
         pushButton_all_info.setObjectName("pushButton_all_info")
         gridLayout.addWidget(pushButton_all_info, 4, 0, 1, 3, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignBottom)
        
-        if email is None:
+        if email is None or not email:
             pushButton_mail.setEnabled(False)
-        if vk is None:
+        if vk is None or not vk:
             pushButton_vk.setEnabled(False)
-        if telegram is None:
+        if telegram is None or not telegram:
             pushButton_telegram.setEnabled(False)
     
