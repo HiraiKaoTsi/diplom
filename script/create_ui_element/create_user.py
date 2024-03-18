@@ -1,11 +1,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from typing import Callable
 
 
 class CreateUser(QtWidgets.QFrame):
     """
     Создает виджет QFrame по полученной информации
     """
-    def __init__(self, details_user, id_user, fio, number_group, student_id_number, number_phone=None, email=None, telegram=None, vk=None):
+    def __init__(self, function_details_user: Callable, functional_open_message: Callable, id_user, fio, number_group, student_id_number, number_phone=None, email=None, telegram=None, vk=None):
         super().__init__()
         
         # Настройка самого виджета
@@ -102,6 +103,7 @@ class CreateUser(QtWidgets.QFrame):
 
         # Кнопка email
         pushButton_mail = QtWidgets.QPushButton(frame_button)
+        pushButton_mail.clicked.connect(lambda: functional_open_message(id_user, 1, "email"))
         pushButton_mail.setMaximumSize(QtCore.QSize(64, 64))
         pushButton_mail.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         pushButton_mail.setText("")
@@ -114,6 +116,7 @@ class CreateUser(QtWidgets.QFrame):
         
         # Кнопка VK
         pushButton_vk = QtWidgets.QPushButton(frame_button)
+        pushButton_vk.clicked.connect(lambda: functional_open_message(id_user, 1, "vk"))
         pushButton_vk.setMaximumSize(QtCore.QSize(64, 64))
         pushButton_vk.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         pushButton_vk.setText("")
@@ -126,6 +129,7 @@ class CreateUser(QtWidgets.QFrame):
 
         # Кнопка telegram
         pushButton_telegram = QtWidgets.QPushButton(frame_button)
+        pushButton_telegram.clicked.connect(lambda: functional_open_message(id_user, 1, "telegram"))
         pushButton_telegram.setMaximumSize(QtCore.QSize(64, 64))
         pushButton_telegram.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         pushButton_telegram.setText("")
@@ -139,7 +143,7 @@ class CreateUser(QtWidgets.QFrame):
         # Кнопка подробная информация
         pushButton_all_info = QtWidgets.QPushButton(self)
         pushButton_all_info.setText("Подробная информация")
-        pushButton_all_info.clicked.connect(lambda: details_user(id_user))
+        pushButton_all_info.clicked.connect(lambda: function_details_user(id_user))
         pushButton_all_info.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/main/about.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -154,4 +158,6 @@ class CreateUser(QtWidgets.QFrame):
             pushButton_vk.setEnabled(False)
         if telegram is None or not telegram:
             pushButton_telegram.setEnabled(False)
+
+
     

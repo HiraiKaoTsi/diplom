@@ -12,27 +12,11 @@ def CountBook(cursor: MySQLCursor = None) -> int:
     result = cursor.fetchone()[0]
     return result
 
-@ConnectBaseReturnTypeList
-def AddNewBook(name_book, author, isbn, year_publication, quantity, cursor: MySQLCursor = None) -> bool:
-    
-    """
-    Данная функция добовляет новую книгу в базу данных
-    :return: True если успешно добавленна запись, None - при ошибки
-    """
-    sql = f"INSERT INTO books(name_book, author, ISBN, year_publication, quantity) VALUES(%s, %s, %s, %s, %s);"
-    cursor.execute(sql, (name_book, author, isbn, year_publication, quantity))
-    return True
-
-
-# mb edit name function
-@ConnectBaseReturnTypeList
-def TakeQuantityBook(id_book: int, cursor: MySQLCursor = None) -> int:
-    """
-    Данная функция возращает колиство данной книги
-    """
-    sql = f"SELECT quantity FROM books WHERE id = %s;"
+@ConnectBaseReturnTypeDict
+def GetInfoBookById(id_book: int, cursor: MySQLCursor = None) -> dict:
+    sql = "SELECT * FROM books WHERE id = %s"
     cursor.execute(sql, (id_book, ))
-    result = cursor.fetchone()[0]
+    result = cursor.fetchone()
     return result
 
 
@@ -46,13 +30,6 @@ def TakeInfoAboutBook(info: str, cursor: MySQLCursor = None):
 
 
 @ConnectBaseReturnTypeList
-def GetAllBooks(cursor: MySQLCursor = None) -> tuple:
-    sql = "SELECT * FROM books;"
-    cursor.execute(sql)
-    result = cursor.fetchall()
-    return tuple(result)
-
-@ConnectBaseReturnTypeList
 def InsertNewBooks(param: tuple, cursor: MySQLCursor = None) -> bool:
     sql = f"""
     INSERT INTO 
@@ -61,5 +38,111 @@ def InsertNewBooks(param: tuple, cursor: MySQLCursor = None) -> bool:
     """
 
     cursor.execute(sql, param)
+    cursor.fetchone()
+    return True
+
+
+@ConnectBaseReturnTypeList
+def GetAllBooks(cursor: MySQLCursor = None) -> tuple:
+    sql = "SELECT *, CountQuantityTakeBook(books.id) AS quantity_take FROM books;"
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return tuple(result)
+
+@ConnectBaseReturnTypeList
+def GetBookWhichAllMissing(cursor: MySQLCursor = None) -> tuple:
+    """
+    Книги у которых отсуствуют все экземпляры
+    """
+    sql = """
+    SELECT DISTINCT
+        books.*,
+        COUNT(take_book.id) AS count_take_book
+    FROM 
+        take_book
+    INNER JOIN
+        books ON take_book.book_id = books.id
+    WHERE 
+        take_book.date_return IS NULL 
+    GROUP BY
+        books.id
+    HAVING
+        (books.quantity - COUNT(take_book.id)) = 0;
+    """
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return tuple(result)
+
+@ConnectBaseReturnTypeList
+def GetBookNotAllMinning(cursor: MySQLCursor = None) -> tuple:
+    """
+    Книги которые имеються не во всех экзмемплярах
+    """
+    sql = """
+    SELECT DISTINCT
+        books.*,
+        COUNT(take_book.id) AS count_take_book
+    FROM 
+        take_book
+    INNER JOIN
+        books ON take_book.book_id = books.id
+    WHERE 
+        take_book.date_return IS NULL 
+    GROUP BY
+        books.id
+    HAVING
+        (books.quantity - COUNT(take_book.id)) > 1;
+    """
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return tuple(result)
+
+
+@ConnectBaseReturnTypeList
+def GetInfoByInputDataBook(input_data: str, cursor: MySQLCursor = None) -> tuple[tuple, ...] | tuple:
+    """
+    Функция по полученной информации
+    """
+    input_data = f"%{input_data}%"
+    sql = """
+    SELECT 
+        *,
+        CountQuantityTakeBook(books.id)
+    FROM 
+        books
+    WHERE 
+        CONCAT_WS(name_book, author, ISBN, year_publication) LIKE %s;
+    """
+    cursor.execute(sql, (input_data, ))
+    result = cursor.fetchall()
+    return tuple(result)
+
+@ConnectBaseReturnTypeList
+def UpdateDataBook(id_book: int, param: dict, cursor: MySQLCursor = None) -> bool:
+    """
+    Изменяет информацию книги по id
+    """
+
+    param_edit_for_sql = ""
+    for key, value in zip(param.keys(), param.values()):
+        param_edit_for_sql+=f"""{key} = {'NULL' if value == "" else f'"{value}"'}, """
+    param_edit_for_sql = param_edit_for_sql[:-2]
+
+    sql = f"""
+    UPDATE books
+    SET {param_edit_for_sql}
+    WHERE id = %s;
+    """
+    cursor.execute(sql, (id_book, ))
+    cursor.fetchone()
+    return True
+
+@ConnectBaseReturnTypeList
+def DeleteBookById(id_book: int, cursor: MySQLCursor = None) -> bool:
+    """
+    Удаляет книгу по введенному id
+    """
+    sql = "DELETE FROM books WHERE id = %s;"
+    cursor.execute(sql, (id_book, ))
     cursor.fetchone()
     return True

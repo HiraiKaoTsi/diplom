@@ -1,7 +1,5 @@
 from .connect import *
 
-from .handler_book import TakeQuantityBook
-
 
 @ConnectBaseReturnTypeList
 def IssuedBookAll(cursor: MySQLCursor = None) -> int:
@@ -46,7 +44,7 @@ def CountQuantityDebtors(cursor: MySQLCursor = None) -> int:
            "    COUNT(ID) "
            "FROM "
            "    take_book "
-           "    WHERE date_take < DATE_SUB(CURRENT_DATE(), INTERVAL how_many_days_give DAY) AND date_return IS NULL;")
+           "WHERE date_take < DATE_SUB(CURRENT_DATE(), INTERVAL how_many_days_give DAY) AND date_return IS NULL;")
     cursor.execute(sql)
     result = cursor.fetchone()[0]
 
@@ -159,3 +157,48 @@ def UpdateReturnBook(user_id: int, book_id, cursor: MySQLCursor = None) -> bool:
     cursor.fetchone()
 
     return True
+
+@ConnectBaseReturnTypeList
+def HistoryUsersTakeBookById(id_book: int, cursor: MySQLCursor = None) -> tuple:
+    sql = """
+    SELECT 
+        users.id,
+        users.FIO,
+        users.number_group,
+        users.student_id_number,
+        take_book.date_take,
+        take_book.how_many_days_give,
+        take_book.date_return
+    FROM 
+        take_book
+    INNER JOIN
+        users ON take_book.user_id = users.id
+    WHERE 
+        take_book.id = %s
+    AND
+        take_book.date_return IS NOT NULL;
+    """
+    cursor.execute(sql, (id_book, ))
+    result = cursor.fetchall()
+
+    return tuple(result)
+
+
+slq = """
+SELECT
+	books.*,
+	books.name_book,
+    books.author,
+    books.ISBN,
+    books.year_publication,
+    take_book.how_many_days_give,
+    take_book.date_take,
+    take_book.date_return,
+    (SELECT FIO FROM users WHERE id = take_book.user_id)
+FROM
+	take_book
+INNER JOIN
+	books ON take_book.book_id = books.id
+WHERE 
+	date_return IS NOT NULL;
+"""

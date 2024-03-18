@@ -1,32 +1,47 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from typing import Callable
 
 
 class CreateBook(QtWidgets.QFrame):
     """
     Создает виджет QFrame по полученной информации
     """
-    def __init__(self, id: int, name: str, author: str, isbn: str, year_release, general_quanity: int, current_quanity_issued: int):
+    def __init__(self, functional_open_book: Callable, id: int, name: str, author: str, isbn: str, year_release, general_quanity: int, quanity_issued: int):
         super().__init__()
 
         # Настройка самого виджета
-        # self.setMinimumSize(QtCore.QSize(800, 500))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
+        # self.setMinimumSize(QtCore.QSize(321, 141))
         self.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.setFrameShadow(QtWidgets.QFrame.Raised)
         self.setObjectName("frame-book")
-        
+
         # Сетка для виджета
-        gridLayout = QtWidgets.QGridLayout(self)
-        gridLayout.setContentsMargins(25, 25, 25, 25)
-        gridLayout.setSpacing(5)
-        gridLayout.setObjectName("gridLayout")
+        horizontalLayout = QtWidgets.QHBoxLayout(self)
+        horizontalLayout.setContentsMargins(25, 25, 25, 25)
+        horizontalLayout.setSpacing(5)
+        horizontalLayout.setObjectName("horizontalLayout")
+
+        # Frame - для основной информации
+        frame_maim_info = QtWidgets.QFrame(self)
+        frame_maim_info.setMinimumSize(QtCore.QSize(50, 100))
+        frame_maim_info.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        frame_maim_info.setFrameShadow(QtWidgets.QFrame.Raised)
+        frame_maim_info.setObjectName("frame_maim_info")
+        horizontalLayout.addWidget(frame_maim_info)
+
+        # Сетка для фрейма с основной информацией
+        verticalLayout = QtWidgets.QVBoxLayout(frame_maim_info)
+        verticalLayout.setContentsMargins(0, 0, 0, 0)
+        verticalLayout.setSpacing(5)
+        verticalLayout.setObjectName("verticalLayout")
 
         # Название
-        label_name = QtWidgets.QLabel(self)
+        label_name = QtWidgets.QLabel(frame_maim_info)
         label_name.setText(f"Название книги: {name}")
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -34,82 +49,51 @@ class CreateBook(QtWidgets.QFrame):
         sizePolicy.setHeightForWidth(label_name.sizePolicy().hasHeightForWidth())
         label_name.setSizePolicy(sizePolicy)
         label_name.setObjectName("label_name")
-        gridLayout.addWidget(label_name, 0, 0, 1, 1)
+        verticalLayout.addWidget(label_name)
 
         # Автор 
-        label_author = QtWidgets.QLabel(self)
+        label_author = QtWidgets.QLabel(frame_maim_info)
         label_author.setText(f"Автор: {author}")
         label_author.setObjectName("label_author")
-        gridLayout.addWidget(label_author, 1, 0, 1, 1)
+        verticalLayout.addWidget(label_author)
 
-        # isbn
-        label_isbn = QtWidgets.QLabel(self)
+        # ISBN
+        label_isbn = QtWidgets.QLabel(frame_maim_info)
         label_isbn.setText(f"ISBN: {isbn}")
         label_isbn.setObjectName("label_isbn")
-        gridLayout.addWidget(label_isbn, 2, 0, 1, 1)
+        verticalLayout.addWidget(label_isbn)
 
         # Год публикации
-        label_year_publication = QtWidgets.QLabel(self)
+        label_year_publication = QtWidgets.QLabel(frame_maim_info)
         label_year_publication.setText(f"Год публикации: {year_release}")
         label_year_publication.setObjectName("label_year_publication")
-        gridLayout.addWidget(label_year_publication, 3, 0, 1, 1)
+        verticalLayout.addWidget(label_year_publication)
 
         # Общее количество книг
-        label_all_quantity = QtWidgets.QLabel(self)
+        label_all_quantity = QtWidgets.QLabel(frame_maim_info)
         label_all_quantity.setText(f"Количество экземпляров: {general_quanity}")
         label_all_quantity.setObjectName("label_all_quantity")
-        gridLayout.addWidget(label_all_quantity, 4, 0, 1, 1)
+        verticalLayout.addWidget(label_all_quantity)
 
         # Текущее количество
-        label_current_quantity = QtWidgets.QLabel(self)
-        label_current_quantity.setText(f"Текущее количество: {general_quanity-current_quanity_issued}")
+        label_current_quantity = QtWidgets.QLabel(frame_maim_info)
+        label_current_quantity.setText(f"Текущее количество: {general_quanity - quanity_issued}")
         label_current_quantity.setObjectName("label_current_quantity")
-        gridLayout.addWidget(label_current_quantity, 5, 0, 1, 1)
+        verticalLayout.addWidget(label_current_quantity)
+        
 
-        # Frame для кнопок
-        frame_button = QtWidgets.QFrame(self)
-        frame_button.setMinimumSize(QtCore.QSize(0, 0))
-        frame_button.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
-        frame_button.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        frame_button.setFrameShadow(QtWidgets.QFrame.Raised)
-        frame_button.setObjectName("frame_button")
-        gridLayout.addWidget(frame_button, 0, 1, 6, 1)
-
-        # Сетка для frame-кнопок
-        verticalLayout = QtWidgets.QVBoxLayout(frame_button)
-        verticalLayout.setContentsMargins(0, 0, 0, 0)
-        verticalLayout.setSpacing(5)
-        verticalLayout.setObjectName("verticalLayout")
-
-        # Кнопка принять книгу 
-        pushButton_accept = QtWidgets.QPushButton(frame_button)
-        pushButton_accept.setText("Принять книгу")
-        pushButton_accept.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        # Кнопка с подробной информацией и функционалом с данной книгой
+        pushButton_functional = QtWidgets.QPushButton(self)
+        pushButton_functional.clicked.connect(lambda: functional_open_book(id))
+        pushButton_functional.setText("Взаимодействие")
+        pushButton_functional.setMinimumSize(QtCore.QSize(100, 0))
+        pushButton_functional.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/book/book-pick-up.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        pushButton_accept.setIcon(icon)
-        pushButton_accept.setIconSize(QtCore.QSize(32, 32))
-        pushButton_accept.setObjectName("pushButton_accept")
-        verticalLayout.addWidget(pushButton_accept)
+        icon.addPixmap(QtGui.QPixmap(":/icons/main/menu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        pushButton_functional.setIcon(icon)
+        pushButton_functional.setIconSize(QtCore.QSize(28, 32))
+        pushButton_functional.setAutoDefault(False)
+        pushButton_functional.setObjectName("pushButton_functional")
+        horizontalLayout.addWidget(pushButton_functional, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
 
-        # Кнопка Выдать книгу
-        pushButton_issue = QtWidgets.QPushButton(frame_button)
-        pushButton_issue.setText("Выдать книгу")
-        pushButton_issue.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/book/book-gived.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        pushButton_issue.setIcon(icon1)
-        pushButton_issue.setIconSize(QtCore.QSize(32, 32))
-        pushButton_issue.setObjectName("pushButton_issue")
-        verticalLayout.addWidget(pushButton_issue)
-
-        # Кнопка изменить информацию
-        pushButton_edit = QtWidgets.QPushButton(frame_button)
-        pushButton_edit.setText("Изменить данные")
-        pushButton_edit.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icons/book/edit-book.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        pushButton_edit.setIcon(icon2)
-        pushButton_edit.setIconSize(QtCore.QSize(29, 29))
-        pushButton_edit.setObjectName("pushButton_edit")
-        verticalLayout.addWidget(pushButton_edit)
+import icons_rc

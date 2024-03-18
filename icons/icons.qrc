@@ -1,5 +1,44 @@
 <RCC>
   <qresource prefix="icons">
+    <file>main/about.png</file>
+    <file>main/arrow-left.png</file>
+    <file>main/castle.png</file>
+    <file>main/check.png</file>
+    <file>main/close.png</file>
+    <file>main/edit.png</file>
+    <file>main/emit-message.png</file>
+    <file>main/info.png</file>
+    <file>main/menu.png</file>
+    <file>main/plus.png</file>
+    <file>main/reset.png</file>
+    <file>main/search.png</file>
+    <file>main/settings.png</file>
+    <file>main/trash.png</file>
+    <file>main/about.png</file>
+    <file>main/arrow-left.png</file>
+    <file>main/castle.png</file>
+    <file>main/check.png</file>
+    <file>main/close.png</file>
+    <file>main/edit.png</file>
+    <file>main/emit-message.png</file>
+    <file>main/info.png</file>
+    <file>main/plus.png</file>
+    <file>main/reset.png</file>
+    <file>main/search.png</file>
+    <file>main/settings.png</file>
+    <file>main/trash.png</file>
+    <file>main/about.png</file>
+    <file>main/arrow-left.png</file>
+    <file>main/castle.png</file>
+    <file>main/check.png</file>
+    <file>main/close.png</file>
+    <file>main/edit.png</file>
+    <file>main/emit-message.png</file>
+    <file>main/info.png</file>
+    <file>main/plus.png</file>
+    <file>main/reset.png</file>
+    <file>main/search.png</file>
+    <file>main/trash.png</file>
     <file>arrow/for-widget/2-bot-arrow.png</file>
     <file>arrow/for-widget/2-bot-arrow-hover.png</file>
     <file>arrow/for-widget/2-left-arrow.png</file>
