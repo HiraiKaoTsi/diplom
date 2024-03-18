@@ -972,8 +972,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>73</width>
-                 <height>40</height>
+                 <width>827</width>
+                 <height>488</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_books">
@@ -1043,7 +1043,7 @@
             <item>
              <widget class="QToolBox" name="toolBox_book">
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <property name="tabSpacing">
                <number>6</number>
@@ -1504,8 +1504,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>81</width>
-                 <height>71</height>
+                 <width>815</width>
+                 <height>481</height>
                 </rect>
                </property>
                <attribute name="icon">
@@ -1541,8 +1541,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>249</width>
-                     <height>150</height>
+                     <width>813</width>
+                     <height>479</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_29">
@@ -1564,7 +1564,7 @@
                     <item>
                      <widget class="QStackedWidget" name="stackedWidget_info_whom_givet">
                       <property name="currentIndex">
-                       <number>0</number>
+                       <number>1</number>
                       </property>
                       <widget class="QWidget" name="page_search_user_to_givet">
                        <layout class="QVBoxLayout" name="verticalLayout_30">
@@ -1650,6 +1650,13 @@
                          </widget>
                         </item>
                         <item>
+                         <widget class="QLabel" name="label_dont_have_result_give_book">
+                          <property name="text">
+                           <string>   Поиск не дал результат...</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
                          <widget class="QScrollArea" name="scrollArea_found_users">
                           <property name="widgetResizable">
                            <bool>true</bool>
@@ -1659,8 +1666,8 @@
                             <rect>
                              <x>0</x>
                              <y>0</y>
-                             <width>237</width>
-                             <height>69</height>
+                             <width>801</width>
+                             <height>333</height>
                             </rect>
                            </property>
                            <layout class="QVBoxLayout" name="verticalLayout_found_users">
@@ -1712,8 +1719,8 @@
                             <rect>
                              <x>0</x>
                              <y>0</y>
-                             <width>170</width>
-                             <height>197</height>
+                             <width>801</width>
+                             <height>422</height>
                             </rect>
                            </property>
                            <layout class="QVBoxLayout" name="verticalLayout_32">
@@ -1864,6 +1871,26 @@
                       </widget>
                      </widget>
                     </item>
+                    <item alignment="Qt::AlignRight">
+                     <widget class="QPushButton" name="pushButton_reset_gb">
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
+                      <property name="text">
+                       <string>Сброс</string>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../icons/icons.qrc">
+                        <normaloff>:/icons/main/reset.png</normaloff>:/icons/main/reset.png</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>32</width>
+                        <height>32</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
                    </layout>
                   </widget>
                  </widget>
@@ -2008,8 +2035,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>85</width>
-                 <height>203</height>
+                 <width>835</width>
+                 <height>625</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2091,8 +2118,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>502</width>
-                     <height>370</height>
+                     <width>823</width>
+                     <height>491</height>
                     </rect>
                    </property>
                    <attribute name="icon">
@@ -3232,8 +3259,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>73</width>
-                 <height>40</height>
+                 <width>827</width>
+                 <height>427</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_all_message">

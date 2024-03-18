@@ -53,6 +53,10 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         # END 3 TAB-ADD-NEW-USER
 
         # START 4 TAB-SEARCH-BOOK
+        self.ui.pushButton_search_users_for_gb.clicked.connect(self.SearchUsersByGivetBook)
+        self.ui.pushButton_reset_gb.hide()
+        self.ui.pushButton_reset_gb.clicked.connect(self.ResetTabGivetBook)
+        self.ui.label_dont_have_result_give_book.hide()
         self.ui.pushButton_delete_book.clicked.connect(self.DeleteBook)
         self.ui.pushButton_edit_info_book.clicked.connect(self.EditDataBook)
         self.ui.pushButton_back_info_book.clicked.connect(lambda: self.ui.stackedWidget_book.setCurrentIndex(0))
@@ -83,6 +87,37 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.pushButton_edit_info_user.clicked.connect(self.EditDataUser)
         self.ui.pushButton_open_page_emit_message.clicked.connect(lambda: self.OpenPageEmitMessage(self.info_open_user['id'], 0))
         # END 5 TAB-DEBTORS
+
+
+    def SearchUsersByGivetBook(self):
+        input_data = self.ui.lineEdit_info_for_gb.text().strip()
+
+        if not input_data:
+            return
+
+        serach_data = GetInfoByInputDataUsers(input_data)
+
+        self.ui.pushButton_reset_gb.show()
+
+        if serach_data == ():
+            self.ui.label_dont_have_result_give_book.show()
+            return
+        
+        
+        for element in serach_data:
+            widget = CreateUserGivetBook(self.OpenPageFunctionalUser, self.NextStageGivetBook, *element[0:4])
+            self.ui.verticalLayout_found_users.addWidget(widget, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
+        
+    def NextStageGivetBook(self, id_user: int):
+        self.ui.stackedWidget_info_whom_givet.setCurrentIndex(1)
+    
+
+    def ResetTabGivetBook(self):
+        self.ui.lineEdit_info_for_gb.setText("")
+        self.ui.label_dont_have_result_give_book.hide()
+        self.ClearLayoutFromFrame(self.ui.verticalLayout_found_users)
+    # def GiveBookUser(self):
+    
 
     def DeleteBook(self):
         
@@ -176,8 +211,8 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         choice = dialog.OpenDialog(text_for_message)
 
         if "quantity" in info_edit.keys():
-            count_gived_book = GetQuantityBookThatUserHaveById(self.info_open_book['id'])
-            if count_gived_book > info_edit['quantity']:
+            count_givet_book = GetQuantityBookThatUserHaveById(self.info_open_book['id'])
+            if count_givet_book > info_edit['quantity']:
                 notification = DialogNotification()
                 notification.OpenDialog("Изменение не могут быть совершены так как вы изменили количество книг на меньшее чем выданы в текущий момент")
                 self.OpenPageFunctionalBook(self.info_open_book["id"])
@@ -451,6 +486,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         Запускает все методы для обновление информации на экране
         """
         # требуеться перезагрузка открытого окна информации пользователя книги если произошло удаление данных
+        # также перезагрузка нужна там где осуществляеться поиск информации кому выдать книгу
         self.EditMainInfo()
         
         self.CreateBookForInfo(GetAllBooks())
@@ -529,7 +565,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         data_taken_book = GetInfoBooksTakenUserById(id_user)
         if data_taken_book != ():
             for element in data_taken_book:
-                widget = CreateGivedBook(*element, self.ReturnBook)
+                widget = CreateGivetBook(*element, self.ReturnBook)
                 self.ui.verticalLayout_take_book.addWidget(widget, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
 
         # Заполнение третей странички (история взятых книг)

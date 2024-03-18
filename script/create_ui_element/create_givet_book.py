@@ -4,7 +4,7 @@ from typing import Callable
 
 
 
-class CreateGivedBook(QtWidgets.QFrame):
+class CreateGivetBook(QtWidgets.QFrame):
     """
     Создает виджет QFrame по полученной информации
     """
@@ -20,7 +20,7 @@ class CreateGivedBook(QtWidgets.QFrame):
         self.setMinimumSize(QtCore.QSize(490, 200))
         self.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.setObjectName("frame-gived-book")
+        self.setObjectName("frame-givet-book")
 
         # Сетка для виджета
         gridLayout = QtWidgets.QGridLayout(self)

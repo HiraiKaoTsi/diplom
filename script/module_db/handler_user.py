@@ -96,7 +96,7 @@ def GetInfoTheyFitDelivery(cursor: MySQLCursor = None) -> tuple[tuple, ...] | tu
 @ConnectBaseReturnTypeList
 def GetInfoByInputDataUsers(input_data: str, cursor: MySQLCursor = None) -> tuple[tuple, ...] | tuple:
     """
-    Функция по полученной информации
+    Функция по полученной информации по введеным данным
     """
     input_data = f"%{input_data}%"
     sql = """
