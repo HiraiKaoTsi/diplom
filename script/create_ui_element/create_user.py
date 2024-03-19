@@ -1,12 +1,29 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from typing import Callable
+from collections.abc import Callable
 
 
 class CreateUser(QtWidgets.QFrame):
     """
-    Создает виджет QFrame по полученной информации
+    Создает виджет QFrame пользователь по полученной информации
     """
-    def __init__(self, function_details_user: Callable, functional_open_message: Callable, id_user, fio, number_group, student_id_number, number_phone=None, email=None, telegram=None, vk=None):
+    def __init__(self, function_details_user: Callable, functional_open_message: Callable,
+                 id_user: int, fio: str, number_group: str, student_id_number: str,
+                 number_phone=None, email=None, telegram=None, vk=None):
+        """
+        :param function_details_user: функция для открытия подробной информации пользователя
+        с аргументом на id пользователя
+        :param functional_open_message: функция для открытия истории сообщений отправленные пользователю
+        с аргументом на id пользователя, id на страницу для функции назад, и текс социальной сети (email, vk, telegram),
+        которой открыта меню отправки сообщений
+        :param id_user: id пользователя
+        :param fio: ФИО пользователя
+        :param number_group: Номер группы
+        :param student_id_number: номер студенческого билета
+        :param number_phone: номер телефона
+        :param email: почтовый адрес
+        :param telegram: ссылка телеграм
+        :param vk: ссылка вк
+        """
         super().__init__()
         
         # Настройка самого виджета
@@ -39,7 +56,7 @@ class CreateUser(QtWidgets.QFrame):
         label_number_group.setObjectName("label_number_group")
         gridLayout.addWidget(label_number_group, 1, 0, 1, 3)
 
-        # Стуленческий билет
+        # Студенческий билет
         label_student_id_number = QtWidgets.QLabel(self)
         label_student_id_number.setText(f"{student_id_number}")
         label_student_id_number.setWordWrap(True)
@@ -151,13 +168,11 @@ class CreateUser(QtWidgets.QFrame):
         pushButton_all_info.setIconSize(QtCore.QSize(25, 25))
         pushButton_all_info.setObjectName("pushButton_all_info")
         gridLayout.addWidget(pushButton_all_info, 4, 0, 1, 3, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignBottom)
-       
+
+        # Выключение кнопок если информации нет
         if email is None or not email:
             pushButton_mail.setEnabled(False)
         if vk is None or not vk:
             pushButton_vk.setEnabled(False)
         if telegram is None or not telegram:
             pushButton_telegram.setEnabled(False)
-
-
-    

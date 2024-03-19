@@ -8,7 +8,7 @@ QFrame#frame-user, #frame-book {
 }
 
 
-QFrame#frame-book-history, #frame-givet-book, #frame-message, #create-user-history-take-book, #frame-user-givet-book{
+QFrame#frame-book-history, #frame-givet-book, #frame-message, #create-user-history-take-book, #frame-user-give-book{
     border: 2px solid rgb(62, 69, 80);
     border-radius: 10px;
 }
@@ -16,4 +16,8 @@ QFrame#frame-book-history, #frame-givet-book, #frame-message, #create-user-histo
 QLabel#label_dont_have_result_user, #label_dont_have_result_book, #label_dont_have_result_user, #label_dont_have_result_give_book {
     margin-top: 30px;
     font-size: 15pt;
+}
+
+QGroupBox {
+    padding-top: 5px;
 }

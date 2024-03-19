@@ -2,9 +2,33 @@ from .connect import *
 
 
 @ConnectBaseReturnTypeList
-def IssuedBookAll(cursor: MySQLCursor = None) -> int:
+def UpdateReturnBook(user_id: int, book_id: int, cursor: MySQLCursor = None) -> bool:
     """
-    Сколько книг выдано всего
+    Осуществляет изменение информации, что пользователь вернул книгу
+    :param user_id: id пользователя
+    :param book_id: id книги
+    :param cursor: (не требует ввода) предназначен для обращения к нему запросов
+    """
+
+    sql = """
+    UPDATE 
+        take_book 
+    SET 
+        date_return = CURRENT_DATE() 
+    WHERE 
+        user_id = %s AND book_id = %s AND date_return IS NULL;
+    """
+
+    cursor.execute(sql, (user_id, book_id))
+    cursor.fetchone()
+    return True
+
+
+@ConnectBaseReturnTypeList
+def GetCountIssuedBookAll(cursor: MySQLCursor = None) -> int:
+    """
+    Осуществляет подсчет количество всех выданных книг
+    :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
     sql = "SELECT COUNT(id) FROM take_book WHERE date_return is NULL;"
     cursor.execute(sql)
@@ -13,10 +37,12 @@ def IssuedBookAll(cursor: MySQLCursor = None) -> int:
 
 
 @ConnectBaseReturnTypeList
-def CountIssuedBookToday(cursor: MySQLCursor = None) -> int:
+def GetCountIssuedBookToday(cursor: MySQLCursor = None) -> int:
     """
-    Данная функция подсчитывает количество выданных книг за сегодня
+    Осуществляет подсчет количество выданных книг за сегодня
+    :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
+
     sql = "SELECT COUNT(id) FROM take_book WHERE date_return IS NULL AND date_take = CURRENT_DATE();"
     cursor.execute(sql)
     result = cursor.fetchone()[0]
@@ -24,75 +50,63 @@ def CountIssuedBookToday(cursor: MySQLCursor = None) -> int:
 
 
 @ConnectBaseReturnTypeList
-def CountReturnBookToday(cursor: MySQLCursor = None) -> int:
+def GetCountReturnBookToday(cursor: MySQLCursor = None) -> int:
     """
-    Данная функция подсчитывает количество вернутых книг за сегодня
+    Осуществляет подсчет количество вернутых книг за сегодня
+    :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
+
     sql = "SELECT COUNT(id) FROM take_book WHERE date_return = CURRENT_DATE();"
     cursor.execute(sql)
     result = cursor.fetchone()[0]
-
     return result
 
 
 @ConnectBaseReturnTypeList
-def CountQuantityDebtors(cursor: MySQLCursor = None) -> int:
+def GetCountQuantityDebtors(cursor: MySQLCursor = None) -> int:
     """
-    Выводит количество задолжников книг
+    Осуществляет подсчет количество задолжников книг
+    :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
-    sql = ("SELECT "
-           "    COUNT(ID) "
-           "FROM "
-           "    take_book "
-           "WHERE date_take < DATE_SUB(CURRENT_DATE(), INTERVAL how_many_days_give DAY) AND date_return IS NULL;")
+
+    sql = """
+    SELECT
+        COUNT(ID) 
+    FROM
+        take_book 
+    WHERE
+        date_take < DATE_SUB(CURRENT_DATE(), INTERVAL how_many_days_give DAY) 
+    AND
+        date_return IS NULL;
+    """
     cursor.execute(sql)
     result = cursor.fetchone()[0]
-
-    return result
-
-
-@ConnectBaseReturnTypeList
-def WhichBookTakeUser(user_id, cursor: MySQLCursor = None) -> tuple:
-    """
-    Выводит все книги, которые брал пользователь (которые вернул)
-    """
-    sql = f"SELECT * FROM take_book WHERE user_id = %s AND date_return IS NOT NULL;"
-    cursor.execute(sql, (user_id,))
-    result = cursor.fetchall()
-
-    return result
-
-
-@ConnectBaseReturnTypeList
-def WhichNowBookAtUser(user_id, cursor: MySQLCursor = None) -> tuple:
-    """
-    Выводит все книги которые сейчас у пользователя
-    """
-    sql = f"SELECT * FROM take_book WHERE user_id = %s AND date_return IS NOT NULL;"
-    cursor.execute(sql, (user_id,))
-    result = cursor.fetchall()
-
     return result
 
 
 @ConnectBaseReturnTypeList
 def GetQuantityBookThatUserHaveById(book_id: int, cursor: MySQLCursor = None) -> int:
     """
-    Получает количество экземпляров книг которые находиться у пользователей по айди книги
+    Осуществляет подсчет количество экземпляров книг которые находиться у пользователй по id книги
+    :param book_id: id книги
+    :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
-    sql = f"SELECT COUNT(id) FROM take_book WHERE book_id = %s AND date_return IS NULL;"
-    cursor.execute(sql, (book_id,))
-    result = cursor.fetchone()[0]
 
+    sql = "SELECT COUNT(id) FROM take_book WHERE book_id = %s AND date_return IS NULL;"
+    cursor.execute(sql, (book_id, ))
+    result = cursor.fetchone()[0]
     return result
 
 
 @ConnectBaseReturnTypeList
 def GetInfoHistoryBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple[tuple, ...]:
     """
-    Получает информацию(историю) о взятых книгах и об их датах получения и возращения пользователем по введенному его id
+    Осуществляет поиск информации о взятых книгах по введенному id пользователя
+    :param user_id: id пользователя
+    :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
-    sql = f"""
+
+    sql = """
     SELECT 
         books.name_book,
         books.author,
@@ -107,17 +121,19 @@ def GetInfoHistoryBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -
     WHERE 
         take_book.user_id = %s AND take_book.date_return IS NOT NULL;
     """
-    cursor.execute(sql, (user_id,))
+    cursor.execute(sql, (user_id, ))
     result = cursor.fetchall()
-
     return tuple(result)
 
 
 @ConnectBaseReturnTypeList
 def GetInfoBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple[tuple, ...]:
     """
-    Получает информацию о книгах которые находится у пользователя сейчас
+    Осуществляет поиск информации о книгах которые находится у пользователя
+    :param user_id: id пользователя
+    :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
+
     sql = """
     SELECT 
         books.id,
@@ -133,33 +149,20 @@ def GetInfoBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple
     WHERE 
         take_book.user_id = %s AND take_book.date_return IS NULL;
     """
-    cursor.execute(sql, (user_id,))
+    cursor.execute(sql, (user_id, ))
     result = cursor.fetchall()
-
     return tuple(result)
 
 
 @ConnectBaseReturnTypeList
-def UpdateReturnBook(user_id: int, book_id, cursor: MySQLCursor = None) -> bool:
+def GetHistoryUsersTakeBookById(id_book: int, cursor: MySQLCursor = None) -> tuple:
     """
-    Обновляет информацию, что пользователь вернул книгу
-    """
-    sql = """
-    UPDATE 
-        take_book 
-    SET 
-        date_return = CURRENT_DATE() 
-    WHERE 
-        user_id = %s AND book_id = %s AND date_return IS NULL;
+    Осуществляет поиск пользователей и информации (когда выдана, на сколько, когда вернуто) книга
+    по введенном id книги
+    :param id_book: id книги
+    :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
 
-    cursor.execute(sql, (user_id, book_id))
-    cursor.fetchone()
-
-    return True
-
-@ConnectBaseReturnTypeList
-def HistoryUsersTakeBookById(id_book: int, cursor: MySQLCursor = None) -> tuple:
     sql = """
     SELECT 
         users.id,
@@ -180,25 +183,4 @@ def HistoryUsersTakeBookById(id_book: int, cursor: MySQLCursor = None) -> tuple:
     """
     cursor.execute(sql, (id_book, ))
     result = cursor.fetchall()
-
     return tuple(result)
-
-
-slq = """
-SELECT
-	books.*,
-	books.name_book,
-    books.author,
-    books.ISBN,
-    books.year_publication,
-    take_book.how_many_days_give,
-    take_book.date_take,
-    take_book.date_return,
-    (SELECT FIO FROM users WHERE id = take_book.user_id)
-FROM
-	take_book
-INNER JOIN
-	books ON take_book.book_id = books.id
-WHERE 
-	date_return IS NOT NULL;
-"""

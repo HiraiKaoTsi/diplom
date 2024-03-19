@@ -16,9 +16,7 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(865, 703)
         MainWindow.setMinimumSize(QtCore.QSize(120, 0))
-        MainWindow.setStyleSheet("QFrame {\n"
-"    border: 1px solid black;\n"
-"}")
+
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.centralwidget)

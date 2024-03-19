@@ -5,10 +5,10 @@ from mysql.connector.cursor import MySQLCursor
 from .config import *
 
 
-def _createConnectionAndCursorDataBase(type_cursor):
+def _createConnectionAndCursorDataBase(type_cursor) -> tuple[MySQLConnection, MySQLCursor] | tuple[None, None]:
     """
-    Данная функция создает экземпляр класса
-    :return: connect & cursor если подключиться к базе не удалось возращает None & None
+    Данная функция создает экземпляр класса MySQLConnection и MySQLCursor и возвращает их
+    если подключиться к базе не удалось возвращать None
     """
     connection, cursor = None, None
     try:
@@ -24,8 +24,8 @@ def _createConnectionAndCursorDataBase(type_cursor):
 
 def _breakConnectionDataBase(connection: MySQLConnection, cursor: MySQLCursor) -> None:
     """
-    Данная функция закрывает поключение к базе данных с курсором
-    :param connect: MySQLConnection
+    Данная функция закрывает подключение к базе данных с курсором
+    :param connection: MySQLConnection
     :param cursor: MySQLCursor
     """
     if connection.is_connected():
@@ -35,9 +35,10 @@ def _breakConnectionDataBase(connection: MySQLConnection, cursor: MySQLCursor) -
 
 def ConnectBaseReturnTypeList(input_funct):
     """
-    Декоратор для открытия и закрытия подключения к базе данных с курсором 
-    Cursor - 
+    Декоратор для подключения к базе данных
+    тип возвращаемой информации курсора - list
     """
+
     def output_func(*args):
         connection, cursor = _createConnectionAndCursorDataBase(list)
         if cursor is not None:
@@ -49,15 +50,16 @@ def ConnectBaseReturnTypeList(input_funct):
                 print(base_error)
             finally:
                 _breakConnectionDataBase(connection, cursor)
-    return output_func
 
+    return output_func
 
 
 def ConnectBaseReturnTypeDict(input_funct):
     """
-    Декоратор для открытия и закрытия подключения к базе данных с курсором 
-    Cursor - 
+    Декоратор для подключения к базе данных
+    тип возвращаемой информации курсора - dict
     """
+
     def output_func(*args):
         connection, cursor = _createConnectionAndCursorDataBase(dict)
         if cursor is not None:
@@ -69,5 +71,5 @@ def ConnectBaseReturnTypeDict(input_funct):
                 print(base_error)
             finally:
                 _breakConnectionDataBase(connection, cursor)
-    return output_func
 
+    return output_func
