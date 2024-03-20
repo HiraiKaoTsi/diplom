@@ -42,7 +42,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (7,'132','312','','','','',''),(8,'1','','','','','',''),(9,'12','312','','','','123123',''),(10,'zxc','qwe','wwww','','','',''),(11,'zxc231','qwe123','231123','','','312',''),(12,'321','312','321','','','','');
+INSERT INTO `users` VALUES (7,'КИРИЛ','312','','','','',''),(8,'1','','','','','',''),(9,'12','312','','','','123123',''),(10,'zxc','qwe','wwww','','','',''),(11,'zxc231','qwe123','231123','','','312',''),(12,'321','312','321','','','','');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-19 23:35:55
+-- Dump completed on 2024-03-20 20:39:06

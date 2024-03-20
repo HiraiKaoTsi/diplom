@@ -36,7 +36,6 @@ def DeleteUserById(id_user: int, cursor: MySQLCursor = None) -> bool:
     return True
 
 
-# МБ ПЕРЕЙТИ НА БОРЕЕ СТАТИЧНОЕ ПЕРЕДАЧА ИФНОРАМЦММ БЕЗ ЦИКЛА ВНУТРИ
 @ConnectBaseReturnTypeList
 def UpdateDataUser(id_user: int, param: dict, cursor: MySQLCursor = None) -> bool:
     """

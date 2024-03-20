@@ -36,7 +36,6 @@ def DeleteBookById(id_book: int, cursor: MySQLCursor = None) -> bool:
     return True
 
 
-# МБ ПЕРЕЙТИ НА БОРЕЕ СТАТИЧНОЕ ПЕРЕДАЧА ИФНОРАМЦММ БЕЗ ЦИКЛА ВНУТРИ
 @ConnectBaseReturnTypeList
 def UpdateDataBook(id_book: int, param: dict, cursor: MySQLCursor = None) -> bool:
     """
@@ -63,7 +62,6 @@ def UpdateDataBook(id_book: int, param: dict, cursor: MySQLCursor = None) -> boo
     return True
 
 
-# ВЕРНУТЬ ОБРАТНО
 @ConnectBaseReturnTypeList
 def GetAllBooks(cursor: MySQLCursor = None) -> tuple:
     """
@@ -71,8 +69,7 @@ def GetAllBooks(cursor: MySQLCursor = None) -> tuple:
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
 
-    sql = "SELECT *, 4 AS quantity_take FROM books;"
-    # sql = "SELECT *, CountQuantityTakeBook(books.id) AS quantity_take FROM books;"
+    sql = "SELECT *, CountQuantityTakeBook(books.id) AS quantity_take FROM books;"
     cursor.execute(sql)
     result = cursor.fetchall()
     return tuple(result)
@@ -169,23 +166,14 @@ def GetInfoByInputDataBook(input_data: str, cursor: MySQLCursor = None) -> tuple
 
     input_data = f"%{input_data}%"
     sql = """
-    SELECT 
+    SELECT
         *,
-        4
-    FROM 
+        CountQuantityTakeBook(books.id)
+    FROM
         books
-    WHERE 
+    WHERE
         CONCAT_WS(name_book, author, ISBN, year_publication) LIKE %s;
     """
-    # ql = """
-    #     SELECT
-    #         *,
-    #         CountQuantityTakeBook(books.id)
-    #     FROM
-    #         books
-    #     WHERE
-    #         CONCAT_WS(name_book, author, ISBN, year_publication) LIKE %s;
-    #     """
     cursor.execute(sql, (input_data, ))
     result = cursor.fetchall()
     return tuple(result)

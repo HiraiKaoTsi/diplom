@@ -2,6 +2,22 @@ from .connect import *
 
 
 @ConnectBaseReturnTypeList
+def InsertTakeBook(user_id: int, book_id: int, how_many_days: int, cursor: MySQLCursor = None) -> bool:
+    """
+    Осуществляет добовление информации, что пользователь взял книгу
+    :param user_id: id пользователя
+    :param book_id: id книги
+    :param how_many_days: на сколько дней будет выданна данная книга
+    :param cursor: (не требует ввода) предназначен для обращения к нему запросов
+    """
+
+    sql = "INSERT INTO take_book(user_id, book_id, how_many_days_give, date_take) VALUES(%s, %s, %s, CURRENT_DATE());"
+    cursor.execute(sql, (user_id, book_id, how_many_days))
+    cursor.fetchone()
+    return True
+
+
+@ConnectBaseReturnTypeList
 def UpdateReturnBook(user_id: int, book_id: int, cursor: MySQLCursor = None) -> bool:
     """
     Осуществляет изменение информации, что пользователь вернул книгу

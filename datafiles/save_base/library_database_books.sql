@@ -40,7 +40,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` VALUES (3,'Книга 3','Автор 3','3333',2024,2),(4,'Книга 4','Автор 4','4444',2024,1),(5,'Книга 5','Автор 5','55555',2024,6),(6,'name','author','isbn',2001,1),(7,'123','2','3',2000,2),(8,'332','332','332',2000,4);
+INSERT INTO `books` VALUES (3,'Книга 3231','Автор 3','3333',2024,2),(4,'Книга 4','Автор 4','4444',2024,1),(5,'Книга 5','Автор 5','55555',2024,6),(6,'name','author','isbn',2001,1),(7,'123','2','3',2000,2),(8,'332','332','332',2000,4);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-19 23:35:55
+-- Dump completed on 2024-03-20 20:39:06
