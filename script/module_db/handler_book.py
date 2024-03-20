@@ -71,7 +71,8 @@ def GetAllBooks(cursor: MySQLCursor = None) -> tuple:
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
 
-    sql = "SELECT *, CountQuantityTakeBook(books.id) AS quantity_take FROM books;"
+    sql = "SELECT *, 4 AS quantity_take FROM books;"
+    # sql = "SELECT *, CountQuantityTakeBook(books.id) AS quantity_take FROM books;"
     cursor.execute(sql)
     result = cursor.fetchall()
     return tuple(result)
@@ -170,12 +171,21 @@ def GetInfoByInputDataBook(input_data: str, cursor: MySQLCursor = None) -> tuple
     sql = """
     SELECT 
         *,
-        CountQuantityTakeBook(books.id)
+        4
     FROM 
         books
     WHERE 
         CONCAT_WS(name_book, author, ISBN, year_publication) LIKE %s;
     """
+    # ql = """
+    #     SELECT
+    #         *,
+    #         CountQuantityTakeBook(books.id)
+    #     FROM
+    #         books
+    #     WHERE
+    #         CONCAT_WS(name_book, author, ISBN, year_publication) LIKE %s;
+    #     """
     cursor.execute(sql, (input_data, ))
     result = cursor.fetchall()
     return tuple(result)
