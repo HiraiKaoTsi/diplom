@@ -1,5 +1,4 @@
-# built - in Module
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
 # interface
 from .edit_ui import Ui_DialogEdit
@@ -14,9 +13,17 @@ class DialogEditInfo(QtWidgets.QDialog):
         self.ui.pushButton_edit.clicked.connect(self.onEdit)
         self.ui.pushButton_cancel.clicked.connect(self.onCancel)
 
+        # Переменная хранит данные выборе пользователя
         self.info_choice = False
 
-    def OpenDialog(self, old_data: dict, new_data: dict):
+    def OpenDialog(self, old_data: dict, new_data: dict) -> bool:
+        """
+        Открытия диалогового окна
+        :param old_data: старая информация
+        :param new_data: новая информация
+        :return:
+        """
+
         ru_translate_key = {
             "name_book": "Название книги",
             "author": "Автор",
@@ -57,10 +64,8 @@ class DialogEditInfo(QtWidgets.QDialog):
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.show()
         self.exec()
+
         return self.info_choice
-
-    # def CreateTextForMessage(self):
-
 
     def onEdit(self):
         self.info_choice = True

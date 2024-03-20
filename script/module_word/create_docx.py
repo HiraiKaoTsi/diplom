@@ -4,18 +4,10 @@ from docx.shared import Pt
 
 def CreateReportMainInfo(way_and_name_file: str, info_meaning: dict) -> bool:
     """
-    Создает doxc файл, с информацией основного окна
-    :way_and_name_file - путь до файла и его название
-    :info_meaning -  значение по которым будет заполняться основная информация 
+    Создает doc файл, с информацией основного окна
+    :param way_and_name_file: путь до файла и его название
+    :param info_meaning: значение по которым будет заполняться основная информация
     """
-
-    # info = {
-    #     "Общее количество книг:": 1,
-    #     "Сколько всего книг выдано:": 2,
-    #     "Выданно книг за сегодня:": 3,
-    #     "Сколько задолжников:": 4,
-    #     }
-
 
     doc = Document()
 
@@ -23,7 +15,7 @@ def CreateReportMainInfo(way_and_name_file: str, info_meaning: dict) -> bool:
     style.font.name = "Times New Roman"
     style.font.size = Pt(14)
 
-    head = doc.add_paragraph("Общаяя инфорамця")
+    head = doc.add_paragraph("Общая информация")
     head.runs[0].font.bold = True 
     head.runs[0].font.size = Pt(20)
     head.alignment = 1
@@ -58,4 +50,5 @@ def CreateReportMainInfo(way_and_name_file: str, info_meaning: dict) -> bool:
         row += 1
 
     doc.save(f"{way_and_name_file}")
+
     return True

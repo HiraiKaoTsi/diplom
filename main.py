@@ -5,7 +5,6 @@ from sys import argv, exit
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from datetime import date
-from datetime import datetime
 
 from script.module_db import *
 from script.module_word import *
@@ -41,7 +40,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
 
         # START 1 TAB-MAIN-INFO
         self.ui.label_today_date.setText(f"Сегодняшняя дата - {datetime.strftime(date.today(), '%d.%m.%Y')}")
-        self.ui.pushButton_create_report_main_info.clicked.connect(self.onCreateReport)
+        self.ui.pushButton_create_report_main_info.clicked.connect(self.CreateReport)
         self.EditMainInfo()
         # END 1 TAB-MAIN-INFO
 
@@ -92,35 +91,68 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             lambda: self.OpenPageEmitMessage(self.info_open_user['id'], 0))
         # END 5 TAB-DEBTORS
 
+    def BaseTriggerForUpdate(input_funct):
+        """
+        Триггер (декоратор) для обновления информации после изменений данных в программе, что бы триггер обновил
+        значения требуется, что бы метод, который оборачивается в декораторе вернул True
+        """
+        def output_func(self, *args):
+            def update_info():
+                self.EditMainInfo()
 
-    def TriggerForUpdate(input_funct):
-        def output_func(self):
-            if input_funct(self):
-                print("1")
-                self.UpdateAllInfo()
+                self.ResetTabBook()
+                self.ResetTabDebtors()
+
+                page = self.ui.tabWidget.currentIndex()
+
+                if self.info_open_user is not None:
+                    self.OpenPageFunctionalUser(self.info_open_user["id"])
+
+                if self.info_open_book is not None:
+                    self.OpenPageFunctionalBook(self.info_open_book["id"])
+
+                self.ui.tabWidget.setCurrentIndex(page)
+            if args[0] is False:
+                if input_funct(self):
+                    update_info()
+            else:
+                if input_funct(self, *args):
+                    update_info()
+
         return output_func
 
-    def UpdateAllInfo(self):
+    def DeleteTriggerForUpdate(input_funct):
         """
-        Запускает все методы для обновления информации на экране
+        Триггер (декоратор) для обновления информации после изменений данных в программе, что бы триггер обновил
+         значения требуется, что бы метод, который оборачивается в декораторе вернул True
         """
-        # требуется перезагрузка открытого окна информации пользователя книги если произошло удаление данных
-        # также перезагрузка нужна там где осуществляется поиск информации кому выдать книгу
-        self.EditMainInfo()
 
-        self.ResetTabBook()
-        self.ResetTabDebtors()
+        def output_func(self):
+            if input_funct(self):
 
-        page = self.ui.tabWidget.currentIndex()
+                self.EditMainInfo()
 
-        if self.info_open_user is not None:
-            self.OpenPageFunctionalUser(self.info_open_user["id"])
+                self.ResetTabBook()
+                self.ResetTabDebtors()
 
-        if self.info_open_book is not None:
-            self.OpenPageFunctionalBook(self.info_open_book["id"])
+                page = self.ui.tabWidget.currentIndex()
 
-        self.ui.tabWidget.setCurrentIndex(page)
+                if self.info_open_user is not None:
+                    self.OpenPageFunctionalUser(self.info_open_user["id"])
 
+                if self.info_open_book is not None:
+                    self.OpenPageFunctionalBook(self.info_open_book["id"])
+
+                self.ui.tabWidget.setCurrentIndex(page)
+
+                if page == 3:
+                    self.ui.stackedWidget_book.setCurrentIndex(0)
+                elif page == 4:
+                    self.ui.stackedWidget.setCurrentIndex(0)
+
+        return output_func
+
+    @BaseTriggerForUpdate
     def EditDataBook(self):
         """
         Изменяет информацию о книги
@@ -166,7 +198,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         if UpdateDataBook(self.info_open_book["id"], info_edit):
             DialogNotification().OpenDialog("Данные изменены")
             self.OpenPageFunctionalBook(self.info_open_book["id"])
-            self.UpdateAllInfo()
+            return True
 
     def SearchUsersByGiveBook(self):
         input_data = self.ui.lineEdit_info_for_gb.text().strip()
@@ -189,44 +221,6 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
     def NextStageGiveBook(self, id_user: int):
         self.ui.stackedWidget_info_whom_givet.setCurrentIndex(1)
 
-    def ResetTabGiveBook(self):
-        self.ui.lineEdit_info_for_gb.setText("")
-        self.ui.label_dont_have_result_give_book.hide()
-        self.ClearLayoutFromFrame(self.ui.verticalLayout_found_users)
-
-    # def GiveBookUser(self):
-
-    def DeleteBook(self):
-
-        choice = DialogChoiceYesOrNo()
-        info_choice = choice.OpenDialog("Вы действительно хотите удалить книгу?")
-        if info_choice is False:
-            return
-
-        info_delete = DeleteBookById(self.info_open_book["id"])
-        if info_delete:
-            self.info_open_user = None
-            notification = DialogNotification()
-            notification.OpenDialog("Книга удален")
-            self.UpdateAllInfo()
-            self.ui.stackedWidget_book.setCurrentIndex(0)
-
-    def ClearValueAddUser(self):
-        self.ui.lineEdit_fio_add_user.setText("")
-        self.ui.lineEdit_number_group_user.setText("")
-        self.ui.lineEdit_student_id_user.setText("")
-        self.ui.lineEdit_phon_number_user.setText("")
-        self.ui.lineEdit_email_user.setText("")
-        self.ui.lineEdit_telegram_user.setText("")
-        self.ui.lineEdit_vk_user.setText("")
-
-    def ClearValueAddBook(self):
-        self.ui.lineEdit_name_book_add.setText("")
-        self.ui.lineEdit_author_add.setText("")
-        self.ui.lineEdit_isbn_add.setText("")
-        self.ui.dateEdit_year_publication_add.setDate(QtCore.QDate(2000, 1, 1))
-        self.ui.spinBox_quantity_add.setValue(0)
-
     def OpenPageFunctionalBook(self, id_book: int):
         data = GetAboutBookById(id_book)
 
@@ -238,7 +232,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.spinBox_quantity_book.setValue(data['quantity'])
         self.ui.dateEdit_year_publication_book.setDate(QtCore.QDate(data['year_publication'], 1, 1))
 
-        self.ui.stackedWidget_book.setCurrentIndex(1)
+        self.ui.stackedWidget_book.setCurrentIndex(1)  ####
 
         data_info_user = GetHistoryUsersTakeBookById(data["id"])
 
@@ -291,78 +285,22 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.stackedWidget.setCurrentIndex(2)
 
 
+    @BaseTriggerForUpdate
     def ReturnBook(self, id_book: int, name_book: str):
 
-        choice = DialogChoiceYesOrNo()
-        info_choice = choice.OpenDialog(
+        choice = DialogChoiceYesOrNo().OpenDialog(
             f"Подтвердите действие пользователь - '{self.info_open_user['FIO']}' вернул книгу - '{name_book}'")
 
-        if info_choice is False:
+        if choice is False:
             return
 
         if UpdateReturnBook(self.info_open_user["id"], id_book):
-            notification = DialogNotification()
-            notification.OpenDialog("Информация успешно обновилась!")
-
+            DialogNotification().OpenDialog("Информация успешно обновилась!")
             self.OpenPageFunctionalUser(self.info_open_user["id"])
-            self.ui.toolBox.setCurrentIndex(1)
-            self.UpdateAllInfo()
+            return True
 
-    def AddNewBook(self):
-        name = self.ui.lineEdit_name_book_add.text().strip()
-        author = self.ui.lineEdit_author_add.text().strip()
-        isbn = self.ui.lineEdit_isbn_add.text().strip()
-        year = self.ui.dateEdit_year_publication_add.dateTime().toString("yyyy")
-        quantity = self.ui.spinBox_quantity_add.value()
 
-        if (not name) or (not author) or (not isbn) or (quantity == 0):
-            notification = DialogNotification()
-            notification.OpenDialog("Заполните всю информацию!")
-            return
-
-        status = InsertNewBooks((name, author, isbn, year, quantity))
-        if status:
-            notification = DialogNotification()
-            notification.OpenDialog("Новая книга успешно добавлена!")
-
-            self.ui.lineEdit_name_book_add.setText("")
-            self.ui.lineEdit_author_add.setText("")
-            self.ui.lineEdit_isbn_add.setText("")
-            self.ui.dateEdit_year_publication_add.setDate(QtCore.QDate(2000, 1, 1))
-            self.ui.spinBox_quantity_add.setValue(0)
-
-            self.UpdateAllInfo()
-
-    def AddNewUser(self):
-        fio = self.ui.lineEdit_fio_add_user.text().strip()
-        number_group = self.ui.lineEdit_number_group_user.text().strip()
-        student_id = self.ui.lineEdit_student_id_user.text().strip()
-        number_phone = self.ui.lineEdit_phon_number_user.text().strip()
-        email = self.ui.lineEdit_email_user.text().strip()
-        telegram = self.ui.lineEdit_telegram_user.text().strip()
-        vk = self.ui.lineEdit_vk_user.text().strip()
-
-        if (not fio) or (not number_group) or (not student_id):
-            notification = DialogNotification()
-            notification.OpenDialog(
-                "Заполните основную информацию для создание пользователя\n(ФИО, номер группы, студенческий билет)")
-            return
-
-        status = InsertNewUser((fio, number_group, student_id, number_phone, email, telegram, vk))
-        if status:
-            notification = DialogNotification()
-            notification.OpenDialog("Студент успешно зарегистрирован!")
-
-            self.ui.lineEdit_fio_add_user.setText("")
-            self.ui.lineEdit_number_group_user.setText("")
-            self.ui.lineEdit_student_id_user.setText("")
-            self.ui.lineEdit_phon_number_user.setText("")
-            self.ui.lineEdit_email_user.setText("")
-            self.ui.lineEdit_telegram_user.setText("")
-            self.ui.lineEdit_vk_user.setText("")
-
-            self.UpdateAllInfo()
-
+    @BaseTriggerForUpdate
     def EditDataUser(self):
         """
         Изменяет информацию о студенте
@@ -381,20 +319,17 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         info_edit = {}
 
         if self.ui.lineEdit_fio_info_user.text().strip() == "":
-            notification = DialogNotification()
-            notification.OpenDialog("Нельзя изменить ФИО на пустое значение")
+            DialogNotification().OpenDialog("Нельзя изменить ФИО на пустое значение")
             self.OpenPageFunctionalUser(self.info_open_user["id"])
             return
 
         if self.ui.lineEdit_number_group.text().strip() == "":
-            notification = DialogNotification()
-            notification.OpenDialog("Нельзя изменить номер группы на пустое значение")
+            DialogNotification().OpenDialog("Нельзя изменить номер группы на пустое значение")
             self.OpenPageFunctionalUser(self.info_open_user["id"])
             return
 
         if self.ui.lineEdit_student_id_number.text().strip() == "":
-            notification = DialogNotification()
-            notification.OpenDialog("Нельзя изменить студенческий билет на пустое значение")
+            DialogNotification().OpenDialog("Нельзя изменить студенческий билет на пустое значение")
             self.OpenPageFunctionalUser(self.info_open_user["id"])
             return
 
@@ -408,62 +343,17 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         if info_edit == {}:
             return
 
-        dialog = DialogEditInfo()
-        choice = dialog.OpenDialog(self.info_open_user, info_edit)
+        choice = DialogEditInfo().OpenDialog(self.info_open_user, info_edit)
 
         if choice is False:
             self.OpenPageFunctionalUser(self.info_open_user["id"])
             return
 
         if UpdateDataUser(self.info_open_user["id"], info_edit):
-            notification = DialogNotification()
-            notification.OpenDialog("Данные изменены")
+            DialogNotification().OpenDialog("Данные изменены")
             self.OpenPageFunctionalUser(self.info_open_user["id"])
-            self.UpdateAllInfo()
+            return True
 
-
-    def EditStyleSheet(self) -> None:
-        """
-        Данный метод считывает файлы .qss в каталоге style и применяет их к приложению
-        """
-        style = ""
-        for qss_file in listdir("style"):
-            with open(f"style/{qss_file}", mode="r", encoding="utf-8") as qss:
-                style += qss.read()
-
-        self.setStyleSheet(style)
-        QtWidgets.qApp.setStyleSheet(style)
-
-    def EditMainInfo(self) -> None:
-        """
-        Данный метод отображает информацию из базы данных на главном экране
-        """
-        self.ui.label_total_number_books.setText(f"{GetCountBook()}")
-        self.ui.label_how_many_given_book.setText(f"{GetCountIssuedBookAll()}")
-        self.ui.label__how_many_given_book_today.setText(f"{GetCountIssuedBookToday()}")
-        self.ui.label_how_many_debtors.setText(f"{GetCountQuantityDebtors()}")
-        self.ui.label_how_many_return_today.setText(f"{GetCountReturnBookToday()}")
-
-    def onCreateReport(self) -> None:
-        """
-        Данный метод создает docx файл и заполняет его информацией с главного окна
-        """
-        filename, ok = QtWidgets.QFileDialog.getSaveFileName(self,
-                                                             "Сохранить файл",
-                                                             ".",
-                                                             "All Files(*.docx)")
-        if not filename:
-            return
-        info = {
-            "Общее количество книг:": self.ui.label_total_number_books.text(),
-            "Сколько всего книг выдано:": self.ui.label_how_many_given_book.text(),
-            "Выдано книг за сегодня:": self.ui.label__how_many_given_book_today.text(),
-            "Сколько задолжников:": self.ui.label_how_many_debtors.text(),
-            "Сколько книг вернуто за сегодня:": self.ui.label_how_many_return_today.text()
-        }
-        if CreateReportMainInfo(filename, info):
-            notification = DialogNotification()
-            notification.OpenDialog("Файл успешно создан!")
 
     def OpenPageFunctionalUser(self, id_user: int):
         """
@@ -513,25 +403,92 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.stackedWidget.setCurrentIndex(0)
         self.ui.tabWidget.setCurrentIndex(4)
 
+    @BaseTriggerForUpdate
+    def AddNewBook(self):
+        """
+        Создает новую книгу
+        """
+        name = self.ui.lineEdit_name_book_add.text().strip()
+        author = self.ui.lineEdit_author_add.text().strip()
+        isbn = self.ui.lineEdit_isbn_add.text().strip()
+        year = self.ui.dateEdit_year_publication_add.dateTime().toString("yyyy")
+        quantity = self.ui.spinBox_quantity_add.value()
+
+        if (not name) or (not author) or (not isbn) or (quantity == 0):
+            DialogNotification().OpenDialog("Заполните всю информацию!")
+            return
+
+        if DialogChoiceYesOrNo().OpenDialog("Подтвердите создание книги") is False:
+            return
+
+        status = InsertNewBooks((name, author, isbn, year, quantity))
+        if status:
+            DialogNotification().OpenDialog("Новая книга успешно добавлена!")
+            self.ClearValueAddBook()
+            return True
+
+    @BaseTriggerForUpdate
+    def AddNewUser(self):
+        """
+        Создает нового пользователя
+        """
+        fio = self.ui.lineEdit_fio_add_user.text().strip()
+        number_group = self.ui.lineEdit_number_group_user.text().strip()
+        student_id = self.ui.lineEdit_student_id_user.text().strip()
+        number_phone = self.ui.lineEdit_phon_number_user.text().strip()
+        email = self.ui.lineEdit_email_user.text().strip()
+        telegram = self.ui.lineEdit_telegram_user.text().strip()
+        vk = self.ui.lineEdit_vk_user.text().strip()
+
+        if (not fio) or (not number_group) or (not student_id):
+            DialogNotification().OpenDialog("Заполните основную информацию для создание пользователя\n"
+                                            "(ФИО, номер группы, студенческий билет)")
+            return
+
+        if DialogChoiceYesOrNo().OpenDialog("Подтвердите создание пользователя") is False:
+            return
+
+        status = InsertNewUser((fio, number_group, student_id, number_phone, email, telegram, vk))
+        if status:
+            DialogNotification().OpenDialog("Студент успешно зарегистрирован!")
+            self.ClearValueAddUser()
+            return True
+
+    @DeleteTriggerForUpdate
     def DeleteUser(self):
-        choice = DialogChoiceYesOrNo()
-        info_choice = choice.OpenDialog("Вы действительно хотите удалить пользователя?")
-        if info_choice is False:
+        """
+        Удаляет выбранного пользователя
+        """
+        choice = DialogChoiceYesOrNo().OpenDialog("Вы действительно хотите удалить пользователя?")
+        if choice is False:
             return
 
         info_delete = DeleteUserById(self.info_open_user["id"])
         if info_delete:
             self.info_open_user = None
-            notification = DialogNotification()
-            notification.OpenDialog("Пользователь удален")
-            self.UpdateAllInfo()
-            self.ui.stackedWidget.setCurrentIndex(1)
+            DialogNotification().OpenDialog("Пользователь удален")
+            return True
+
+    @DeleteTriggerForUpdate
+    def DeleteBook(self):
+        """
+        Удаляет выбранную книгу
+        """
+        choice = DialogChoiceYesOrNo().OpenDialog("Вы действительно хотите удалить книгу?")
+        if choice is False:
+            return
+
+        info_delete = DeleteBookById(self.info_open_book["id"])
+        if info_delete:
+            self.info_open_user = None
+            DialogNotification().OpenDialog("Книга удален")
+            return True
 
     def CreateBookForInfo(self, data_info_book: tuple[tuple, ...]):
         """
         Создает книги по полученной информации
+        :param data_info_book: информация по которой будут создаваться книги
         """
-
         self.ClearLayoutFromFrame(self.ui.verticalLayout_books)
 
         if data_info_book == ():
@@ -548,6 +505,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
     def CreateUserForInfo(self, data_info_user: tuple[tuple, ...]):
         """
         Создает пользователей по полученной информации
+        :param data_info_user: информация по которой будут создаваться пользователи
         """
         self.ClearLayoutFromFrame(self.ui.verticalLayout_all_user)
 
@@ -561,23 +519,40 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             widget = CreateUser(self.OpenPageFunctionalUser, self.OpenPageEmitMessage, *element)
             self.ui.verticalLayout_all_user.addWidget(widget)
 
-    def ClearLayoutFromFrame(self, layout: QtWidgets.QVBoxLayout):
+    def ClearValueAddUser(self):
         """
-        Удаляет из введенного layout все виджеты
+        Очищает поля ввода во вкладке зарегистрировать пользователя
         """
-        #  verticalLayout_all_user - пользователи
-        #  verticalLayout_all_message - сообщение пользователям
-        #   verticalLayout_books - книги
-        if layout is not None:
-            for i in range(layout.count()):
-                item = layout.takeAt(0)
-                widget = item.widget()
-                if widget is not None:
-                    widget.deleteLater()
-                else:
-                    self.deleteLayout(item.layout())
+        self.ui.lineEdit_fio_add_user.setText("")
+        self.ui.lineEdit_number_group_user.setText("")
+        self.ui.lineEdit_student_id_user.setText("")
+        self.ui.lineEdit_phon_number_user.setText("")
+        self.ui.lineEdit_email_user.setText("")
+        self.ui.lineEdit_telegram_user.setText("")
+        self.ui.lineEdit_vk_user.setText("")
+
+    def ClearValueAddBook(self):
+        """
+        Очищает поля ввода во вкладке добавить книгу
+        """
+        self.ui.lineEdit_name_book_add.setText("")
+        self.ui.lineEdit_author_add.setText("")
+        self.ui.lineEdit_isbn_add.setText("")
+        self.ui.dateEdit_year_publication_add.setDate(QtCore.QDate(2000, 1, 1))
+        self.ui.spinBox_quantity_add.setValue(0)
+
+    def ResetTabGiveBook(self):
+        """
+        Очистка информации в меню выдачи книг
+        """
+        self.ui.lineEdit_info_for_gb.setText("")
+        self.ui.label_dont_have_result_give_book.hide()
+        self.ClearLayoutFromFrame(self.ui.verticalLayout_found_users)
 
     def ResetTabBook(self):
+        """
+        Очистка информации из вкладки книги
+        """
         self.SearchBooks(1)
         self.ui.lineEdit_search_book.setText("")
         self.ui.radioButton_all_book.setChecked(True)
@@ -586,6 +561,9 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.frame_radioButton_book.show()
 
     def ResetTabDebtors(self):
+        """
+        Очистка информации из вкладки студенты
+        """
         self.SearchStudents(1)
         self.ui.lineEdit_search_user.setText("")
         self.ui.radioButton_all_users.setChecked(True)
@@ -594,45 +572,112 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.frame_radioButton_users.show()
 
     def SearchStudents(self, info: int):
+        """
+        Осуществляет поиск отображение информации на вкладке студенты
+        :param info: принимает значение от 1 - 5
+        - 1: поиск всех студентов
+        - 2: студенты, взявшие книги
+        - 3: задолжники
+        - 4: подходящие к сдаче
+        - 5: поиск по введенной информации в поле ввода
+        """
+        self.ui.pushButton_reset_user.show()
         match info:
             case 1:
                 self.CreateUserForInfo(GetAllUser())
                 self.ui.pushButton_reset_user.hide()
             case 2:
                 self.CreateUserForInfo(GetUsersTakesBook())
-                self.ui.pushButton_reset_user.show()
             case 3:
                 self.CreateUserForInfo(GetUsersBookDebtors())
-                self.ui.pushButton_reset_user.show()
             case 4:
                 self.CreateUserForInfo(GetInfoTheyFitDelivery())
-                self.ui.pushButton_reset_user.show()
             case 5:
                 input_data_user = self.ui.lineEdit_search_user.text().strip()
                 if not input_data_user:
                     return
                 self.CreateUserForInfo(GetInfoByInputDataUsers(input_data_user))
-                self.ui.pushButton_reset_user.show()
                 self.ui.frame_radioButton_users.hide()
 
     def SearchBooks(self, info: int):
+        """
+        Осуществляет поиск отображение информации на вкладке книги
+        :param info: принимает значение от 1 - 4
+        - 1: поиск всех книг
+        - 2: отсутствующие все экземпляры
+        - 3: не все экземпляры
+        - 5: поиск по введенной информации в поле ввода
+        """
+        self.ui.pushButton_reset_book.show()
         match info:
             case 1:
                 self.CreateBookForInfo(GetAllBooks())
                 self.ui.pushButton_reset_book.hide()
             case 2:
                 self.CreateBookForInfo(GetBookWhichAllMissing())
-                self.ui.pushButton_reset_book.show()
             case 3:
                 self.CreateBookForInfo(GetBookNotAllMissing())
-                self.ui.pushButton_reset_book.show()
             case 4:
                 input_data_book = self.ui.lineEdit_search_book.text().strip()
                 if not input_data_book:
                     return
                 self.CreateBookForInfo(GetInfoByInputDataBook(input_data_book))
                 self.ui.frame_radioButton_book.hide()
-                self.ui.pushButton_reset_book.show()
+
+    def EditMainInfo(self) -> None:
+        """
+        Данный метод отображает информацию из базы данных на главном экране
+        """
+        self.ui.label_total_number_books.setText(f"{GetCountBook()}")
+        self.ui.label_how_many_given_book.setText(f"{GetCountIssuedBookAll()}")
+        self.ui.label__how_many_given_book_today.setText(f"{GetCountIssuedBookToday()}")
+        self.ui.label_how_many_debtors.setText(f"{GetCountQuantityDebtors()}")
+        self.ui.label_how_many_return_today.setText(f"{GetCountReturnBookToday()}")
+
+    def CreateReport(self) -> None:
+        """
+        Данный метод создает docx файл и заполняет его информацией с главного окна
+        """
+        filename, ok = QtWidgets.QFileDialog.getSaveFileName(self,
+                                                             "Сохранить файл",
+                                                             ".",
+                                                             "All Files(*.docx)")
+        if not filename:
+            return
+        info = {
+            "Общее количество книг:": self.ui.label_total_number_books.text(),
+            "Сколько всего книг выдано:": self.ui.label_how_many_given_book.text(),
+            "Выдано книг за сегодня:": self.ui.label__how_many_given_book_today.text(),
+            "Сколько задолжников:": self.ui.label_how_many_debtors.text(),
+            "Сколько книг вернуто за сегодня:": self.ui.label_how_many_return_today.text()
+        }
+        if CreateReportMainInfo(filename, info):
+            DialogNotification().OpenDialog("Файл успешно создан!")
+
+    def EditStyleSheet(self) -> None:
+        """
+        Данный метод считывает файлы .qss в каталоге style и применяет их к приложению
+        """
+        style = ""
+        for qss_file in listdir("style"):
+            with open(f"style/{qss_file}", mode="r", encoding="utf-8") as qss:
+                style += qss.read()
+
+        self.setStyleSheet(style)
+        QtWidgets.qApp.setStyleSheet(style)
+
+    def ClearLayoutFromFrame(self, layout: QtWidgets.QVBoxLayout) -> None:
+        """
+        Удаляет из введенного layout все виджеты
+        """
+        if layout is not None:
+            for i in range(layout.count()):
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+                else:
+                    self.deleteLayout(item.layout())
 
 
 if __name__ == "__main__":
