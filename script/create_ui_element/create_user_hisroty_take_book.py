@@ -4,7 +4,8 @@ from datetime import datetime
 
 
 class CreateUserHistoryTakeBook(QtWidgets.QFrame):
-    def __init__(self, function_details_user: Callable, id_user, fio, number_group, student_id_number, date_take: datetime.date, how_many_days, date_return: datetime.date):
+    def __init__(self, function_details_user: Callable, id_user, fio, number_group, student_id_number,
+                 date_take: datetime.date, how_many_days, date_return: datetime.date):
         super().__init__()
 
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
@@ -63,7 +64,7 @@ class CreateUserHistoryTakeBook(QtWidgets.QFrame):
         horizontalLayout.addWidget(label_date_take)
 
         label_how_many_day = QtWidgets.QLabel(frame_date)
-        label_how_many_day.setText(f"на - {how_many_days} дня/дней")
+        label_how_many_day.setText(f"  на - {how_many_days} дня/дней  ")
         label_how_many_day.setObjectName("label_how_many_day")
         horizontalLayout.addWidget(label_how_many_day)
 

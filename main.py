@@ -3,12 +3,10 @@ from os import listdir
 # built - in Module
 from sys import argv, exit
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 from datetime import date
 
 from script.module_db import *
 from script.module_word import *
-
 from script.create_ui_element import *
 
 # interface
@@ -94,6 +92,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             lambda: self.OpenPageEmitMessage(self.info_open_user['id'], 0))
         # END 5 TAB-DEBTORS
 
+
     def BaseTriggerForUpdate(input_funct):
         """
         Триггер (декоратор) для обновления информации после изменений данных в программе, что бы триггер обновил
@@ -116,6 +115,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
                     self.OpenPageFunctionalBook(self.info_open_book["id"])
 
                 self.ui.tabWidget.setCurrentIndex(page)
+
             if args[0] is False:
                 if input_funct(self):
                     update_info()
@@ -153,32 +153,15 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
                 if page == 3:
                     self.ui.stackedWidget_book.setCurrentIndex(0)
                 elif page == 4:
-                    self.ui.stackedWidget.setCurrentIndex(0)
+                    self.ui.stackedWidget.setCurrentIndex(1)
 
         return output_func
 
-
-    def SearchUsersByGiveBook(self):
-        input_data = self.ui.lineEdit_info_for_gb.text().strip()
-
-        if not input_data:
-            return
-
-        search_data = GetInfoByInputDataUsers(input_data)
-
-        self.ui.pushButton_reset_gb.show()
-        
-        if search_data == ():
-            self.ui.label_dont_have_result_give_book.show()
-            return
-
-        self.ClearLayoutFromFrame(self.ui.verticalLayout_found_users)
-
-        for element in search_data:
-            widget = CreateUserGiveBook(self.OpenPageFunctionalUser, self.NextStageGiveBook, *element[0:4])
-            self.ui.verticalLayout_found_users.addWidget(widget, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
-
     def NextStageGiveBook(self, id_user: int):
+        """
+        Осуществляет переход к следующему шагу выдачи книги после выбора пользователя
+        :param id_user: id пользователя
+        """
         data = GetAboutUser(id_user)
         self.info_input_user_for_give_book = data
 
@@ -188,10 +171,12 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.spinBox_quantity_day_gb.setValue(0)
 
         self.ui.stackedWidget_info_whom_givet.setCurrentIndex(1)
-        
-    # проверка что нельзя выдать книгу если осталось 0 штук и вернуть книгу по другому
+
     @BaseTriggerForUpdate
     def GiveBook(self):
+        """
+        Выдает книгу пользователю
+        """
         fio = self.info_input_user_for_give_book["FIO"]
         name_book = self.info_open_book["name_book"]
         how_day = self.ui.spinBox_quantity_day_gb.value()
@@ -200,7 +185,8 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             DialogNotification().OpenDialog("Введите количество дней на сколько выдаете книгу")
             return
 
-        choice = DialogChoiceYesOrNo().OpenDialog(f"Подтвердите, выдачу книги {name_book} для пользователю {fio} на {how_day} дней?")
+        choice = DialogChoiceYesOrNo().OpenDialog(f"Подтвердите, выдачу книги {name_book} для пользователю {fio} "
+                                                  f"на {how_day} дней?")
 
         if choice is False:
             return
@@ -209,8 +195,31 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             DialogNotification().OpenDialog("Запись успешна добавлена!")
             return True
 
+    @BaseTriggerForUpdate
+    def ReturnBook(self, id_take_book: int, name_book: str):
+        """
+        Возвращает книгу в библиотеку
+        :param id_take_book: id записи взятой книги
+        :param name_book: название книги которую вернул пользователь
+
+        """
+        choice = DialogChoiceYesOrNo().OpenDialog(
+            f"Подтвердите действие пользователь - '{self.info_open_user['FIO']}' вернул книгу - '{name_book}'")
+
+        if choice is False:
+            return
+
+        if UpdateReturnBook(id_take_book):
+            DialogNotification().OpenDialog("Информация успешно обновилась!")
+            return True
+
     def OpenPageFunctionalBook(self, id_book: int):
+        """
+         Открывает страничку подробная информация о книги
+        :param id_book: id книги
+        """
         data = GetAboutBookById(id_book)
+        count_take = GetCountTakeBookById(data["id"])
 
         self.info_open_book = data
 
@@ -219,8 +228,12 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.lineEdit_isbn_book.setText(f"{data['ISBN']}")
         self.ui.spinBox_quantity_book.setValue(data['quantity'])
         self.ui.dateEdit_year_publication_book.setDate(QtCore.QDate(data['year_publication'], 1, 1))
+        self.ui.label_current_quantity.setText(f"Текущее количество книг: {data['quantity'] - count_take}")
 
-        self.ui.stackedWidget_book.setCurrentIndex(1)  ####
+        if count_take == data["quantity"]:
+            self.ui.toolBox_book.setItemEnabled(1, False)
+        else:
+            self.ui.toolBox_book.setItemEnabled(1, True)
 
         data_info_user = GetHistoryUsersTakeBookById(data["id"])
 
@@ -228,27 +241,9 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             widget = CreateUserHistoryTakeBook(self.OpenPageFunctionalUser, *element)
             self.ui.verticalLayout_history_user_take_book.addWidget(widget)
 
-
-
-    @BaseTriggerForUpdate
-    def ReturnBook(self, id_book: int, name_book: str):
-        """
-        Возращает книгу в библиотеку
-        :param id_book: id книги которую вернул пользователь
-        :parma name_book: название книги которую вернул пользователь
-        """
-        choice = DialogChoiceYesOrNo().OpenDialog(
-            f"Подтвердите действие пользователь - '{self.info_open_user['FIO']}' вернул книгу - '{name_book}'")
-
-        if choice is False:
-            return
-
-        if UpdateReturnBook(self.info_open_user["id"], id_book):
-            DialogNotification().OpenDialog("Информация успешно обновилась!")
-            return True
-
-
-
+        self.ui.stackedWidget_info_whom_givet.setCurrentIndex(0)
+        self.ui.toolBox_book.setCurrentIndex(0)
+        self.ui.stackedWidget_book.setCurrentIndex(1)
 
     def OpenPageFunctionalUser(self, id_user: int):
         """
@@ -277,7 +272,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         data_taken_book = GetInfoBooksTakenUserById(id_user)
         if data_taken_book != ():
             for element in data_taken_book:
-                widget = CreateGivetBook(*element, self.ReturnBook)
+                widget = CreateGiveBook(self.ReturnBook, *element)
                 self.ui.verticalLayout_take_book.addWidget(widget, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
 
         # Заполнение третей странички (история взятых книг)
@@ -301,7 +296,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
 
     def OpenPageEmitMessage(self, id_user: int, id_page_back: int, social_network: str = ""):
         """
-        Открывает историю отправленых сообщений пользователю
+        Открывает историю отправленных сообщений пользователю
         :param id_user: id пользователя
         :param id_page_back: на какую страничку вернуться назад
         :param social_network: какую социальную сеть выбрать по дефолту для отправки
@@ -590,9 +585,11 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         """
         Очистка информации в меню выдачи книг
         """
+        self.ui.pushButton_reset_gb.hide()
         self.ui.lineEdit_info_for_gb.setText("")
         self.ui.label_dont_have_result_give_book.hide()
         self.ClearLayoutFromFrame(self.ui.verticalLayout_found_users)
+        self.ui.stackedWidget_info_whom_givet.setCurrentIndex(0)
 
     def ResetTabBook(self):
         """
@@ -615,6 +612,29 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.pushButton_reset_user.hide()
         self.ui.label_dont_have_result_user.hide()
         self.ui.frame_radioButton_users.show()
+
+    def SearchUsersByGiveBook(self):
+        """
+        Осуществляет поиск пользователей кому выдать книгу
+        """
+        input_data = self.ui.lineEdit_info_for_gb.text().strip()
+
+        if not input_data:
+            return
+
+        search_data = GetInfoByInputDataUsers(input_data)
+
+        self.ui.pushButton_reset_gb.show()
+
+        if search_data == ():
+            self.ui.label_dont_have_result_give_book.show()
+            return
+
+        self.ClearLayoutFromFrame(self.ui.verticalLayout_found_users)
+
+        for element in search_data:
+            widget = CreateUserGiveBook(self.OpenPageFunctionalUser, self.NextStageGiveBook, *element[0:4])
+            self.ui.verticalLayout_found_users.addWidget(widget, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
 
     def SearchStudents(self, info: int):
         """
@@ -640,6 +660,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             case 5:
                 input_data_user = self.ui.lineEdit_search_user.text().strip()
                 if not input_data_user:
+                    self.ui.pushButton_reset_user.hide()
                     return
                 self.CreateUserForInfo(GetInfoByInputDataUsers(input_data_user))
                 self.ui.frame_radioButton_users.hide()
@@ -665,6 +686,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             case 4:
                 input_data_book = self.ui.lineEdit_search_book.text().strip()
                 if not input_data_book:
+                    self.ui.pushButton_reset_book.hide()
                     return
                 self.CreateBookForInfo(GetInfoByInputDataBook(input_data_book))
                 self.ui.frame_radioButton_book.hide()

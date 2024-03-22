@@ -3,12 +3,12 @@ from datetime import datetime
 from typing import Callable
 
 
-
-class CreateGivetBook(QtWidgets.QFrame):
+class CreateGiveBook(QtWidgets.QFrame):
     """
     Создает виджет QFrame по полученной информации
     """
-    def __init__(self, id_book, name: str, author: str, isbn: str, year_release: int, date_take: datetime.date, functional_return_book: Callable):
+    def __init__(self, functional_return_book: Callable, id_take_book: int, id_book, name: str, author: str, isbn: str,
+                 year_release: int, date_take: datetime.date):
         super().__init__()
 
         # Настройка самого виджета
@@ -20,7 +20,7 @@ class CreateGivetBook(QtWidgets.QFrame):
         self.setMinimumSize(QtCore.QSize(490, 200))
         self.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.setObjectName("frame-givet-book")
+        self.setObjectName("frame-give-book")
 
         # Сетка для виджета
         gridLayout = QtWidgets.QGridLayout(self)
@@ -66,12 +66,12 @@ class CreateGivetBook(QtWidgets.QFrame):
         # Кнопка принятие книги
         pushButton_accept = QtWidgets.QPushButton(self)
         pushButton_accept.setText("Принять книгу")
-        pushButton_accept.clicked.connect(lambda: functional_return_book(id_book, name))
+        pushButton_accept.clicked.connect(lambda: functional_return_book(id_take_book, name))
         pushButton_accept.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/book/book-pick-up.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         pushButton_accept.setIcon(icon)
         pushButton_accept.setIconSize(QtCore.QSize(32, 32))
-        pushButton_accept.setObjectName("pushButton-accept-for-gived-book")
+        pushButton_accept.setObjectName("pushButton-accept-for-give-book")
         gridLayout.addWidget(pushButton_accept, 0, 1, 5, 1)
 

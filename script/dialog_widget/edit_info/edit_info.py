@@ -13,7 +13,7 @@ class DialogEditInfo(QtWidgets.QDialog):
         self.ui.pushButton_edit.clicked.connect(self.onEdit)
         self.ui.pushButton_cancel.clicked.connect(self.onCancel)
 
-        # Переменная хранит данные выборе пользователя
+        # Переменная хранит данные о выборе пользователя
         self.info_choice = False
 
     def OpenDialog(self, old_data: dict, new_data: dict) -> bool:
@@ -21,7 +21,7 @@ class DialogEditInfo(QtWidgets.QDialog):
         Открытия диалогового окна
         :param old_data: старая информация
         :param new_data: новая информация
-        :return:
+        :return: True сли пользователь подтвердил изменение False во всех других случаях
         """
 
         ru_translate_key = {

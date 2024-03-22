@@ -18,11 +18,10 @@ def InsertTakeBook(user_id: int, book_id: int, how_many_days: int, cursor: MySQL
 
 
 @ConnectBaseReturnTypeList
-def UpdateReturnBook(user_id: int, book_id: int, cursor: MySQLCursor = None) -> bool:
+def UpdateReturnBook(id_take_book: int, cursor: MySQLCursor = None) -> bool:
     """
     Осуществляет изменение информации, что пользователь вернул книгу
-    :param user_id: id пользователя
-    :param book_id: id книги
+    :param id_take_book: id записи взятой книги
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
 
@@ -32,10 +31,12 @@ def UpdateReturnBook(user_id: int, book_id: int, cursor: MySQLCursor = None) -> 
     SET 
         date_return = CURRENT_DATE() 
     WHERE 
-        user_id = %s AND book_id = %s AND date_return IS NULL;
+        id = %s
+    AND 
+        date_return IS NULL;
     """
 
-    cursor.execute(sql, (user_id, book_id))
+    cursor.execute(sql, (id_take_book, ))
     cursor.fetchone()
     return True
 
@@ -99,6 +100,18 @@ def GetCountQuantityDebtors(cursor: MySQLCursor = None) -> int:
     result = cursor.fetchone()[0]
     return result
 
+@ConnectBaseReturnTypeList
+def GetCountTakeBookById(id_book: int, cursor: MySQLCursor = None) -> int:
+    """
+    Осуществляет подсчитывание количество книг которые находиться у пользователя по id номеру
+    :param id_book: id книги
+    :param cursor: (не требует ввода) предназначен для обращения к нему запросов
+    """
+    sql = "SELECT CountQuantityTakeBook(%s)"
+    cursor.execute(sql, (id_book,))
+    result = cursor.fetchone()
+    return result[0]
+
 
 @ConnectBaseReturnTypeList
 def GetQuantityBookThatUserHaveById(book_id: int, cursor: MySQLCursor = None) -> int:
@@ -152,6 +165,7 @@ def GetInfoBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple
 
     sql = """
     SELECT 
+        take_book.id,
         books.id,
         books.name_book,
         books.author,
@@ -193,7 +207,7 @@ def GetHistoryUsersTakeBookById(id_book: int, cursor: MySQLCursor = None) -> tup
     INNER JOIN
         users ON take_book.user_id = users.id
     WHERE 
-        take_book.id = %s
+        take_book.book_id = %s
     AND
         take_book.date_return IS NOT NULL;
     """
