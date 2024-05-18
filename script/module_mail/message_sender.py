@@ -8,18 +8,19 @@ from collections.abc import Callable
 
 class MessageSend(QtCore.QThread):
 
-    signal_successful_sending = QtCore.pyqtSignal(str)
+    signal_successful_sending = QtCore.pyqtSignal(str, str)
     signal_error_sending = QtCore.pyqtSignal(str)
 
-    def __init__(self, function_successful: Callable[[str], None], function_error: Callable[[str], None]):
+    def __init__(self, function_successful: Callable[[str, str], None], function_error: Callable[[str], None]):
         super().__init__()
 
-        self.signal_successful_sending .connect(function_successful)
+        self.signal_successful_sending.connect(function_successful)
         self.signal_error_sending.connect(function_error)
 
     def EmitMessage(self, email_recipient: str, message: str):
         msg = EmailMessage()
         msg["From"] = SENDER_ADDRESS
+        msg["Subject"] = "Библиотека ТТТ"
         msg["To"] = email_recipient
         msg.add_alternative(message, subtype="text")
 
@@ -29,10 +30,10 @@ class MessageSend(QtCore.QThread):
             smtpObj.starttls()
             smtpObj.login(SENDER_ADDRESS, PASSWORD_SEND_ADDRESS)
             smtpObj.send_message(msg)
-            print(1)
-        except Exception:
+            self.signal_successful_sending.emit("Сообщение успешно отправлено!", message)
+        except Exception as er:
             self.signal_error_sending.emit(
-                "Во время отправки сообщение произошла ошибка, проверти правильно ли указан почтовый")
+                f"Во время отправки сообщение произошла ошибка, проверти правильно ли указан почтовый {er}")
         finally:
             if smtpObj is not None:
                 smtpObj.quit()

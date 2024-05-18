@@ -27,10 +27,8 @@ class CreateMessage(QtWidgets.QFrame):
 
         if social_network == "email":
             label_icon_social_network.setPixmap(QtGui.QPixmap(":/icons/socialNetwork/email.png"))
-        if social_network == "telegram":
-            label_icon_social_network.setPixmap(QtGui.QPixmap(":/icons/socialNetwork/telegram.png"))
-        if social_network == "vk":
-            label_icon_social_network.setPixmap(QtGui.QPixmap(":/icons/socialNetwork/vk.png"))
+        if social_network == "sms":
+            label_icon_social_network.setPixmap(QtGui.QPixmap(":/icons/socialNetwork/phone.png"))
 
         label_icon_social_network.setMaximumSize(QtCore.QSize(35, 35))
         label_icon_social_network.setText("")

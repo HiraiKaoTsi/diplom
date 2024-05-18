@@ -2,7 +2,7 @@ from .connect import *
 
 
 @ConnectBaseReturnTypeList
-def InsertNewUser(value: tuple[str, str, str, str, str, str], cursor: MySQLCursor = None) -> bool:
+def InsertNewUser(value: tuple[str, str, str, str, str], cursor: MySQLCursor = None) -> bool:
     """
     Осуществляет добавление нового пользователя
     :param value: [фио, номер_группы, студенческий, номер_телефона, почта, телеграм, вк]
@@ -12,9 +12,9 @@ def InsertNewUser(value: tuple[str, str, str, str, str, str], cursor: MySQLCurso
 
     sql = """
     INSERT INTO 
-        users(FIO, number_group, student_id_number, number_phone, email, telegram, vk) 
+        users(FIO, number_group, student_id_number, number_phone, email) 
     VALUES
-        (%s, %s, %s, %s, %s, %s, %s);
+        (%s, %s, %s, %s, %s);
     """
     cursor.execute(sql, value)
     cursor.fetchone()
@@ -175,7 +175,7 @@ def GetInfoByInputDataUsers(input_data: str, cursor: MySQLCursor = None) -> tupl
     FROM 
         users
     WHERE 
-        CONCAT_WS(FIO, number_group, student_id_number, number_phone, email, vk, telegram) LIKE %s;
+        CONCAT_WS(FIO, number_group, student_id_number, number_phone, email) LIKE %s;
     """
     cursor.execute(sql, (input_data, ))
     result = cursor.fetchall()

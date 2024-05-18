@@ -8,7 +8,7 @@ class CreateUser(QtWidgets.QFrame):
     """
     def __init__(self, function_details_user: Callable, functional_open_message: Callable,
                  id_user: int, fio: str, number_group: str, student_id_number: str,
-                 number_phone=None, email=None, telegram=None, vk=None):
+                 number_phone=None, email=None):
         """
         :param function_details_user: функция для открытия подробной информации пользователя
         с аргументом на id пользователя
@@ -131,31 +131,19 @@ class CreateUser(QtWidgets.QFrame):
         pushButton_mail.setObjectName("pushButton_mail")
         horizontalLayout.addWidget(pushButton_mail)
         
-        # Кнопка VK
-        pushButton_vk = QtWidgets.QPushButton(frame_button)
-        pushButton_vk.clicked.connect(lambda: functional_open_message(id_user, 1, "vk"))
-        pushButton_vk.setMaximumSize(QtCore.QSize(64, 64))
-        pushButton_vk.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        pushButton_vk.setText("")
+        # Кнопка sms
+        pushButton_phone_sms = QtWidgets.QPushButton(frame_button)
+        pushButton_phone_sms.clicked.connect(lambda: functional_open_message(id_user, 1, "sms"))
+        pushButton_phone_sms.setMaximumSize(QtCore.QSize(64, 64))
+        pushButton_phone_sms.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        pushButton_phone_sms.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icons/socialNetwork/vk.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        pushButton_vk.setIcon(icon2)
-        pushButton_vk.setIconSize(QtCore.QSize(32, 32))
-        pushButton_vk.setObjectName("pushButton_vk")
-        horizontalLayout.addWidget(pushButton_vk)
+        icon2.addPixmap(QtGui.QPixmap(":/icons/socialNetwork/phone.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        pushButton_phone_sms.setIcon(icon2)
+        pushButton_phone_sms.setIconSize(QtCore.QSize(32, 32))
+        pushButton_phone_sms.setObjectName("pushButton_phone_sms")
+        horizontalLayout.addWidget(pushButton_phone_sms)
 
-        # Кнопка telegram
-        pushButton_telegram = QtWidgets.QPushButton(frame_button)
-        pushButton_telegram.clicked.connect(lambda: functional_open_message(id_user, 1, "telegram"))
-        pushButton_telegram.setMaximumSize(QtCore.QSize(64, 64))
-        pushButton_telegram.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        pushButton_telegram.setText("")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/icons/socialNetwork/telegram.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        pushButton_telegram.setIcon(icon3)
-        pushButton_telegram.setIconSize(QtCore.QSize(32, 32))
-        pushButton_telegram.setObjectName("pushButton_telegram")
-        horizontalLayout.addWidget(pushButton_telegram)
 
         # Кнопка подробная информация
         pushButton_all_info = QtWidgets.QPushButton(self)
@@ -172,7 +160,6 @@ class CreateUser(QtWidgets.QFrame):
         # Выключение кнопок если информации нет
         if email is None or not email:
             pushButton_mail.setEnabled(False)
-        if vk is None or not vk:
-            pushButton_vk.setEnabled(False)
-        if telegram is None or not telegram:
-            pushButton_telegram.setEnabled(False)
+        if number_phone is None or not number_phone:
+            pushButton_phone_sms.setEnabled(False)
+

@@ -8,6 +8,8 @@ from datetime import date
 from script.module_db import *
 from script.module_word import *
 from script.create_ui_element import *
+from script.module_mail import *
+from script.module_sms import *
 
 # interface
 from interface_ui import Ui_MainWindow
@@ -22,7 +24,13 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        # Выставление страниц на изначальное состояние
+        self.ui.tabWidget.setCurrentIndex(0)
         self.ui.stackedWidget_book.setCurrentIndex(0)
+        self.ui.stackedWidget.setCurrentIndex(1)
+        self.ui.stackedWidget_info_whom_givet.setCurrentIndex(0)
+        self.ui.toolBox_book.setCurrentIndex(0)
+        self.ui.toolBox.setCurrentIndex(0)
 
         # Launch method
         self.EditStyleSheet()
@@ -31,6 +39,8 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
 
         # Информация открытого пользователя
         self.info_open_user = None
+        # Информация от куда открыта переписка с пользователем
+        self.info_message_user = 0
         # Информация открытой книги
         self.info_open_book = None
         # информация пользователь для выдачи книги
@@ -90,7 +100,16 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.pushButton_edit_info_user.clicked.connect(self.EditDataUser)
         self.ui.pushButton_open_page_emit_message.clicked.connect(
             lambda: self.OpenPageEmitMessage(self.info_open_user['id'], 0))
+        self.ui.pushButton_emit_message.clicked.connect(self.SendEmailMessage)
         # END 5 TAB-DEBTORS
+
+        # START 6 TAB-INFO
+        self.window_large_text = DialogLargeText()
+        self.ui.pushButton_manual.clicked.connect(lambda: self.window_large_text.OpenDialog(0))
+        self.ui.pushButton_information.clicked.connect(lambda: self.window_large_text.OpenDialog(1))
+        self.ui.pushButton_author.clicked.connect(lambda: self.window_large_text.OpenDialog(2))
+        self.ui.pushButton_version.clicked.connect(lambda:  DialogNotification().OpenDialog("Текущая версия програмы - v2.6."))
+        # END 6 TAB-INFO
 
 
     def BaseTriggerForUpdate(input_funct):
@@ -261,8 +280,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.lineEdit_student_id_number.setText(f"{data['student_id_number']}")
         self.ui.lineEdit_phone.setText(f"{'' if data['number_phone'] is None else data['number_phone']}")
         self.ui.lineEdit_mail.setText(f"{'' if data['email'] is None else data['email']}")
-        self.ui.lineEdit_telegram.setText(f"{'' if data['telegram'] is None else data['telegram']}")
-        self.ui.lineEdit_vk.setText(f"{'' if data['vk'] is None else data['vk']}")
+
 
         # Очистка старой информации
         self.ClearLayoutFromFrame(self.ui.verticalLayout_take_book)
@@ -285,8 +303,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
 
         # Кнопка написать сообщение
         self.ui.pushButton_open_page_emit_message.setEnabled(True)
-        if (data['email'] is None or not data['email']) and (data['telegram'] is None or not data['telegram']) and (
-                data['vk'] is None or not data['vk']):
+        if (data['email'] is None or not data['email']) and (data['number_phone'] is None or not data['number_phone']):
             self.ui.pushButton_open_page_emit_message.setEnabled(False)
 
         # Переход на страничку
@@ -295,6 +312,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.tabWidget.setCurrentIndex(4)
 
     def OpenPageEmitMessage(self, id_user: int, id_page_back: int, social_network: str = ""):
+        self.info_message_user = id_page_back
         """
         Открывает историю отправленных сообщений пользователю
         :param id_user: id пользователя
@@ -311,10 +329,8 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
 
         if data["email"] is None or not data["email"]:
             model.item(1).setEnabled(False)
-        if data["telegram"] is None or not data["telegram"]:
+        if data["number_phone"] is None or not data["number_phone"]:
             model.item(2).setEnabled(False)
-        if data["vk"] is None or not data["vk"]:
-            model.item(3).setEnabled(False)
 
         self.ui.pushButton_back_message.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(id_page_back))
 
@@ -323,10 +339,8 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
                 self.ui.comboBox_social_network.setCurrentIndex(0)
             case "email":
                 self.ui.comboBox_social_network.setCurrentIndex(1)
-            case "telegram":
+            case "sms":
                 self.ui.comboBox_social_network.setCurrentIndex(2)
-            case "vk":
-                self.ui.comboBox_social_network.setCurrentIndex(3)
 
         self.ui.textEdit_message.setText("")
 
@@ -355,8 +369,6 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             self.ui.lineEdit_student_id_number.text().strip(),
             self.ui.lineEdit_phone.text().strip(),
             self.ui.lineEdit_mail.text().strip(),
-            self.ui.lineEdit_telegram.text().strip(),
-            self.ui.lineEdit_vk.text().strip(),
         )
 
         info_edit = {}
@@ -477,8 +489,6 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         student_id = self.ui.lineEdit_student_id_user.text().strip()
         number_phone = self.ui.lineEdit_phon_number_user.text().strip()
         email = self.ui.lineEdit_email_user.text().strip()
-        telegram = self.ui.lineEdit_telegram_user.text().strip()
-        vk = self.ui.lineEdit_vk_user.text().strip()
 
         if (not fio) or (not number_group) or (not student_id):
             DialogNotification().OpenDialog("Заполните основную информацию для создание пользователя\n"
@@ -488,7 +498,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         if DialogChoiceYesOrNo().OpenDialog("Подтвердите создание пользователя") is False:
             return
 
-        status = InsertNewUser((fio, number_group, student_id, number_phone, email, telegram, vk))
+        status = InsertNewUser((fio, number_group, student_id, number_phone, email))
         if status:
             DialogNotification().OpenDialog("Студент успешно зарегистрирован!")
             self.ClearValueAddUser()
@@ -537,7 +547,6 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
 
         self.ui.label_dont_have_result_book.hide()
 
-        # print(data_info_book)
         for element in data_info_book:
             widget = CreateBook(self.OpenPageFunctionalBook, *element)
             self.ui.verticalLayout_books.addWidget(widget)
@@ -548,7 +557,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         :param data_info_user: информация по которой будут создаваться пользователи
         """
         self.ClearLayoutFromFrame(self.ui.verticalLayout_all_user)
-
+ 
         if data_info_user == ():
             self.ui.label_dont_have_result_user.show()
             return
@@ -568,8 +577,6 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.lineEdit_student_id_user.setText("")
         self.ui.lineEdit_phon_number_user.setText("")
         self.ui.lineEdit_email_user.setText("")
-        self.ui.lineEdit_telegram_user.setText("")
-        self.ui.lineEdit_vk_user.setText("")
 
     def ClearValueAddBook(self):
         """
@@ -629,7 +636,8 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         if search_data == ():
             self.ui.label_dont_have_result_give_book.show()
             return
-
+        
+        self.ui.label_dont_have_result_give_book.hide()
         self.ClearLayoutFromFrame(self.ui.verticalLayout_found_users)
 
         for element in search_data:
@@ -700,6 +708,37 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.label__how_many_given_book_today.setText(f"{GetCountIssuedBookToday()}")
         self.ui.label_how_many_debtors.setText(f"{GetCountQuantityDebtors()}")
         self.ui.label_how_many_return_today.setText(f"{GetCountReturnBookToday()}")
+
+    def SendEmailMessage(self):
+        text = self.ui.textEdit_message.toPlainText()
+        if not text:
+            return
+        
+        combobox_value = self.ui.comboBox_social_network.currentIndex()
+        
+        if combobox_value == 0:
+            DialogNotification().OpenDialog("Выберите куда отправить сообщение!")
+        if combobox_value == 1:
+            mes = MessageSend(self.signal_SuccessfulSendingMailMessage, self.signal_ErrorSendingMailMessage)
+            mes.EmitMessage(self.info_open_user["email"], text)
+        if combobox_value == 2:
+            if len(text) >= 51:
+                DialogNotification().OpenDialog("Текст SMS сообщение не должен превышать 50 символов!")
+                return
+            status, text_notification = EmitMessageSmS(self.info_open_user["number_phone"], text)
+            DialogNotification().OpenDialog(f"{text_notification}")
+            if status:
+                InsertNewMessage(self.info_open_user["id"], text, "sms")
+                self.OpenPageEmitMessage(self.info_open_user['id'], self.info_message_user)
+ 
+    def signal_SuccessfulSendingMailMessage(self, text_notification: str, text_mesage: str):
+        DialogNotification().OpenDialog(f"{text_notification}")
+        InsertNewMessage(self.info_open_user["id"], text_mesage, "email")
+        self.OpenPageEmitMessage(self.info_open_user['id'], self.info_message_user)
+
+    @staticmethod
+    def signal_ErrorSendingMailMessage(text: str):
+        DialogNotification().OpenDialog(f"{text}")
 
     def CreateReport(self) -> None:
         """

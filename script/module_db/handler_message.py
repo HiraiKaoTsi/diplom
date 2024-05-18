@@ -12,7 +12,7 @@ def InsertNewMessage(id_user: int, text_message: str, social_network: str, curso
     :return: True если успешна добавлена запись
     """
     
-    sql = "INSERT INTO history_message VALUES(%s, CURRENT_DATE(), %s, %s);"
+    sql = "INSERT INTO history_message(user_id, date_emit, main_text, social_network) VALUES(%s, CURRENT_DATE(), %s, %s);"
     cursor.execute(sql, (id_user, text_message, social_network))
     cursor.fetchone()
     return True
