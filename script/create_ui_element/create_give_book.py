@@ -8,7 +8,7 @@ class CreateGiveBook(QtWidgets.QFrame):
     Создает виджет QFrame по полученной информации
     """
     def __init__(self, functional_return_book: Callable, id_take_book: int, id_book, name: str, author: str, isbn: str,
-                 year_release: int, date_take: datetime.date):
+                 year_release: int, date_take: datetime.date, how_days_give: int):
         super().__init__()
 
         # Настройка самого виджета
@@ -57,11 +57,17 @@ class CreateGiveBook(QtWidgets.QFrame):
         label_year_publication.setObjectName("label_year_publication")
         gridLayout.addWidget(label_year_publication, 3, 0, 1, 1)
 
-        # Год даты взятие
+        # Даты взятие
         label_date_take = QtWidgets.QLabel(self)
         label_date_take.setText(f"Дата взятие книги: {datetime.strftime(date_take, '%d.%m.%Y')}")
         label_date_take.setObjectName("label_date_take")
         gridLayout.addWidget(label_date_take, 4, 0, 1, 1)
+
+        # На сколько
+        label_how_many_days = QtWidgets.QLabel(self)
+        label_how_many_days.setText(f"На сколько дней: {how_days_give}")
+        label_how_many_days.setObjectName("label_how_many_days")
+        gridLayout.addWidget(label_how_many_days, 5, 0, 1, 1)
 
         # Кнопка принятие книги
         pushButton_accept = QtWidgets.QPushButton(self)
@@ -73,5 +79,5 @@ class CreateGiveBook(QtWidgets.QFrame):
         pushButton_accept.setIcon(icon)
         pushButton_accept.setIconSize(QtCore.QSize(32, 32))
         pushButton_accept.setObjectName("pushButton-accept-for-give-book")
-        gridLayout.addWidget(pushButton_accept, 0, 1, 5, 1)
+        gridLayout.addWidget(pushButton_accept, 0, 1, 6, 1)
 

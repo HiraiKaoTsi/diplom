@@ -171,7 +171,8 @@ def GetInfoBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple
         books.author,
         books.ISBN,
         books.year_publication,
-        take_book.date_take
+        take_book.date_take,
+        take_book.how_many_days_give
     FROM 
         take_book
     INNER JOIN 

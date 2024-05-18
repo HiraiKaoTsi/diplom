@@ -48,7 +48,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="iconSize">
        <size>
@@ -233,7 +233,7 @@
             <item row="0" column="0" colspan="2">
              <widget class="QLabel" name="label_title_tab1">
               <property name="text">
-               <string>общая информация</string>
+               <string>Общая информация</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -512,6 +512,65 @@
                </item>
                <item>
                 <widget class="QSpinBox" name="spinBox_quantity_add">
+                 <property name="minimumSize">
+                  <size>
+                   <width>50</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frame_price">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_38">
+               <property name="spacing">
+                <number>5</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="label_5">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Цена</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="spinBox_price_add">
                  <property name="minimumSize">
                   <size>
                    <width>50</width>
@@ -980,8 +1039,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>73</width>
-                 <height>40</height>
+                 <width>914</width>
+                 <height>462</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_books">
@@ -1061,7 +1120,7 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>83</width>
+                 <width>71</width>
                  <height>71</height>
                 </rect>
                </property>
@@ -1546,7 +1605,7 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>83</width>
+                 <width>81</width>
                  <height>71</height>
                 </rect>
                </property>
@@ -1781,7 +1840,7 @@
                             <rect>
                              <x>0</x>
                              <y>0</y>
-                             <width>170</width>
+                             <width>220</width>
                              <height>235</height>
                             </rect>
                            </property>
@@ -1988,7 +2047,7 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>83</width>
+                 <width>81</width>
                  <height>71</height>
                 </rect>
                </property>
@@ -2025,7 +2084,7 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>81</width>
+                     <width>79</width>
                      <height>69</height>
                     </rect>
                    </property>
@@ -2089,7 +2148,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page_info_user">
            <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -3016,8 +3075,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>73</width>
-                 <height>40</height>
+                 <width>914</width>
+                 <height>462</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_all_user">
@@ -3191,8 +3250,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>81</width>
-                 <height>40</height>
+                 <width>914</width>
+                 <height>401</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_all_message">
@@ -3391,8 +3450,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>350</width>
-             <height>162</height>
+             <width>924</width>
+             <height>601</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_37" stretch="0">

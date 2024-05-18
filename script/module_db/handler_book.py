@@ -137,19 +137,27 @@ def GetBookNotAllMissing(cursor: MySQLCursor = None) -> tuple:
     """
 
     sql = """
-    SELECT DISTINCT
-        books.*,
-        COUNT(take_book.id) AS count_take_book
-    FROM 
-        take_book
-    INNER JOIN
-        books ON take_book.book_id = books.id
-    WHERE 
-        take_book.date_return IS NULL 
+   SELECT
+        b.id,
+        b.name_book,
+        b.author,
+        b.ISBN,
+        b.year_publication,
+        b.quantity,
+        (b.quantity - COUNT(tb.book_id)) AS available_quantity
+    FROM
+        books b
+    JOIN
+        take_book tb ON b.id = tb.book_id AND tb.date_return IS NULL
     GROUP BY
-        books.id
+        b.id,
+        b.name_book,
+        b.author,
+        b.ISBN,
+        b.year_publication,
+        b.quantity
     HAVING
-        (books.quantity - COUNT(take_book.id)) > 1;
+        available_quantity > 0;
     """
     cursor.execute(sql)
     result = cursor.fetchall()

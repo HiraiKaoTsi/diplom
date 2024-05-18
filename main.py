@@ -1,21 +1,23 @@
+# libs
 from os import listdir
-
-# built - in Module
 from sys import argv, exit
-from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import date
 
+# pip libs
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+# My module
 from script.module_db import *
 from script.module_word import *
 from script.create_ui_element import *
 from script.module_mail import *
 from script.module_sms import *
 
-# interface
-from interface_ui import Ui_MainWindow
-
 # dialog
 from script.dialog_widget import *
+
+# interface
+from interface_ui import Ui_MainWindow
 
 
 class FunctionalMainWindow(QtWidgets.QMainWindow):
@@ -98,9 +100,9 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.lineEdit_search_user.returnPressed.connect(lambda: self.SearchStudents(5))
         self.ui.pushButton_search_user.clicked.connect(lambda: self.SearchStudents(5))
         self.ui.pushButton_edit_info_user.clicked.connect(self.EditDataUser)
-        self.ui.pushButton_open_page_emit_message.clicked.connect(
-            lambda: self.OpenPageEmitMessage(self.info_open_user['id'], 0))
+        self.ui.pushButton_open_page_emit_message.clicked.connect(lambda: self.OpenPageEmitMessage(self.info_open_user['id'], 0))
         self.ui.pushButton_emit_message.clicked.connect(self.SendEmailMessage)
+        self.ui.pushButton_clear_message.clicked.connect(self.ClearTextForEmitMessage)
         # END 5 TAB-DEBTORS
 
         # START 6 TAB-INFO
@@ -587,6 +589,13 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         self.ui.lineEdit_isbn_add.setText("")
         self.ui.dateEdit_year_publication_add.setDate(QtCore.QDate(2000, 1, 1))
         self.ui.spinBox_quantity_add.setValue(0)
+
+    def ClearTextForEmitMessage(self):
+        """
+        Очищает поля ввода и комбобокс в отправке сообщений
+        """
+        self.ui.comboBox_social_network.setCurrentIndex(0)
+        self.ui.textEdit_message.setText("")
 
     def ResetTabGiveBook(self):
         """
