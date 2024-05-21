@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 @ConnectBaseReturnTypeList
-def InsertNewBooks(value: tuple[str, str, str, datetime.year, int], cursor: MySQLCursor = None) -> bool:
+def InsertNewBooks(value: tuple[str, str, str, datetime.year, int, int], cursor: MySQLCursor = None) -> bool:
     """
     Осуществляет добавление новой книги
     :param value: [название_книги, автор, isbn, год_публикации, количество]
@@ -13,8 +13,8 @@ def InsertNewBooks(value: tuple[str, str, str, datetime.year, int], cursor: MySQ
 
     sql = """
     INSERT INTO 
-    books(name_book, author, ISBN, year_publication, quantity) 
-    VALUES(%s, %s, %s, %s, %s);
+    books(name_book, author, ISBN, year_publication, quantity, price) 
+    VALUES(%s, %s, %s, %s, %s, %s);
     """
     cursor.execute(sql, value)
     cursor.fetchone()
@@ -69,7 +69,7 @@ def GetAllBooks(cursor: MySQLCursor = None) -> tuple:
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
 
-    sql = "SELECT *, CountQuantityTakeBook(books.id) AS quantity_take FROM books;"
+    sql = "SELECT id, name_book, author, ISBN, year_publication, quantity, CountQuantityTakeBook(books.id) AS quantity_take FROM books;"
     cursor.execute(sql)
     result = cursor.fetchall()
     return tuple(result)
@@ -111,7 +111,12 @@ def GetBookWhichAllMissing(cursor: MySQLCursor = None) -> tuple:
 
     sql = """
     SELECT DISTINCT
-        books.*,
+        books.id, 
+        books.name_book, 
+        books.author, 
+        books.ISBN, 
+        books.year_publication, 
+        books.quantity, 
         COUNT(take_book.id) AS count_take_book
     FROM 
         take_book
@@ -175,7 +180,7 @@ def GetInfoByInputDataBook(input_data: str, cursor: MySQLCursor = None) -> tuple
     input_data = f"%{input_data}%"
     sql = """
     SELECT
-        *,
+        id, name_book, author, ISBN, year_publication, quantity,
         CountQuantityTakeBook(books.id)
     FROM
         books
