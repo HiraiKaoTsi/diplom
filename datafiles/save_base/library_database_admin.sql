@@ -16,33 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `books`
+-- Table structure for table `admin`
 --
 
-DROP TABLE IF EXISTS `books`;
+DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `books` (
+CREATE TABLE `admin` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name_book` varchar(255) NOT NULL,
-  `author` varchar(255) NOT NULL,
-  `ISBN` varchar(20) NOT NULL,
-  `year_publication` year DEFAULT NULL,
-  `quantity` int DEFAULT '1',
-  `price` float NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `login` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `books`
+-- Dumping data for table `admin`
 --
 
-LOCK TABLES `books` WRITE;
-/*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` VALUES (3,'Книга 3231','Автор 3','3333',2024,2,0),(4,'Книга 4','Автор 4','4444',2024,1,0),(5,'Книга 5','Автор 5','55555',2024,5,0),(6,'name','author','isbn',2001,1,0),(7,'123','2','3',2000,2,0),(8,'332','332','332',2000,4,0),(9,'текс','текс','текс',2000,3,12);
-/*!40000 ALTER TABLE `books` ENABLE KEYS */;
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` VALUES (1,'AdminTTT','1234');
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

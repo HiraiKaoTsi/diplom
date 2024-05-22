@@ -29,11 +29,9 @@ CREATE TABLE `users` (
   `student_id_number` varchar(25) NOT NULL,
   `number_phone` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `telegram` varchar(255) DEFAULT NULL,
-  `vk` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +40,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (7,'КИРИЛ','312','','','','',''),(8,'1','','','','','',''),(9,'12','312','','','','123123',''),(10,'zxc','qwe','wwww','','','',''),(11,'zxc231','qwe123','231123','','','312',''),(12,'321','312','321','','','','');
+INSERT INTO `users` VALUES (7,'КИРИЛ','312','12332123','','asshentaishek@mail.ru'),(8,'5555','5555','5555','+79080901220','vifstiks@mail.ru'),(10,'zxc','qwe','wwww','','1231'),(11,'zxc231','qwe123','231123','123','312'),(12,'321','312','321','','');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-20 20:39:06
+-- Dump completed on 2024-05-22 11:08:23
