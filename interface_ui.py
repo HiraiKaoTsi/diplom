@@ -19,9 +19,9 @@ class Ui_MainWindow(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/book/book.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
-        MainWindow.setStyleSheet("QFrame {\n"
-"    border: 1px solid black;\n"
-"}")
+#         MainWindow.setStyleSheet("QFrame {\n"
+# "    border: 1px solid black;\n"
+# "}")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.centralwidget)

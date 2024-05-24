@@ -40,7 +40,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (7,'КИРИЛ','312','12332123','','asshentaishek@mail.ru'),(8,'5555','5555','5555','+79080901220','vifstiks@mail.ru'),(10,'zxc','qwe','wwww','','1231'),(11,'zxc231','qwe123','231123','123','312'),(12,'321','312','321','','');
+INSERT INTO `users` VALUES (7,'Александрова Анастасия Владиславовна','312','П2043105','','asshentaishek@mail.ru'),(8,'Ефемов Максим Владимирович','431','П2043106','+79080901220','vifstiks@mail.ru'),(10,'Кондрашова Елизавета Егоровна','123','П2043107','','bankai-hyorinmaru@mail.ru'),(11,'Муравьев Герман Кириллович','431','П2043108','',''),(12,'Муравьев Герман Кириллович','312','П2043109','',''),(13,'Дроздова Полина Львовна','222','П2043110',NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-22 11:08:23
+-- Dump completed on 2024-05-24 14:45:38
