@@ -1,11 +1,10 @@
 from mysql.connector import connect, Error
-from mysql.connector.connection import MySQLConnection
-from mysql.connector.cursor import MySQLCursor
+
 
 from .config import *
 
 
-def _createConnectionAndCursorDataBase(type_cursor) -> tuple[MySQLConnection, MySQLCursor] | tuple[None, None]:
+def _createConnectionAndCursorDataBase(type_cursor):
     """
     Данная функция создает экземпляр класса MySQLConnection и MySQLCursor и возвращает их
     если подключиться к базе не удалось возвращать None
@@ -22,7 +21,7 @@ def _createConnectionAndCursorDataBase(type_cursor) -> tuple[MySQLConnection, My
     return connection, cursor
 
 
-def _breakConnectionDataBase(connection: MySQLConnection, cursor: MySQLCursor) -> None:
+def _breakConnectionDataBase(connection, cursor) -> None:
     """
     Данная функция закрывает подключение к базе данных с курсором
     :param connection: MySQLConnection

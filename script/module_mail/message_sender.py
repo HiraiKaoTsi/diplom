@@ -3,7 +3,7 @@ from email.message import EmailMessage
 from .config_mail import *
 
 from PyQt5 import QtCore
-from collections.abc import Callable
+
 
 
 class MessageSend(QtCore.QThread):
@@ -11,7 +11,7 @@ class MessageSend(QtCore.QThread):
     signal_successful_sending = QtCore.pyqtSignal(str, str)
     signal_error_sending = QtCore.pyqtSignal(str)
 
-    def __init__(self, function_successful: Callable[[str, str], None], function_error: Callable[[str], None]):
+    def __init__(self, function_successful, function_error):
         super().__init__()
 
         self.signal_successful_sending.connect(function_successful)

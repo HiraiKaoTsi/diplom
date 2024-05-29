@@ -5,7 +5,7 @@ import urllib.parse
 import json
 
 
-def EmitMessageSmS(number_phone: str, text_message: str) -> tuple[bool, str]:
+def EmitMessageSmS(number_phone: str, text_message: str) -> tuple:
     params = {
         "login": login,
         "psw": password,

@@ -2,7 +2,7 @@ from .connect import *
 
 
 @ConnectBaseReturnTypeList
-def InsertTakeBook(user_id: int, book_id: int, how_many_days: int, cursor: MySQLCursor = None) -> bool:
+def InsertTakeBook(user_id: int, book_id: int, how_many_days: int, cursor = None) -> bool:
     """
     Осуществляет добовление информации, что пользователь взял книгу
     :param user_id: id пользователя
@@ -18,7 +18,7 @@ def InsertTakeBook(user_id: int, book_id: int, how_many_days: int, cursor: MySQL
 
 
 @ConnectBaseReturnTypeList
-def UpdateReturnBook(id_take_book: int, cursor: MySQLCursor = None) -> bool:
+def UpdateReturnBook(id_take_book: int, cursor = None) -> bool:
     """
     Осуществляет изменение информации, что пользователь вернул книгу
     :param id_take_book: id записи взятой книги
@@ -42,7 +42,7 @@ def UpdateReturnBook(id_take_book: int, cursor: MySQLCursor = None) -> bool:
 
 
 @ConnectBaseReturnTypeList
-def GetCountIssuedBookAll(cursor: MySQLCursor = None) -> int:
+def GetCountIssuedBookAll(cursor = None) -> int:
     """
     Осуществляет подсчет количество всех выданных книг
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
@@ -54,7 +54,7 @@ def GetCountIssuedBookAll(cursor: MySQLCursor = None) -> int:
 
 
 @ConnectBaseReturnTypeList
-def GetCountIssuedBookToday(cursor: MySQLCursor = None) -> int:
+def GetCountIssuedBookToday(cursor = None) -> int:
     """
     Осуществляет подсчет количество выданных книг за сегодня
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
@@ -67,7 +67,7 @@ def GetCountIssuedBookToday(cursor: MySQLCursor = None) -> int:
 
 
 @ConnectBaseReturnTypeList
-def GetCountReturnBookToday(cursor: MySQLCursor = None) -> int:
+def GetCountReturnBookToday(cursor = None) -> int:
     """
     Осуществляет подсчет количество вернутых книг за сегодня
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
@@ -80,7 +80,7 @@ def GetCountReturnBookToday(cursor: MySQLCursor = None) -> int:
 
 
 @ConnectBaseReturnTypeList
-def GetCountQuantityDebtors(cursor: MySQLCursor = None) -> int:
+def GetCountQuantityDebtors(cursor = None) -> int:
     """
     Осуществляет подсчет количество задолжников книг
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
@@ -101,7 +101,7 @@ def GetCountQuantityDebtors(cursor: MySQLCursor = None) -> int:
     return result
 
 @ConnectBaseReturnTypeList
-def GetCountTakeBookById(id_book: int, cursor: MySQLCursor = None) -> int:
+def GetCountTakeBookById(id_book: int, cursor = None) -> int:
     """
     Осуществляет подсчитывание количество книг которые находиться у пользователя по id номеру
     :param id_book: id книги
@@ -114,7 +114,7 @@ def GetCountTakeBookById(id_book: int, cursor: MySQLCursor = None) -> int:
 
 
 @ConnectBaseReturnTypeList
-def GetQuantityBookThatUserHaveById(book_id: int, cursor: MySQLCursor = None) -> int:
+def GetQuantityBookThatUserHaveById(book_id: int, cursor = None) -> int:
     """
     Осуществляет подсчет количество экземпляров книг которые находиться у пользователй по id книги
     :param book_id: id книги
@@ -128,7 +128,7 @@ def GetQuantityBookThatUserHaveById(book_id: int, cursor: MySQLCursor = None) ->
 
 
 @ConnectBaseReturnTypeList
-def GetInfoHistoryBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple[tuple, ...]:
+def GetInfoHistoryBooksTakenUserById(user_id: int, cursor = None) -> tuple:
     """
     Осуществляет поиск информации о взятых книгах по введенному id пользователя
     :param user_id: id пользователя
@@ -156,7 +156,7 @@ def GetInfoHistoryBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -
 
 
 @ConnectBaseReturnTypeList
-def GetInfoBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple[tuple, ...]:
+def GetInfoBooksTakenUserById(user_id: int, cursor = None) -> tuple:
     """
     Осуществляет поиск информации о книгах которые находится у пользователя
     :param user_id: id пользователя
@@ -186,7 +186,7 @@ def GetInfoBooksTakenUserById(user_id: int, cursor: MySQLCursor = None) -> tuple
 
 
 @ConnectBaseReturnTypeList
-def GetHistoryUsersTakeBookById(id_book: int, cursor: MySQLCursor = None) -> tuple:
+def GetHistoryUsersTakeBookById(id_book: int, cursor = None) -> tuple:
     """
     Осуществляет поиск пользователей и информации (когда выдана, на сколько, когда вернуто) книга
     по введенном id книги

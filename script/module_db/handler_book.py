@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 @ConnectBaseReturnTypeList
-def InsertNewBooks(value: tuple[str, str, str, datetime.year, int, int], cursor: MySQLCursor = None) -> bool:
+def InsertNewBooks(value, cursor = None) -> bool:
     """
     Осуществляет добавление новой книги
     :param value: [название_книги, автор, isbn, год_публикации, количество]
@@ -22,7 +22,7 @@ def InsertNewBooks(value: tuple[str, str, str, datetime.year, int, int], cursor:
 
 
 @ConnectBaseReturnTypeList
-def DeleteBookById(id_book: int, cursor: MySQLCursor = None) -> bool:
+def DeleteBookById(id_book: int, cursor = None) -> bool:
     """
     Осуществляет удаление книги по введенному id номеру
     :param id_book: id книги
@@ -37,7 +37,7 @@ def DeleteBookById(id_book: int, cursor: MySQLCursor = None) -> bool:
 
 
 @ConnectBaseReturnTypeList
-def UpdateDataBook(id_book: int, param: dict, cursor: MySQLCursor = None) -> bool:
+def UpdateDataBook(id_book: int, param: dict, cursor = None) -> bool:
     """
     Осуществляет изменение информации книги по его id номеру
     :param id_book: id книги
@@ -63,7 +63,7 @@ def UpdateDataBook(id_book: int, param: dict, cursor: MySQLCursor = None) -> boo
 
 
 @ConnectBaseReturnTypeList
-def GetAllBooks(cursor: MySQLCursor = None) -> tuple:
+def GetAllBooks(cursor = None) -> tuple:
     """
     Осуществляет получение информации о всех книгах
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
@@ -76,7 +76,7 @@ def GetAllBooks(cursor: MySQLCursor = None) -> tuple:
 
 
 @ConnectBaseReturnTypeDict
-def GetAboutBookById(id_book: int, cursor: MySQLCursor = None) -> dict:
+def GetAboutBookById(id_book: int, cursor = None) -> dict:
     """
     Осуществляет поиск информацию о книге по его id номеру
     :param id_book: id книги, которую требуется найти
@@ -90,7 +90,7 @@ def GetAboutBookById(id_book: int, cursor: MySQLCursor = None) -> dict:
 
 
 @ConnectBaseReturnTypeList
-def GetCountBook(cursor: MySQLCursor = None) -> int:
+def GetCountBook(cursor = None) -> int:
     """
     Осуществляет подсчитывание книг в базе данных
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
@@ -103,7 +103,7 @@ def GetCountBook(cursor: MySQLCursor = None) -> int:
 
 
 @ConnectBaseReturnTypeList
-def GetBookWhichAllMissing(cursor: MySQLCursor = None) -> tuple:
+def GetBookWhichAllMissing(cursor = None) -> tuple:
     """
     Осуществляет получение книги у которых отсутствуют все экземпляры
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов ы
@@ -135,7 +135,7 @@ def GetBookWhichAllMissing(cursor: MySQLCursor = None) -> tuple:
 
 
 @ConnectBaseReturnTypeList
-def GetBookNotAllMissing(cursor: MySQLCursor = None) -> tuple:
+def GetBookNotAllMissing(cursor = None) -> tuple:
     """
     Осуществляет получение книги которые имеются не во всех экземплярах
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
@@ -170,7 +170,7 @@ def GetBookNotAllMissing(cursor: MySQLCursor = None) -> tuple:
 
 
 @ConnectBaseReturnTypeList
-def GetInfoByInputDataBook(input_data: str, cursor: MySQLCursor = None) -> tuple[tuple, ...]:
+def GetInfoByInputDataBook(input_data: str, cursor = None) -> tuple:
     """
     Осуществляет поиск книги по введенной информации из всей таблицы books
     :param input_data: любая текстовая информация

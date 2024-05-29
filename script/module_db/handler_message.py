@@ -2,7 +2,7 @@ from .connect import *
 
 
 @ConnectBaseReturnTypeList
-def InsertNewMessage(id_user: int, text_message: str, social_network: str, cursor: MySQLCursor = None) -> bool:
+def InsertNewMessage(id_user: int, text_message: str, social_network: str, cursor = None) -> bool:
     """
     Осуществляет добавление нового сообщение
     :param id_user: id пользователя
@@ -19,7 +19,7 @@ def InsertNewMessage(id_user: int, text_message: str, social_network: str, curso
 
 
 @ConnectBaseReturnTypeList
-def GetAllHistoryMessageUsers(id_user: int, cursor: MySQLCursor = None) -> tuple:
+def GetAllHistoryMessageUsers(id_user: int, cursor = None) -> tuple:
     """
     Осуществляет получение истории сообщений которые отправлены пользователю
     :param id_user: id пользователя

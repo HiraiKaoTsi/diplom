@@ -537,7 +537,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             DialogNotification().OpenDialog("Книга удален")
             return True
 
-    def CreateBookForInfo(self, data_info_book: tuple[tuple, ...]):
+    def CreateBookForInfo(self, data_info_book: tuple):
         """
         Создает книги по полученной информации
         :param data_info_book: информация по которой будут создаваться книги
@@ -554,7 +554,7 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             widget = CreateBook(self.OpenPageFunctionalBook, *element)
             self.ui.verticalLayout_books.addWidget(widget)
 
-    def CreateUserForInfo(self, data_info_user: tuple[tuple, ...]):
+    def CreateUserForInfo(self, data_info_user: tuple):
         """
         Создает пользователей по полученной информации
         :param data_info_user: информация по которой будут создаваться пользователи

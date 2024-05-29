@@ -2,7 +2,7 @@ from .connect import *
 
 
 @ConnectBaseReturnTypeList
-def InsertNewUser(value: tuple[str, str, str, str, str], cursor: MySQLCursor = None) -> bool:
+def InsertNewUser(value, cursor = None) -> bool:
     """
     Осуществляет добавление нового пользователя
     :param value: [фио, номер_группы, студенческий, номер_телефона, почта, телеграм, вк]
@@ -22,7 +22,7 @@ def InsertNewUser(value: tuple[str, str, str, str, str], cursor: MySQLCursor = N
 
 
 @ConnectBaseReturnTypeList
-def DeleteUserById(id_user: int, cursor: MySQLCursor = None) -> bool:
+def DeleteUserById(id_user: int, cursor = None) -> bool:
     """
     Осуществляет удаление пользователя по введенному id номеру
     :param id_user: id книги
@@ -37,7 +37,7 @@ def DeleteUserById(id_user: int, cursor: MySQLCursor = None) -> bool:
 
 
 @ConnectBaseReturnTypeList
-def UpdateDataUser(id_user: int, param: dict, cursor: MySQLCursor = None) -> bool:
+def UpdateDataUser(id_user: int, param: dict, cursor = None) -> bool:
     """
     Осуществляет изменение информации пользователя по его id номеру
     :param id_user: id книги
@@ -63,7 +63,7 @@ def UpdateDataUser(id_user: int, param: dict, cursor: MySQLCursor = None) -> boo
 
 
 @ConnectBaseReturnTypeList
-def GetAllUser(cursor: MySQLCursor = None) -> tuple[tuple, ...]:
+def GetAllUser(cursor = None) -> tuple:
     """
     Осуществляет получение информации о всех пользователей
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
@@ -76,7 +76,7 @@ def GetAllUser(cursor: MySQLCursor = None) -> tuple[tuple, ...]:
 
 
 @ConnectBaseReturnTypeDict
-def GetAboutUser(id_user: int, cursor: MySQLCursor = None) -> dict:
+def GetAboutUser(id_user: int, cursor = None) -> dict:
     """
     Осуществляет поиск информацию о пользователе по его id номеру
     :param id_user: id пользователе, которую требуется найти
@@ -90,7 +90,7 @@ def GetAboutUser(id_user: int, cursor: MySQLCursor = None) -> dict:
 
 
 @ConnectBaseReturnTypeList
-def GetUsersTakesBook(cursor: MySQLCursor = None) -> tuple[tuple, ...]:
+def GetUsersTakesBook(cursor = None) -> tuple:
     """
     Осуществляет поиск пользователей которые взяли книгу в библиотеке
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
@@ -111,7 +111,7 @@ def GetUsersTakesBook(cursor: MySQLCursor = None) -> tuple[tuple, ...]:
 
 
 @ConnectBaseReturnTypeList
-def GetUsersBookDebtors(cursor: MySQLCursor = None) -> tuple[tuple, ...]:
+def GetUsersBookDebtors(cursor = None) -> tuple:
     """
     Осуществляет поиск пользователей которые задолжали книгу/книги
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
@@ -135,7 +135,7 @@ def GetUsersBookDebtors(cursor: MySQLCursor = None) -> tuple[tuple, ...]:
 
 
 @ConnectBaseReturnTypeList
-def GetInfoTheyFitDelivery(cursor: MySQLCursor = None) -> tuple[tuple, ...]:
+def GetInfoTheyFitDelivery(cursor = None) -> tuple:
     """
     Пользователи которые вскоре должны стать сдать книгу/книги (в течение 2 дней)
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
@@ -161,7 +161,7 @@ def GetInfoTheyFitDelivery(cursor: MySQLCursor = None) -> tuple[tuple, ...]:
 
 
 @ConnectBaseReturnTypeList
-def GetInfoByInputDataUsers(input_data: str, cursor: MySQLCursor = None) -> tuple[tuple, ...] | tuple:
+def GetInfoByInputDataUsers(input_data: str, cursor = None) -> tuple:
     """
     Осуществляет поиск пользователя по введенной информации из всей таблицы users
     :param input_data: любая текстовая информация
