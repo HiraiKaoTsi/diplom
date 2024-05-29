@@ -338,13 +338,12 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
 
         self.ui.pushButton_back_message.clicked.connect(lambda: self.ui.stackedWidget.setCurrentIndex(id_page_back))
 
-        match social_network:
-            case "":
-                self.ui.comboBox_social_network.setCurrentIndex(0)
-            case "email":
-                self.ui.comboBox_social_network.setCurrentIndex(1)
-            case "sms":
-                self.ui.comboBox_social_network.setCurrentIndex(2)
+        if social_network == "":
+            self.ui.comboBox_social_network.setCurrentIndex(0)
+        elif social_network == "email":
+            self.ui.comboBox_social_network.setCurrentIndex(1)
+        elif social_network == "sms":
+            self.ui.comboBox_social_network.setCurrentIndex(2)
 
         self.ui.textEdit_message.setText("")
 
@@ -666,23 +665,22 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         - 5: поиск по введенной информации в поле ввода
         """
         self.ui.pushButton_reset_user.show()
-        match info:
-            case 1:
-                self.CreateUserForInfo(GetAllUser())
+        if info == 1:
+            self.CreateUserForInfo(GetAllUser())
+            self.ui.pushButton_reset_user.hide()
+        elif info == 2:
+            self.CreateUserForInfo(GetUsersTakesBook())
+        elif info == 3:
+            self.CreateUserForInfo(GetUsersBookDebtors())
+        elif info == 4:
+            self.CreateUserForInfo(GetInfoTheyFitDelivery())
+        elif info == 5:
+            input_data_user = self.ui.lineEdit_search_user.text().strip()
+            if not input_data_user:
                 self.ui.pushButton_reset_user.hide()
-            case 2:
-                self.CreateUserForInfo(GetUsersTakesBook())
-            case 3:
-                self.CreateUserForInfo(GetUsersBookDebtors())
-            case 4:
-                self.CreateUserForInfo(GetInfoTheyFitDelivery())
-            case 5:
-                input_data_user = self.ui.lineEdit_search_user.text().strip()
-                if not input_data_user:
-                    self.ui.pushButton_reset_user.hide()
-                    return
-                self.CreateUserForInfo(GetInfoByInputDataUsers(input_data_user))
-                self.ui.frame_radioButton_users.hide()
+                return
+            self.CreateUserForInfo(GetInfoByInputDataUsers(input_data_user))
+            self.ui.frame_radioButton_users.hide()
 
     def SearchBooks(self, info: int):
         """
@@ -694,22 +692,22 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         - 5: поиск по введенной информации в поле ввода
         """
         self.ui.pushButton_reset_book.show()
-        match info:
-            case 1:
-                self.CreateBookForInfo(GetAllBooks())
-                self.ui.pushButton_reset_book.hide()
-            case 2:
-                self.CreateBookForInfo(GetBookWhichAllMissing())
-            case 3:
-                self.CreateBookForInfo(GetBookNotAllMissing())
-            case 4:
-                input_data_book = self.ui.lineEdit_search_book.text().strip()
-                if not input_data_book:
-                    self.ui.pushButton_reset_book.hide()
-                    return
-                self.CreateBookForInfo(GetInfoByInputDataBook(input_data_book))
-                self.ui.frame_radioButton_book.hide()
 
+        if info == 1:
+            self.CreateBookForInfo(GetAllBooks())
+            self.ui.pushButton_reset_book.hide()
+        if info == 2:
+            self.CreateBookForInfo(GetBookWhichAllMissing())
+        if info == 3:
+            self.CreateBookForInfo(GetBookNotAllMissing())
+        if info == 4:
+            input_data_book = self.ui.lineEdit_search_book.text().strip()
+            if not input_data_book:
+                self.ui.pushButton_reset_book.hide()
+                return
+            self.CreateBookForInfo(GetInfoByInputDataBook(input_data_book))
+            self.ui.frame_radioButton_book.hide()
+     
     def EditMainInfo(self):
         """
         Данный метод отображает информацию из базы данных на главном экране
