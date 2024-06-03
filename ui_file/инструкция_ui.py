@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\Project\Python\diplom\ui_file\большой_text.ui'
+# Form implementation generated from reading ui file 'd:\Project\Python\diplom\ui_file\инструкция.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -11,19 +11,24 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(400, 300)
-        self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(642, 600)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icons/main/manual.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.scrollArea = QtWidgets.QScrollArea(Dialog)
+        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 398, 298))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 640, 598))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setContentsMargins(3, 3, 3, 3)
@@ -36,10 +41,12 @@ class Ui_Dialog(object):
         self.verticalLayout_2.addWidget(self.label_main_text)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
+        MainWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Информация"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Текст"))
+import icons_rc
