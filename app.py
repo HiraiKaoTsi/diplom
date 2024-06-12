@@ -187,9 +187,9 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         data = GetAboutUser(id_user)
         self.info_input_user_for_give_book = data
 
-        self.ui.label_fio_gb.setText(f"{data['FIO']}")
-        self.ui.label_group_gb.setText(f"{data['number_group']}")
-        self.ui.label_id_stud_number_gb.setText(f"{data['student_id_number']}")
+        self.ui.label_fio_gb.setText(f"ФИО -  {data['FIO']}")
+        self.ui.label_group_gb.setText(f"Номер группы -  {data['number_group']}")
+        self.ui.label_id_stud_number_gb.setText(f"Студенческий билет -  {data['student_id_number']}")
         self.ui.spinBox_quantity_day_gb.setValue(0)
 
         self.ui.stackedWidget_info_whom_givet.setCurrentIndex(1)
@@ -515,11 +515,14 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
         choice = DialogChoiceYesOrNo().OpenDialog("Вы действительно хотите удалить пользователя?")
         if choice is False:
             return
-
+        if CheckTakeBookByIdUsers(self.info_open_user["id"]):
+            DialogNotification().OpenDialog("Удаление не может произойти так как у данного пользователя не сдана книга!")
+            return 
+        
         info_delete = DeleteUserById(self.info_open_user["id"])
         if info_delete:
             self.info_open_user = None
-            DialogNotification().OpenDialog("Пользователь удален")
+            DialogNotification().OpenDialog("Пользователь удален!")
             return True
 
     @DeleteTriggerForUpdate

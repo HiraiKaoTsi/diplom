@@ -215,3 +215,19 @@ def GetHistoryUsersTakeBookById(id_book: int, cursor = None) -> tuple:
     cursor.execute(sql, (id_book, ))
     result = cursor.fetchall()
     return tuple(result)
+
+
+@ConnectBaseReturnTypeList
+def CheckTakeBookByIdUsers(id_user: int, cursor = None) -> bool:
+    """
+    Осуществляет проверку если у пользователя есть хоть 1 взятая и не вернутая книга то выдает True в ином случаи False
+    :param id_user: id пользователя
+    """
+
+    sql = "SELECT * FROM take_book WHERE user_id = %s AND date_return IS NULL;"
+    cursor.execute(sql, (id_user, ))
+    result = cursor.fetchall()
+    if len(result) == 0:
+        return False
+    return True
+    

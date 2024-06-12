@@ -28,7 +28,7 @@ QTabBar::tab:selected {
 }
 
 QTabBar::tab:!selected {
-    margin-top: 2px; 
+    margin-top: 3px; 
 }
 
 QTabWidget::tab-bar {

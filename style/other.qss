@@ -28,6 +28,14 @@ QFrame {
 QWidget {
     color: white;
 	font-family: Rubick;
-	font-size: 9pt;
-	font-weight: 600;
+	font-size: 12pt;
+	font-weight: 650;
+}
+
+QFrame#frame_title_message QLabel {
+    font-size: 15pt;
+}
+
+QLabel#label_history_message {
+    font-size: 20pt;
 }

@@ -23,5 +23,5 @@ QGroupBox {
 }
 
 QScrollArea#scrollArea_tab1 QLabel {
-	font-size: 11pt;
+	font-size: 12pt;
 }

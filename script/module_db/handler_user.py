@@ -137,7 +137,7 @@ def GetUsersBookDebtors(cursor = None) -> tuple:
 @ConnectBaseReturnTypeList
 def GetInfoTheyFitDelivery(cursor = None) -> tuple:
     """
-    Пользователи которые вскоре должны стать сдать книгу/книги (в течение 2 дней)
+    Пользователи которые вскоре должны сдать книгу/книги (в течение 2 дней)
     :param cursor: (не требует ввода) предназначен для обращения к нему запросов
     """
 
