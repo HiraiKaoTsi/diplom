@@ -259,6 +259,9 @@ class FunctionalMainWindow(QtWidgets.QMainWindow):
             self.ui.toolBox_book.setItemEnabled(1, True)
 
         data_info_user = GetHistoryUsersTakeBookById(data["id"])
+        
+        # Очистка старой информации
+        self.ClearLayoutFromFrame(self.ui.verticalLayout_history_user_take_book)
 
         for element in data_info_user:
             widget = CreateUserHistoryTakeBook(self.OpenPageFunctionalUser, *element)

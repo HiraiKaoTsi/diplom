@@ -1,13 +1,13 @@
 from PyQt5 import QtGui, QtWidgets, QtCore
 
 # interface
-from .information_large_text_ui import Ui_Dialog
+from .information_large_text_ui import Ui_MainWindow
 
 
-class DialogLargeText(QtWidgets.QDialog):
+class DialogLargeText(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         QtWidgets.QWidget.__init__(self, parent)
-        self.ui = Ui_Dialog()
+        self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.resize(800, 600)
 
